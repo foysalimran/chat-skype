@@ -961,7 +961,7 @@ SCS::createSection($prefix, array(
       'id'    => 'circle-button-close',
       'type'  => 'icon',
       'title' => esc_html__('Icon for circle button close ', 'chat-skype'),
-      'default' => 'fa-solid fa-xmark',
+      'default' => 'fas fa-times',
       'subtitle' => esc_html__('Change icon for circle button close.', 'chat-skype'),
     ),
 
