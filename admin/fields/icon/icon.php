@@ -33,7 +33,7 @@ if ( ! class_exists( 'SCS_Field_icon' ) ) {
       echo '<input type="hidden" name="'. esc_attr( $this->field_name() ) .'" value="'. esc_attr( $this->value ) .'" class="scs-icon-value"'. esc_attr($this->field_attributes()) .' />';
       echo '</div>';
 
-      echo $this->field_after();
+      echo esc_html($this->field_after());
 
     }
 

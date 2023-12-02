@@ -96,7 +96,7 @@ function scs_chat_popup()
   <div class="skySupport skySupport-<?php if (isset($options['bubble-visibility'])) {
                                       echo esc_attr($options['bubble-visibility']);
                                     }; ?>-only <?php if ($options['autoshow-popup']) : ?>skySupport-show<?php endif; ?> <?php if ($options['bubble-style'] === 'dark') : ?>dark-mode <?php elseif ($options['bubble-style'] === 'night') : ?> night-mode<?php endif; ?> <?php if ($options['bubble-position'] === 'left') { ?>skySupport-left<?php } ?>">
-    <?php echo $bubbleType; ?>
+    <?php echo wp_kses_post($bubbleType); ?>
     <div class="skySupport__popup animation<?php if ($options['select-animation'] === 'random') : ?><?php echo $random ?><?php else : ?><?php echo esc_attr($options['select-animation']); ?><?php endif; ?> chat-availability" <?php if ($options['select-timezone']) { ?> data-timezone="<?php echo esc_attr($options['select-timezone']); ?>" <?php } ?> data-availability='{ "sunday":"<?php echo esc_attr($sunday); ?>", "monday":"<?php echo esc_attr($monday); ?>", "tuesday":"<?php echo esc_attr($tuesday); ?>", "wednesday":"<?php echo esc_attr($wednesday); ?>", "thursday":"<?php echo esc_attr($thursday); ?>", "friday":"<?php echo esc_attr($friday); ?>", "saturday":"<?php echo esc_attr($saturday); ?>" }'>
       <div class="skySupport__popup--header <?php if ($options['header-content-position'] === 'center') { ?>header-center<?php } ?>">
         <div class="image">

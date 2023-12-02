@@ -44,7 +44,7 @@ if ( ! class_exists( 'SCS_Field_gallery' ) ) {
       echo '<a href="#" class="button scs-warning-primary scs-clear-gallery'. esc_attr( $hidden ) .'">'. $args['clear_title'] .'</a>';
       echo '<input type="hidden" name="'. esc_attr( $this->field_name() ) .'" value="'. esc_attr( $this->value ) .'"'. esc_attr($this->field_attributes()) .'/>';
 
-      echo $this->field_after();
+      echo esc_html($this->field_after());
 
     }
 

@@ -6,9 +6,11 @@
  *  Author:         ThemeAtelier
  *  Author URI:     http://themeatelier.net/
  *  Requirements:   PHP 5.2.4 or above, WordPress 3.3 or above.
- *  Version:       1.0
- * Text Domain:  chat-skype
- * Domain Path:  /languages
+ *  Version:        1.0
+ *  License:        GPLv2 or later
+*   License URI:    http://www.gnu.org/licenses/gpl-2.0.html
+ *  Text Domain:    chat-skype
+ *  Domain Path:    /languages
  */
 
 // Block Direct access

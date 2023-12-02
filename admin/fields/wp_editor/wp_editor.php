@@ -47,7 +47,7 @@ if ( ! class_exists( 'SCS_Field_wp_editor' ) ) {
 
       echo ( scs_wp_editor_api() ) ? '</div>' : '';
 
-      echo $this->field_after();
+      echo esc_html($this->field_after());
 
     }
 

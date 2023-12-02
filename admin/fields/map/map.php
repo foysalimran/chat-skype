@@ -73,7 +73,7 @@ if ( ! class_exists( 'SCS_Field_map' ) ) {
 
       echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[zoom]' ) ) .'" value="'. esc_attr( $value['zoom'] ) .'" class="scs--zoom" />';
 
-      echo $this->field_after();
+      echo esc_html($this->field_after());
 
     }
 

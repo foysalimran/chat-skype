@@ -85,7 +85,7 @@ if ( ! class_exists( 'SCS_Field_radio' ) ) {
 
       }
 
-      echo $this->field_after();
+      echo esc_html($this->field_after());
 
     }
 

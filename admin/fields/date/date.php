@@ -28,7 +28,7 @@ if (!class_exists('SCS_Field_date')) {
       $settings = (!empty($this->field['settings'])) ? $this->field['settings'] : array();
       $settings = wp_parse_args($settings, $default_settings);
 
-      echo esc_html__($this->field_before(), 'chat-skype');
+      echo esc_html__($this->field_before());
 
       if (!empty($this->field['from_to'])) {
 
@@ -51,7 +51,7 @@ if (!class_exists('SCS_Field_date')) {
 
       echo '<div class="scs-date-settings" data-settings="' . esc_attr(wp_json_encode($settings)) . '"></div>';
 
-      echo $this->field_after();
+      echo esc_html($this->field_after());
     }
 
     public function enqueue()

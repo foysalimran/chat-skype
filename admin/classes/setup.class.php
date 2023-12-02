@@ -749,14 +749,14 @@ if (!class_exists('SCS_Setup')) {
       }
 
       // These attributes has been sanitized above.
-      echo '<div class="scs-field scs-field-' . $field_type . $is_pseudo . $class . $visible . '"' . $depend . '>';
+      echo wp_kses_post('<div class="scs-field scs-field-' . $field_type . $is_pseudo . $class . $visible . '"' . $depend . '>');
 
       if (!empty($field_type)) {
 
         if (!empty($field['title'])) {
           echo '<div class="scs-title">';
           echo '<h4>' . $field['title'] . '</h4>';
-          echo (!empty($field['subtitle'])) ? '<div class="scs-subtitle-text">' . $field['subtitle'] . '</div>' : '';
+          echo (!empty($field['subtitle'])) ? '<div class="scs-subtitle-text">' . esc_html($field['subtitle']) . '</div>' : '';
           echo '</div>';
         }
 

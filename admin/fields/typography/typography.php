@@ -283,7 +283,7 @@ if ( ! class_exists( 'SCS_Field_typography' ) ) {
           echo '<div class="scs--block scs--block-font-color">';
           echo '<div class="scs--title">'. esc_html__( 'Font Color', 'chat-skype' ) .'</div>';
           echo '<div class="scs-field-color">';
-          echo '<input type="text" name="'. esc_attr( $this->field_name( '[color]' ) ) .'" class="scs-color scs--color" value="'. esc_attr( $this->value['color'] ) .'"'. $default_color_attr .' />';
+          echo '<input type="text" name="'. esc_attr( $this->field_name( '[color]' ) ) .'" class="scs-color scs--color" value="'. esc_attr( $this->value['color'] ) .'"'. esc_attr($default_color_attr) .' />';
           echo '</div>';
           echo '</div>';
         }
@@ -313,7 +313,7 @@ if ( ! class_exists( 'SCS_Field_typography' ) ) {
 
       echo '</div>';
 
-      echo $this->field_after();
+      echo esc_html($this->field_after());
 
     }
 

@@ -19,7 +19,7 @@ if ( ! class_exists( 'SCS_Field_textarea' ) ) {
       echo esc_html($this->field_before());
       echo $this->shortcoder();
       echo '<textarea name="'. esc_attr( $this->field_name() ) .'"'. esc_attr($this->field_attributes()) .'>'. esc_attr($this->value) .'</textarea>';
-      echo $this->field_after();
+      echo esc_html($this->field_after());
 
     }
 

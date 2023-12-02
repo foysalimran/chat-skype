@@ -53,7 +53,7 @@ if ( ! class_exists( 'SCS_Field_datetime' ) ) {
 
       echo '<div class="scs-datetime-settings" data-settings="'. esc_attr( wp_json_encode( $settings ) ) .'"></div>';
 
-      echo $this->field_after();
+      echo esc_html($this->field_after());
 
     }
 

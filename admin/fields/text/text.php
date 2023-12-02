@@ -22,7 +22,7 @@ if ( ! class_exists( 'SCS_Field_text' ) ) {
 
       echo '<input type="'. esc_attr( $type ) .'" name="'. esc_attr( $this->field_name() ) .'" value="'. esc_attr( $this->value ) .'"'. esc_attr($this->field_attributes()) .' />';
 
-      echo $this->field_after();
+      echo esc_html($this->field_after());
 
     }
 

@@ -54,7 +54,7 @@ if ( ! class_exists( 'SCS_Field_upload' ) ) {
       echo '<a href="#" class="button button-secondary scs-warning-primary scs--remove'. esc_attr( $hidden ) .'">'. $args['remove_title'] .'</a>';
       echo '</div>';
 
-      echo $this->field_after();
+      echo esc_html($this->field_after());
 
     }
   }

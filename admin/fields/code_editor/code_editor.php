@@ -35,7 +35,7 @@ if (!class_exists('SCS_Field_code_editor')) {
 
       echo esc_html($this->field_before());
       echo '<textarea name="' . esc_attr($this->field_name()) . '"' . esc_attr($this->field_attributes()) . ' data-editor="' . esc_attr(wp_json_encode($settings)) . '">' . esc_attr($this->value) . '</textarea>';
-      echo $this->field_after();
+      echo esc_html($this->field_after());
     }
 
     public function enqueue()

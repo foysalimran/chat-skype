@@ -90,7 +90,7 @@ if ( ! class_exists( 'SCS_Field_repeater' ) ) {
         echo '<div class="scs-repeater-alert scs-repeater-min">'. esc_html__( 'You cannot remove more.', 'chat-skype' ) .'</div>';
         echo '<a href="#" class="button button-primary scs-repeater-add">'. esc_html($args['button_title']) .'</a>';
 
-        echo $this->field_after();
+        echo esc_html($this->field_after());
 
       }
 

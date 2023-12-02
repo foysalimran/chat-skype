@@ -142,7 +142,7 @@ if ( ! class_exists( 'SCS_Field_group' ) ) {
         echo '<div class="scs-cloneable-alert scs-cloneable-min">'. esc_html__( 'You cannot remove more.', 'chat-skype' ) .'</div>';
         echo '<a href="#" class="button button-primary scs-cloneable-add">'. esc_html($args['button_title']) .'</a>';
 
-        echo $this->field_after();
+        echo esc_html($this->field_after());
 
       }
 

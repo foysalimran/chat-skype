@@ -1397,13 +1397,13 @@ class Scs_Buttons extends Widget_Base
                             <p class="offline"><?php echo esc_html($offlineText); ?></p>
                         <?php } ?>
                     </div>
-                    <a href="skype:<?php echo $skypeid; ?>?chat" target="_blank"></a>
+                    <a href="skype:<?php echo esc_url($skypeid); ?>?chat" target="_blank"></a>
                 </button>
             </div>
         <?php else : ?>
             <div class="button-wrapper">
                 <a href="skype:<?php echo $skypeid; ?>?chat" class="skySupport-button-2 <?php echo esc_attr($icon__bg); ?> skySupport-btn-bg <?php echo esc_attr($visibility); ?> <?php echo esc_attr($rounded); ?> <?php echo esc_attr($sizes); ?>">
-                    <i class="<?php echo $skySupportIcon; ?>"></i> <?php if ($labelText) { ?><span><?php echo esc_html($labelText); ?></span><?php } ?>
+                    <i class="<?php echo esc_attr( $skySupportIcon); ?>"></i> <?php if ($labelText) { ?><span><?php echo esc_html($labelText); ?></span><?php } ?>
                 </a>
             </div>
         <?php endif; ?>

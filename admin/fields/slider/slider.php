@@ -35,7 +35,7 @@ if ( ! class_exists( 'SCS_Field_slider' ) ) {
       echo '</div>';
       echo '</div>';
 
-      echo $this->field_after();
+      echo esc_html($this->field_after());
 
     }
 

@@ -32,7 +32,7 @@ if ( ! class_exists( 'SCS_Field_switcher' ) ) {
 
       echo esc_attr(( !empty($this->field['label'] ) )) ? '<span class="scs--label">'. esc_attr( $this->field['label'] ) . '</span>' : '';
 
-      echo $this->field_after();
+      echo esc_html($this->field_after());
 
     }
 

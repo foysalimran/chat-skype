@@ -125,7 +125,7 @@ if ( ! class_exists( 'SCS_Field_border' ) ) {
         echo '</div>';
       }
 
-      echo $this->field_after();
+      echo esc_html($this->field_after());
 
     }
 

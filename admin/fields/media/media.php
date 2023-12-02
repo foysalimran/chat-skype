@@ -88,7 +88,7 @@ if ( ! class_exists( 'SCS_Field_media' ) ) {
       echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[title]' ) ) .'" value="'. esc_attr( $this->value['title'] ) .'" class="scs--title"/>';
       echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[description]' ) ) .'" value="'. esc_attr( $this->value['description'] ) .'" class="scs--description"/>';
 
-      echo $this->field_after();
+      echo esc_html($this->field_after());
 
     }
 

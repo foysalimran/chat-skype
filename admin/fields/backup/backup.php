@@ -30,7 +30,7 @@ if ( ! class_exists( 'SCS_Field_backup' ) ) {
       echo '<hr />';
       echo '<button type="submit" name="scs_transient[reset]" value="reset" class="button scs-warning-primary scs-confirm scs-reset" data-unique="'. esc_attr( $unique ) .'" data-nonce="'. esc_attr( $nonce ) .'">'. esc_html__( 'Reset', 'chat-skype' ) .'</button>';
 
-      echo $this->field_after();
+      echo esc_html($this->field_after());
 
     }
 

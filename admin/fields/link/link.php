@@ -48,7 +48,7 @@ if ( ! class_exists( 'SCS_Field_link' ) ) {
       echo '<a href="#" class="button scs--edit'. esc_attr( $maybe_hidden ) .'">'. $args['edit_title'] .'</a> ';
       echo '<a href="#" class="button scs-warning-primary scs--remove'. esc_attr( $maybe_hidden ) .'">'. $args['remove_title'] .'</a>';
 
-      echo $this->field_after();
+      echo esc_html($this->field_after());
 
     }
 

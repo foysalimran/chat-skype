@@ -28,7 +28,7 @@ if ( ! class_exists( 'SCS_Field_number' ) ) {
       echo '<input type="number" name="'. esc_attr( $this->field_name() ) .'" value="'. esc_attr( $this->value ) .'"'. esc_attr($this->field_attributes()) .' min="'. esc_attr( $args['min'] ) .'" max="'. esc_attr( $args['max'] ) .'" step="'. esc_attr( $args['step'] ) .'"/>';
       echo ( ! empty( $args['unit'] ) ) ? '<span class="scs--unit">'. esc_attr( $args['unit'] ) .'</span>' : '';
       echo '</div>';
-      echo $this->field_after();
+      echo esc_html($this->field_after());
 
     }
 
