@@ -42,7 +42,7 @@ class Scs_Buttons extends Widget_Base
     {
 
 
-        // ----------------------------------------  Click to dial Buttons Settings ------------------------------
+        // ----------------------------------------  Chat skype Buttons Settings ------------------------------
 
         $this->start_controls_section(
             'scs__general__settings',

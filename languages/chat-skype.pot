@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chat for Skype\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-11 06:41+0000\n"
+"POT-Creation-Date: 2023-12-14 06:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.6; wp-6.3.1\n"
+"X-Loco-Version: 2.6.6; wp-6.4.2\n"
 "X-Domain: chat-skype"
 
 #. 1: Elementor
@@ -60,7 +60,7 @@ msgstr ""
 msgid "00:00-23:59"
 msgstr ""
 
-#: inc/scs-plugin-options.php:650
+#: inc/scs-plugin-options.php:649
 msgid ""
 "24-hour Time without PM:AM\" eg: From 00:00 to 23:59. If you are offline for "
 "any specefic full day use 00:00 and 00:00 in From and To value."
@@ -70,7 +70,7 @@ msgstr ""
 msgid "Active"
 msgstr ""
 
-#: inc/scs-plugin-options.php:818
+#: inc/scs-plugin-options.php:817
 msgid "Add add custom message for shoing in message box."
 msgstr ""
 
@@ -78,7 +78,7 @@ msgstr ""
 msgid "Add agent photo to show in button."
 msgstr ""
 
-#: inc/scs-plugin-options.php:784
+#: inc/scs-plugin-options.php:783
 msgid "Add agent photo to show in the bubble."
 msgstr ""
 
@@ -106,7 +106,7 @@ msgstr ""
 msgid "Add Link"
 msgstr ""
 
-#: inc/scs-plugin-options.php:838
+#: inc/scs-plugin-options.php:837
 msgid "Add messasge button text"
 msgstr ""
 
@@ -114,7 +114,7 @@ msgstr ""
 msgid "Add New"
 msgstr ""
 
-#: inc/scs-plugin-options.php:808
+#: inc/scs-plugin-options.php:807
 msgid "Add subtitle to show under agent name"
 msgstr ""
 
@@ -126,7 +126,7 @@ msgstr ""
 msgid "Add your skype ID. eg: myskypeid1222"
 msgstr ""
 
-#: inc/scs-plugin-options.php:798
+#: inc/scs-plugin-options.php:797
 msgid "Add your/agent name for shoing in bubble."
 msgstr ""
 
@@ -354,11 +354,11 @@ msgstr ""
 msgid "Agent designation"
 msgstr ""
 
-#: inc/scs-plugin-options.php:797 view/elementor-widgets/widgets/buttons.php:99
+#: inc/scs-plugin-options.php:796 view/elementor-widgets/widgets/buttons.php:99
 msgid "Agent name"
 msgstr ""
 
-#: inc/scs-plugin-options.php:783 view/elementor-widgets/widgets/buttons.php:83
+#: inc/scs-plugin-options.php:782 view/elementor-widgets/widgets/buttons.php:83
 msgid "Agent photo"
 msgstr ""
 
@@ -366,7 +366,7 @@ msgstr ""
 msgid "Alignment"
 msgstr ""
 
-#: admin/fields/border/border.php:29 admin/fields/spacing/spacing.php:29
+#: admin/fields/border/border.php:29 admin/fields/spacing/spacing.php:34
 msgid "all"
 msgstr ""
 
@@ -1228,17 +1228,17 @@ msgstr ""
 msgid "Are you sure to delete this item?"
 msgstr ""
 
-#: admin/classes/admin-options.class.php:517
-#: admin/classes/admin-options.class.php:640
+#: admin/classes/admin-options.class.php:503
+#: admin/classes/admin-options.class.php:617
 msgid "Are you sure to reset this section options?"
 msgstr ""
 
-#: admin/classes/admin-options.class.php:518
-#: admin/classes/admin-options.class.php:641
+#: admin/classes/admin-options.class.php:504
+#: admin/classes/admin-options.class.php:618
 msgid "Are you sure you want to reset all settings to default values?"
 msgstr ""
 
-#: admin/classes/setup.class.php:606
+#: admin/classes/setup.class.php:607
 msgid "Are you sure?"
 msgstr ""
 
@@ -1911,11 +1911,11 @@ msgstr ""
 msgid "Auto"
 msgstr ""
 
-#: inc/scs-plugin-options.php:848
+#: inc/scs-plugin-options.php:847
 msgid "Auto open popup"
 msgstr ""
 
-#: inc/scs-plugin-options.php:649
+#: inc/scs-plugin-options.php:648
 msgid "Availablity"
 msgstr ""
 
@@ -1951,7 +1951,7 @@ msgstr ""
 msgid "Background Size"
 msgstr ""
 
-#: inc/scs-plugin-options.php:1035
+#: inc/scs-plugin-options.php:1043
 msgid "Backup"
 msgstr ""
 
@@ -1973,7 +1973,7 @@ msgstr ""
 msgid "Border Box"
 msgstr ""
 
-#: admin/fields/border/border.php:27 admin/fields/spacing/spacing.php:27
+#: admin/fields/border/border.php:27 admin/fields/spacing/spacing.php:32
 msgid "bottom"
 msgstr ""
 
@@ -1997,23 +1997,23 @@ msgstr ""
 msgid "Brazil/West"
 msgstr ""
 
-#: inc/scs-plugin-options.php:935
+#: inc/scs-plugin-options.php:934
 msgid "Bubble button style"
 msgstr ""
 
-#: inc/scs-plugin-options.php:896
+#: inc/scs-plugin-options.php:895
 msgid "Bubble header contnet position"
 msgstr ""
 
-#: inc/scs-plugin-options.php:857
+#: inc/scs-plugin-options.php:856
 msgid "Bubble position"
 msgstr ""
 
-#: inc/scs-plugin-options.php:987
+#: inc/scs-plugin-options.php:986
 msgid "Bubble text"
 msgstr ""
 
-#: inc/scs-plugin-options.php:868
+#: inc/scs-plugin-options.php:867
 msgid "Bubble visibility"
 msgstr ""
 
@@ -2021,7 +2021,7 @@ msgstr ""
 msgid "Button label"
 msgstr ""
 
-#: inc/scs-plugin-options.php:1000
+#: inc/scs-plugin-options.php:999
 msgid "Buttons shortcodes"
 msgstr ""
 
@@ -2075,7 +2075,7 @@ msgstr ""
 msgid "Capitalize"
 msgstr ""
 
-#: inc/scs-plugin-options.php:900 admin/fields/typography/typography.php:172
+#: inc/scs-plugin-options.php:899 admin/fields/typography/typography.php:172
 #: view/elementor-widgets/widgets/buttons.php:1328
 msgid "Center"
 msgstr ""
@@ -2101,19 +2101,19 @@ msgstr ""
 msgid "Change icon"
 msgstr ""
 
-#: inc/scs-plugin-options.php:829
+#: inc/scs-plugin-options.php:828
 msgid "Change icon for adding before send message text."
 msgstr ""
 
-#: inc/scs-plugin-options.php:965
+#: inc/scs-plugin-options.php:964
 msgid "Change icon for circle button close."
 msgstr ""
 
-#: inc/scs-plugin-options.php:956
+#: inc/scs-plugin-options.php:955
 msgid "Change icon for circle button."
 msgstr ""
 
-#: inc/scs-plugin-options.php:988
+#: inc/scs-plugin-options.php:987
 msgid "Change text to show in bubble"
 msgstr ""
 
@@ -2126,11 +2126,21 @@ msgid "Chat settings"
 msgstr ""
 
 #: inc/scs-plugin-options.php:603
+#: view/elementor-widgets/elementor-widget.php:236
+#: view/elementor-widgets/elementor-widget.php:255
 msgid "Chat skype"
 msgstr ""
 
 #: view/elementor-widgets/widgets/buttons.php:28
 msgid "Chat skype buttons"
+msgstr ""
+
+#: view/elementor-widgets/elementor-widget.php:273
+msgid "Chat skype Elements"
+msgstr ""
+
+#: view/elementor-widgets/elementor-widget.php:215
+msgid "Chat Skype WordPress Plugin"
 msgstr ""
 
 #: view/elementor-widgets/elementor-widget.php:105
@@ -2152,19 +2162,6 @@ msgstr ""
 msgid "Clear"
 msgstr ""
 
-#: view/elementor-widgets/elementor-widget.php:236
-#: view/elementor-widgets/elementor-widget.php:255
-msgid "Click to dial"
-msgstr ""
-
-#: view/elementor-widgets/elementor-widget.php:273
-msgid "Click to dial Elements"
-msgstr ""
-
-#: view/elementor-widgets/elementor-widget.php:215
-msgid "Click to dial WordPress Plugin"
-msgstr ""
-
 #: admin/fields/background/background.php:278
 msgid "Color"
 msgstr ""
@@ -2182,7 +2179,7 @@ msgstr ""
 msgid "Content Box"
 msgstr ""
 
-#: inc/scs-plugin-options.php:1017 inc/scs-plugin-options.php:1024
+#: inc/scs-plugin-options.php:1025 inc/scs-plugin-options.php:1032
 msgid ""
 "Copy this shortcode and paste it in any pages/posts/widget. Edit values as "
 "you need."
@@ -2210,7 +2207,7 @@ msgstr ""
 msgid "Custom Web Fonts"
 msgstr ""
 
-#: inc/scs-plugin-options.php:887
+#: inc/scs-plugin-options.php:886
 msgid "Dark mode"
 msgstr ""
 
@@ -2233,12 +2230,12 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: admin/classes/admin-options.class.php:241
-#: admin/classes/admin-options.class.php:257
+#: admin/classes/admin-options.class.php:244
+#: admin/classes/admin-options.class.php:258
 msgid "Default settings restored."
 msgstr ""
 
-#: inc/scs-plugin-options.php:872
+#: inc/scs-plugin-options.php:871
 msgid "Desktop Only"
 msgstr ""
 
@@ -2262,7 +2259,7 @@ msgstr ""
 msgid "Double"
 msgstr ""
 
-#: inc/scs-plugin-options.php:920
+#: inc/scs-plugin-options.php:919
 msgid "Ease Down"
 msgstr ""
 
@@ -2308,7 +2305,7 @@ msgstr ""
 msgid "End time"
 msgstr ""
 
-#: admin/classes/admin-options.class.php:169
+#: admin/classes/admin-options.class.php:173
 msgid "Error while saving the changes."
 msgstr ""
 
@@ -2838,7 +2835,7 @@ msgstr ""
 msgid "Europe/Zurich"
 msgstr ""
 
-#: inc/scs-plugin-options.php:871
+#: inc/scs-plugin-options.php:870
 #: view/elementor-widgets/widgets/buttons.php:1075
 msgid "Everywhere"
 msgstr ""
@@ -2847,27 +2844,27 @@ msgstr ""
 msgid "Export & Download"
 msgstr ""
 
-#: inc/scs-plugin-options.php:1037
+#: inc/scs-plugin-options.php:1045
 msgid "Export or import to use same settings in different websites."
 msgstr ""
 
-#: inc/scs-plugin-options.php:976
+#: inc/scs-plugin-options.php:975
 msgid "Fade"
 msgstr ""
 
-#: inc/scs-plugin-options.php:915
+#: inc/scs-plugin-options.php:914
 msgid "Fade Down"
 msgstr ""
 
-#: inc/scs-plugin-options.php:916
+#: inc/scs-plugin-options.php:915
 msgid "Fade In Scale"
 msgstr ""
 
-#: inc/scs-plugin-options.php:914
+#: inc/scs-plugin-options.php:913
 msgid "Fade Right"
 msgstr ""
 
-#: admin/classes/setup.class.php:778 admin/classes/setup.class.php:782
+#: admin/classes/setup.class.php:774 admin/classes/setup.class.php:777
 msgid "Field not found!"
 msgstr ""
 
@@ -2875,15 +2872,15 @@ msgstr ""
 msgid "Fixed"
 msgstr ""
 
-#: inc/scs-plugin-options.php:922
+#: inc/scs-plugin-options.php:921
 msgid "Flip Horizontal"
 msgstr ""
 
-#: inc/scs-plugin-options.php:924
+#: inc/scs-plugin-options.php:923
 msgid "Flip Up"
 msgstr ""
 
-#: inc/scs-plugin-options.php:923
+#: inc/scs-plugin-options.php:922
 msgid "Flip Vertical"
 msgstr ""
 
@@ -2911,12 +2908,12 @@ msgstr ""
 msgid "Font Variant"
 msgstr ""
 
-#: inc/scs-plugin-options.php:742
+#: inc/scs-plugin-options.php:741
 #: view/elementor-widgets/widgets/buttons.php:986
 msgid "Friday"
 msgstr ""
 
-#: admin/fields/background/background.php:72 admin/fields/date/date.php:31
+#: admin/fields/background/background.php:72 admin/fields/date/date.php:36
 #: admin/fields/datetime/datetime.php:36
 msgid "From"
 msgstr ""
@@ -2976,7 +2973,7 @@ msgstr ""
 msgid "height"
 msgstr ""
 
-#: inc/scs-plugin-options.php:819
+#: inc/scs-plugin-options.php:818
 msgid ""
 "Hello, Welcome to the site. Please click below button for chatting me "
 "through Skype."
@@ -3009,7 +3006,7 @@ msgstr ""
 msgid "How can I help you?"
 msgstr ""
 
-#: inc/scs-plugin-options.php:989
+#: inc/scs-plugin-options.php:988
 msgid "How may I help you?"
 msgstr ""
 
@@ -3049,15 +3046,15 @@ msgstr ""
 msgid "Icon color"
 msgstr ""
 
-#: inc/scs-plugin-options.php:954
+#: inc/scs-plugin-options.php:953
 msgid "Icon for circle button"
 msgstr ""
 
-#: inc/scs-plugin-options.php:963
+#: inc/scs-plugin-options.php:962
 msgid "Icon for circle button close "
 msgstr ""
 
-#: inc/scs-plugin-options.php:827
+#: inc/scs-plugin-options.php:826
 msgid "Icon for message button"
 msgstr ""
 
@@ -3165,7 +3162,7 @@ msgstr ""
 msgid "Japan"
 msgstr ""
 
-#: inc/scs-plugin-options.php:799
+#: inc/scs-plugin-options.php:798
 msgid "John Doe"
 msgstr ""
 
@@ -3182,17 +3179,17 @@ msgstr ""
 msgid "Large"
 msgstr ""
 
-#: admin/fields/map/map.php:24
+#: admin/fields/map/map.php:23
 msgid "Latitude"
 msgstr ""
 
-#: inc/scs-plugin-options.php:861 inc/scs-plugin-options.php:899
+#: inc/scs-plugin-options.php:860 inc/scs-plugin-options.php:898
 #: admin/fields/typography/typography.php:171
 #: view/elementor-widgets/widgets/buttons.php:1324
 msgid "Left"
 msgstr ""
 
-#: admin/fields/border/border.php:28 admin/fields/spacing/spacing.php:28
+#: admin/fields/border/border.php:28 admin/fields/spacing/spacing.php:33
 msgid "left"
 msgstr ""
 
@@ -3217,7 +3214,7 @@ msgstr ""
 msgid "Libya"
 msgstr ""
 
-#: inc/scs-plugin-options.php:886
+#: inc/scs-plugin-options.php:885
 msgid "Light mode"
 msgstr ""
 
@@ -3238,7 +3235,7 @@ msgstr ""
 msgid "Load Extra Styles"
 msgstr ""
 
-#: admin/fields/map/map.php:25
+#: admin/fields/map/map.php:24
 msgid "Longitude"
 msgstr ""
 
@@ -3254,11 +3251,11 @@ msgstr ""
 msgid "Medium"
 msgstr ""
 
-#: inc/scs-plugin-options.php:837
+#: inc/scs-plugin-options.php:836
 msgid "Message button text"
 msgstr ""
 
-#: inc/scs-plugin-options.php:817
+#: inc/scs-plugin-options.php:816
 msgid "Message from agent"
 msgstr ""
 
@@ -3286,7 +3283,7 @@ msgstr ""
 msgid "Mobile and tablets"
 msgstr ""
 
-#: inc/scs-plugin-options.php:874
+#: inc/scs-plugin-options.php:873
 msgid "Mobile Only"
 msgstr ""
 
@@ -3294,7 +3291,7 @@ msgstr ""
 msgid "Mobile only"
 msgstr ""
 
-#: inc/scs-plugin-options.php:672
+#: inc/scs-plugin-options.php:671
 #: view/elementor-widgets/widgets/buttons.php:830
 msgid "Monday"
 msgstr ""
@@ -3318,7 +3315,7 @@ msgstr ""
 msgid "Navajo"
 msgstr ""
 
-#: inc/scs-plugin-options.php:888
+#: inc/scs-plugin-options.php:887
 msgid "Night mode"
 msgstr ""
 
@@ -3327,7 +3324,7 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: admin/classes/admin-options.class.php:616 admin/functions/actions.php:41
+#: admin/classes/admin-options.class.php:595 admin/functions/actions.php:41
 #: admin/fields/button_set/button_set.php:56
 #: admin/fields/checkbox/checkbox.php:82 admin/fields/radio/radio.php:75
 #: admin/fields/select/select.php:113
@@ -3338,7 +3335,7 @@ msgstr ""
 msgid "No Repeat"
 msgstr ""
 
-#: admin/classes/setup.class.php:609
+#: admin/classes/setup.class.php:610
 msgid "No results found."
 msgstr ""
 
@@ -3383,7 +3380,7 @@ msgstr ""
 msgid "Online badget text"
 msgstr ""
 
-#: admin/classes/setup.class.php:710
+#: admin/classes/setup.class.php:708
 msgid "Oops! Not allowed."
 msgstr ""
 
@@ -3623,7 +3620,7 @@ msgstr ""
 msgid "PHP"
 msgstr ""
 
-#: admin/classes/setup.class.php:607
+#: admin/classes/setup.class.php:608
 #, php-format
 msgid "Please enter %s or more characters"
 msgstr ""
@@ -3660,7 +3657,7 @@ msgstr ""
 msgid "PST8PDT"
 msgstr ""
 
-#: inc/scs-plugin-options.php:927
+#: inc/scs-plugin-options.php:926
 msgid "Random"
 msgstr ""
 
@@ -3688,18 +3685,18 @@ msgstr ""
 msgid "Repeat Vertically"
 msgstr ""
 
-#: admin/classes/admin-options.class.php:518
-#: admin/classes/admin-options.class.php:641 admin/fields/backup/backup.php:31
+#: admin/classes/admin-options.class.php:504
+#: admin/classes/admin-options.class.php:618 admin/fields/backup/backup.php:31
 msgid "Reset"
 msgstr ""
 
-#: admin/classes/admin-options.class.php:518
-#: admin/classes/admin-options.class.php:641
+#: admin/classes/admin-options.class.php:504
+#: admin/classes/admin-options.class.php:618
 msgid "Reset All"
 msgstr ""
 
-#: admin/classes/admin-options.class.php:517
-#: admin/classes/admin-options.class.php:640
+#: admin/classes/admin-options.class.php:503
+#: admin/classes/admin-options.class.php:617
 msgid "Reset Section"
 msgstr ""
 
@@ -3707,12 +3704,12 @@ msgstr ""
 msgid "ridge"
 msgstr ""
 
-#: inc/scs-plugin-options.php:860 admin/fields/typography/typography.php:173
+#: inc/scs-plugin-options.php:859 admin/fields/typography/typography.php:173
 #: view/elementor-widgets/widgets/buttons.php:1332
 msgid "Right"
 msgstr ""
 
-#: admin/fields/border/border.php:26 admin/fields/spacing/spacing.php:26
+#: admin/fields/border/border.php:26 admin/fields/spacing/spacing.php:31
 msgid "right"
 msgstr ""
 
@@ -3743,15 +3740,15 @@ msgstr ""
 msgid "ROK"
 msgstr ""
 
-#: inc/scs-plugin-options.php:975
+#: inc/scs-plugin-options.php:974
 msgid "Rotate"
 msgstr ""
 
-#: inc/scs-plugin-options.php:921
+#: inc/scs-plugin-options.php:920
 msgid "Rotate Left"
 msgstr ""
 
-#: inc/scs-plugin-options.php:917
+#: inc/scs-plugin-options.php:916
 msgid "Rotation"
 msgstr ""
 
@@ -3772,18 +3769,18 @@ msgstr ""
 msgid "Saturation"
 msgstr ""
 
-#: inc/scs-plugin-options.php:760
+#: inc/scs-plugin-options.php:759
 #: view/elementor-widgets/widgets/buttons.php:1024
 msgid "Saturday"
 msgstr ""
 
-#: admin/classes/admin-options.class.php:516
-#: admin/classes/admin-options.class.php:639
+#: admin/classes/admin-options.class.php:502
+#: admin/classes/admin-options.class.php:616
 msgid "Save"
 msgstr ""
 
-#: admin/classes/admin-options.class.php:516
-#: admin/classes/admin-options.class.php:639
+#: admin/classes/admin-options.class.php:502
+#: admin/classes/admin-options.class.php:616
 msgid "Saving..."
 msgstr ""
 
@@ -3799,12 +3796,12 @@ msgstr ""
 msgid "SCS settings"
 msgstr ""
 
-#: admin/classes/admin-options.class.php:513 admin/fields/icon/icon.php:57
-#: admin/fields/map/map.php:23
+#: admin/classes/admin-options.class.php:499 admin/fields/icon/icon.php:57
+#: admin/fields/map/map.php:22
 msgid "Search..."
 msgstr ""
 
-#: admin/classes/setup.class.php:608
+#: admin/classes/setup.class.php:609
 msgid "Searching..."
 msgstr ""
 
@@ -3812,44 +3809,44 @@ msgstr ""
 msgid "Select a font"
 msgstr ""
 
-#: inc/scs-plugin-options.php:912
+#: inc/scs-plugin-options.php:911
 msgid "Select animation for bubble"
 msgstr ""
 
-#: inc/scs-plugin-options.php:972
+#: inc/scs-plugin-options.php:971
 msgid "Select animation for circle icon"
 msgstr ""
 
-#: inc/scs-plugin-options.php:883
+#: inc/scs-plugin-options.php:882
 msgid "Select bubble layout mode"
 msgstr ""
 
-#: inc/scs-plugin-options.php:1006
+#: inc/scs-plugin-options.php:1014
 msgid "Select button style"
 msgstr ""
 
-#: inc/scs-plugin-options.php:641
+#: inc/scs-plugin-options.php:640
 #: view/elementor-widgets/widgets/buttons.php:189
 msgid "Select timezone"
 msgstr ""
 
-#: inc/scs-plugin-options.php:839
+#: inc/scs-plugin-options.php:838
 msgid "Send a message"
 msgstr ""
 
-#: skype-chat.php:48
+#: skype-chat.php:50
 msgid "Settings"
 msgstr ""
 
-#: admin/classes/admin-options.class.php:328
+#: admin/classes/admin-options.class.php:318
 msgid "Settings saved."
 msgstr ""
 
-#: admin/classes/admin-options.class.php:229
+#: admin/classes/admin-options.class.php:233
 msgid "Settings successfully imported."
 msgstr ""
 
-#: admin/classes/admin-options.class.php:511
+#: admin/classes/admin-options.class.php:497
 msgid "show all settings"
 msgstr ""
 
@@ -3866,19 +3863,19 @@ msgstr ""
 msgid "Skype ID"
 msgstr ""
 
-#: inc/scs-plugin-options.php:919
+#: inc/scs-plugin-options.php:918
 msgid "Slide Down"
 msgstr ""
 
-#: inc/scs-plugin-options.php:974
+#: inc/scs-plugin-options.php:973
 msgid "Slide down"
 msgstr ""
 
-#: inc/scs-plugin-options.php:918
+#: inc/scs-plugin-options.php:917
 msgid "Slide Fall"
 msgstr ""
 
-#: inc/scs-plugin-options.php:926 inc/scs-plugin-options.php:977
+#: inc/scs-plugin-options.php:925 inc/scs-plugin-options.php:976
 msgid "Slide Up"
 msgstr ""
 
@@ -3912,20 +3909,20 @@ msgstr ""
 msgid "Subset"
 msgstr ""
 
-#: inc/scs-plugin-options.php:807
+#: inc/scs-plugin-options.php:806
 msgid "Subtitle"
 msgstr ""
 
-#: inc/scs-plugin-options.php:655
+#: inc/scs-plugin-options.php:654
 #: view/elementor-widgets/widgets/buttons.php:790
 msgid "Sunday"
 msgstr ""
 
-#: inc/scs-plugin-options.php:925
+#: inc/scs-plugin-options.php:924
 msgid "Super Scaled"
 msgstr ""
 
-#: inc/scs-plugin-options.php:873
+#: inc/scs-plugin-options.php:872
 msgid "Tablet Only"
 msgstr ""
 
@@ -3961,26 +3958,26 @@ msgstr ""
 msgid "This field is required."
 msgstr ""
 
-#: inc/scs-plugin-options.php:724
+#: inc/scs-plugin-options.php:723
 #: view/elementor-widgets/widgets/buttons.php:947
 msgid "Thursday"
 msgstr ""
 
-#: inc/scs-plugin-options.php:638
+#: inc/scs-plugin-options.php:637
 #: view/elementor-widgets/widgets/buttons.php:182
 msgid "Timezone"
 msgstr ""
 
-#: admin/fields/background/background.php:90 admin/fields/date/date.php:32
+#: admin/fields/background/background.php:90 admin/fields/date/date.php:37
 #: admin/fields/datetime/datetime.php:37
 msgid "To"
 msgstr ""
 
-#: admin/fields/border/border.php:25 admin/fields/spacing/spacing.php:25
+#: admin/fields/border/border.php:25 admin/fields/spacing/spacing.php:30
 msgid "top"
 msgstr ""
 
-#: inc/scs-plugin-options.php:689
+#: inc/scs-plugin-options.php:688
 #: view/elementor-widgets/widgets/buttons.php:869
 msgid "Tuesday"
 msgstr ""
@@ -3990,11 +3987,11 @@ msgstr ""
 msgid "Turkey"
 msgstr ""
 
-#: inc/scs-plugin-options.php:849
+#: inc/scs-plugin-options.php:848
 msgid "Turn ON for open popup automatically."
 msgstr ""
 
-#: inc/scs-plugin-options.php:809
+#: inc/scs-plugin-options.php:808
 msgid "Typically replies within a day"
 msgstr ""
 
@@ -4107,7 +4104,7 @@ msgstr ""
 msgid "Wavy"
 msgstr ""
 
-#: inc/scs-plugin-options.php:706
+#: inc/scs-plugin-options.php:705
 #: view/elementor-widgets/widgets/buttons.php:908
 msgid "Wednesday"
 msgstr ""
@@ -4117,7 +4114,7 @@ msgstr ""
 msgid "WET"
 msgstr ""
 
-#: inc/scs-plugin-options.php:639
+#: inc/scs-plugin-options.php:638
 #: view/elementor-widgets/widgets/buttons.php:183
 msgid ""
 "When using the date and time from the user browser you can transform it to "
@@ -4153,10 +4150,10 @@ msgstr ""
 msgid "You cannot remove more."
 msgstr ""
 
-#: admin/classes/admin-options.class.php:509
+#: admin/classes/admin-options.class.php:495
 msgid "You have unsaved changes, save your changes!"
 msgstr ""
 
-#: skype-chat.php:21
+#: skype-chat.php:23
 msgid "You should not access this file directly.!"
 msgstr ""

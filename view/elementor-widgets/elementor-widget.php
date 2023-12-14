@@ -212,7 +212,7 @@ if (!class_exists('Scs_El_Widgets')) {
             $message = sprintf(
                 /* translators: 1: Elementor */
                 esc_html__('"%1$s" requires "%2$s" to be installed and activated.', 'chat-skype'),
-                '<strong>' . esc_html__('Click to dial WordPress Plugin', 'chat-skype') . '</strong>',
+                '<strong>' . esc_html__('Chat Skype WordPress Plugin', 'chat-skype') . '</strong>',
                 '<strong>' . esc_html__('Elementor', 'chat-skype') . '</strong>'
             );
             printf('<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', $message);
@@ -233,7 +233,7 @@ if (!class_exists('Scs_El_Widgets')) {
             $message = sprintf(
                 /* translators: 1: Elementor 2: Required Elementor version */
                 esc_html__('"%1$s" requires "%2$s" version %3$s or greater.', 'chat-skype'),
-                '<strong>' . esc_html__('Click to dial', 'chat-skype') . '</strong>',
+                '<strong>' . esc_html__('Chat skype', 'chat-skype') . '</strong>',
                 '<strong>' . esc_html__('Elementor', 'chat-skype') . '</strong>',
                 self::MINIMUM_ELEMENTOR_VERSION
             );
@@ -252,7 +252,7 @@ if (!class_exists('Scs_El_Widgets')) {
             $message = sprintf(
                 /* translators: 1: PHP 2: Required PHP version */
                 esc_html__('"%1$s" requires "%2$s" version %3$s or greater.', 'chat-skype'),
-                '<strong>' . esc_html__('Click to dial', 'chat-skype') . '</strong>',
+                '<strong>' . esc_html__('Chat skype', 'chat-skype') . '</strong>',
                 '<strong>' . esc_html__('PHP', 'chat-skype') . '</strong>',
                 self::MINIMUM_PHP_VERSION
             );
@@ -270,7 +270,7 @@ if (!class_exists('Scs_El_Widgets')) {
         {
 
             \Elementor\Plugin::instance()->elements_manager->add_category('scs-elements', [
-                'title' => esc_html__('Click to dial Elements', 'chat-skype'),
+                'title' => esc_html__('Chat skype Elements', 'chat-skype'),
             ], 1);
         }
 
