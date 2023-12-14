@@ -18,7 +18,7 @@ if ( ! class_exists( 'SCS_Field_color_group' ) ) {
 
       $options = ( ! empty( $this->field['options'] ) ) ? $this->field['options'] : array();
 
-      echo esc_html($this->field_before());
+      echo wp_kses_post($this->field_before());
 
       if ( ! empty( $options ) ) {
         foreach ( $options as $key => $option ) {
@@ -34,7 +34,7 @@ if ( ! class_exists( 'SCS_Field_color_group' ) ) {
         }
       }
 
-      echo esc_html($this->field_after());
+      echo wp_kses_post($this->field_after());
 
     }
 

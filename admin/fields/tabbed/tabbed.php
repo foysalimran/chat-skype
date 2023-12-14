@@ -18,7 +18,7 @@ if ( ! class_exists( 'SCS_Field_tabbed' ) ) {
 
       $unallows = array( 'tabbed' );
 
-      echo esc_html($this->field_before());
+      echo wp_kses_post($this->field_before());
 
       echo '<div class="scs-tabbed-nav" data-depend-id="'. esc_attr( $this->field['id'] ) .'">';
       foreach ( $this->field['tabs'] as $key => $tab ) {
@@ -56,7 +56,7 @@ if ( ! class_exists( 'SCS_Field_tabbed' ) ) {
       }
       echo '</div>';
 
-      echo esc_html($this->field_after());
+      echo wp_kses_post($this->field_after());
 
     }
 

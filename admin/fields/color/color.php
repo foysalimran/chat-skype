@@ -18,9 +18,9 @@ if ( ! class_exists( 'SCS_Field_color' ) ) {
 
       $default_attr = ( ! empty( $this->field['default'] ) ) ? ' data-default-color="'. esc_attr( $this->field['default'] ) .'"' : '';
 
-      echo esc_html($this->field_before());
+      echo wp_kses_post($this->field_before());
       echo '<input type="text" name="'. esc_attr( $this->field_name() ) .'" value="'. esc_attr( $this->value ) .'" class="scs-color"'. esc_attr($default_attr) . esc_attr($this->field_attributes()) .'/>';
-      echo esc_html($this->field_after());
+      echo wp_kses_post($this->field_after());
 
     }
 

@@ -20,7 +20,7 @@ if ( ! class_exists( 'SCS_Field_typography' ) ) {
 
     public function render() {
 
-      echo esc_html($this->field_before());
+      echo wp_kses_post($this->field_before());
 
       $args                  = wp_parse_args( $this->field, array(
         'font_family'        => true,
@@ -94,7 +94,7 @@ if ( ! class_exists( 'SCS_Field_typography' ) ) {
           if ( ! empty( $args['font_family'] ) ) {
             echo '<div class="scs--block">';
             echo '<div class="scs--title">'. esc_html__( 'Font Family', 'chat-skype' ) .'</div>';
-            echo $this->create_select( array( $this->value['font-family'] => $this->value['font-family'] ), 'font-family', esc_html__( 'Select a font', 'chat-skype' ) );
+            echo $this->create_select( array( esc_attr($this->value['font-family']) => esc_attr($this->value['font-family']) ), 'font-family', esc_html__( 'Select a font', 'chat-skype' ) );
             echo '</div>';
           }
 
@@ -313,7 +313,7 @@ if ( ! class_exists( 'SCS_Field_typography' ) ) {
 
       echo '</div>';
 
-      echo esc_html($this->field_after());
+      echo wp_kses_post($this->field_after());
 
     }
 

@@ -34,7 +34,7 @@ if ( ! class_exists( 'SCS_Field_link' ) ) {
 
       $maybe_hidden = ( empty( $hidden ) ) ? ' hidden' : '';
 
-      echo esc_html($this->field_before());
+      echo wp_kses_post($this->field_before());
 
       echo '<textarea readonly="readonly" class="scs--link hidden"></textarea>';
 
@@ -45,10 +45,10 @@ if ( ! class_exists( 'SCS_Field_link' ) ) {
       echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[target]' ) ) .'" value="'. esc_attr( $value['target'] ) .'" class="scs--target" />';
 
       echo '<a href="#" class="button button-primary scs--add'. esc_attr( $hidden ) .'">'. $args['add_title'] .'</a> ';
-      echo '<a href="#" class="button scs--edit'. esc_attr( $maybe_hidden ) .'">'. $args['edit_title'] .'</a> ';
+      echo '<a href="#" class="button scs--edit'. esc_attr( $maybe_hidden ) .'">'. esc_html($args['edit_title']) .'</a> ';
       echo '<a href="#" class="button scs-warning-primary scs--remove'. esc_attr( $maybe_hidden ) .'">'. $args['remove_title'] .'</a>';
 
-      echo esc_html($this->field_after());
+      echo wp_kses_post($this->field_after());
 
     }
 

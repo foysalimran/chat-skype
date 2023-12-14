@@ -33,9 +33,9 @@ if (!class_exists('SCS_Field_code_editor')) {
       $settings = (!empty($this->field['settings'])) ? $this->field['settings'] : array();
       $settings = wp_parse_args($settings, $default_settings);
 
-      echo esc_html($this->field_before());
+      echo wp_kses_post($this->field_before());
       echo '<textarea name="' . esc_attr($this->field_name()) . '"' . esc_attr($this->field_attributes()) . ' data-editor="' . esc_attr(wp_json_encode($settings)) . '">' . esc_attr($this->value) . '</textarea>';
-      echo esc_html($this->field_after());
+      echo wp_kses_post($this->field_after());
     }
 
     public function enqueue()
@@ -49,7 +49,7 @@ if (!class_exists('SCS_Field_code_editor')) {
       }
 
       if (!wp_script_is('scs-codemirror')) {
-        wp_enqueue_script('scs-codemirror', SCS_DIR_URL . 'admin/assets/js/codemirror.min.js', array('chat-skype'), $this->version, true);
+        wp_enqueue_script('scs-codemirror', SCS_DIR_URL . 'admin/assets/js/codemirror.min.js', array('jquery'), $this->version, true);
         wp_enqueue_script('scs-codemirror-loadmode', SCS_DIR_URL . 'admin/assets/js/loadmode.min.js', array('scs-codemirror'), $this->version, true);
       }
 

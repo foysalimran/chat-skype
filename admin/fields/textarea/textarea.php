@@ -16,10 +16,10 @@ if ( ! class_exists( 'SCS_Field_textarea' ) ) {
 
     public function render() {
 
-      echo esc_html($this->field_before());
-      echo $this->shortcoder();
+      echo wp_kses_post($this->field_before());
+      echo esc_attr($this->shortcoder());
       echo '<textarea name="'. esc_attr( $this->field_name() ) .'"'. esc_attr($this->field_attributes()) .'>'. esc_attr($this->value) .'</textarea>';
-      echo esc_html($this->field_after());
+      echo wp_kses_post($this->field_after());
 
     }
 

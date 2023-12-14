@@ -21,7 +21,7 @@ if ( ! class_exists( 'SCS_Field_icon' ) ) {
         'remove_title' => esc_html__( 'Remove Icon', 'chat-skype' ),
       ) );
 
-      echo esc_html($this->field_before());
+      echo wp_kses_post($this->field_before());
 
       $nonce  = wp_create_nonce( 'scs_icon_nonce' );
       $hidden = ( empty( $this->value ) ) ? ' hidden' : '';
@@ -33,7 +33,7 @@ if ( ! class_exists( 'SCS_Field_icon' ) ) {
       echo '<input type="hidden" name="'. esc_attr( $this->field_name() ) .'" value="'. esc_attr( $this->value ) .'" class="scs-icon-value"'. esc_attr($this->field_attributes()) .' />';
       echo '</div>';
 
-      echo esc_html($this->field_after());
+      echo wp_kses_post($this->field_after());
 
     }
 

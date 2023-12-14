@@ -626,8 +626,7 @@ SCS::createSection($prefix, array(
       'type'  => 'text',
       'title' => esc_html__('Skype ID', 'chat-skype'),
       'default'  => 'myskypeid1222',
-      'subtitle'  => esc_html__('Add your skype ID. eg: myskypeid1222', 'chat-skype'),
-
+      'desc'  => esc_html__('Add your skype ID. eg: myskypeid1222', 'chat-skype'),
     ),
 
 
@@ -1000,6 +999,15 @@ SCS::createSection($prefix, array(
   'title'       => esc_html__('Buttons shortcodes', 'chat-skype'),
   'icon'        => 'fas fa-code',
   'fields'      => array(
+    array(
+      'id'       => 'opt-code-editor-3',
+      'type'     => 'code_editor',
+      'title'    => 'CSS Editor',
+      'settings' => array(
+        'theme'  => 'ambiance',
+        'mode'   => 'css',
+      ),
+    ),
     array(
       'id'      => 'opt-shortcode-select',
       'type'    => 'image_select',

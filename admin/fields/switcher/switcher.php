@@ -21,7 +21,7 @@ if ( ! class_exists( 'SCS_Field_switcher' ) ) {
       $text_off   = ( ! empty( $this->field['text_off'] ) ) ? $this->field['text_off'] : esc_html__( 'Off', 'chat-skype' );
       $text_width = ( ! empty( $this->field['text_width'] ) ) ? ' style="width: '. esc_attr( $this->field['text_width'] ) .'px;"': '';
 
-      echo esc_html($this->field_before());
+      echo wp_kses_post($this->field_before());
 
       echo '<div class="scs--switcher'. esc_attr( $active ) .'"'. $text_width .'>';
       echo '<span class="scs--on">'. esc_attr( $text_on ) .'</span>';
@@ -32,7 +32,7 @@ if ( ! class_exists( 'SCS_Field_switcher' ) ) {
 
       echo esc_attr(( !empty($this->field['label'] ) )) ? '<span class="scs--label">'. esc_attr( $this->field['label'] ) . '</span>' : '';
 
-      echo esc_html($this->field_after());
+      echo wp_kses_post($this->field_after());
 
     }
 

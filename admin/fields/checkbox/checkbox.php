@@ -25,7 +25,7 @@ if ( ! class_exists( 'SCS_Field_checkbox' ) ) {
 
       $inline_class = ( $args['inline'] ) ? ' class="scs--inline-list"' : '';
 
-      echo esc_html($this->field_before());
+      echo wp_kses_post($this->field_before());
 
       if ( isset( $this->field['options'] ) ) {
 
@@ -93,7 +93,7 @@ if ( ! class_exists( 'SCS_Field_checkbox' ) ) {
 
       }
 
-      echo esc_html($this->field_after());
+      echo wp_kses_post($this->field_after());
 
     }
 

@@ -39,7 +39,7 @@ if ( ! class_exists( 'SCS_Field_wp_editor' ) ) {
         'wpautop'       => $args['wpautop'],
       );
 
-      echo esc_html($this->field_before());
+      echo wp_kses_post($this->field_before());
 
       echo ( scs_wp_editor_api() ) ? '<div class="scs-wp-editor" data-editor-settings="'. esc_attr( wp_json_encode( $editor_settings ) ) .'">' : '';
 
@@ -47,7 +47,7 @@ if ( ! class_exists( 'SCS_Field_wp_editor' ) ) {
 
       echo ( scs_wp_editor_api() ) ? '</div>' : '';
 
-      echo esc_html($this->field_after());
+      echo wp_kses_post($this->field_after());
 
     }
 

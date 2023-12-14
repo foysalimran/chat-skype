@@ -28,7 +28,7 @@ if ( ! class_exists( 'SCS_Field_datetime' ) ) {
 
       $settings = wp_parse_args( $settings, $defaults );
 
-      echo esc_html($this->field_before());
+      echo wp_kses_post($this->field_before());
 
       if ( ! empty( $this->field['from_to'] ) ) {
 
@@ -53,7 +53,7 @@ if ( ! class_exists( 'SCS_Field_datetime' ) ) {
 
       echo '<div class="scs-datetime-settings" data-settings="'. esc_attr( wp_json_encode( $settings ) ) .'"></div>';
 
-      echo esc_html($this->field_after());
+      echo wp_kses_post($this->field_after());
 
     }
 

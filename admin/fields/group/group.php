@@ -42,7 +42,7 @@ if ( ! class_exists( 'SCS_Field_group' ) ) {
 
       } else {
 
-        echo esc_html($this->field_before());
+        echo wp_kses_post($this->field_before());
 
         echo '<div class="scs-cloneable-item scs-cloneable-hidden" data-depend-id="'. esc_attr( $this->field['id'] ) .'">';
 
@@ -142,7 +142,7 @@ if ( ! class_exists( 'SCS_Field_group' ) ) {
         echo '<div class="scs-cloneable-alert scs-cloneable-min">'. esc_html__( 'You cannot remove more.', 'chat-skype' ) .'</div>';
         echo '<a href="#" class="button button-primary scs-cloneable-add">'. esc_html($args['button_title']) .'</a>';
 
-        echo esc_html($this->field_after());
+        echo wp_kses_post($this->field_after());
 
       }
 

@@ -24,7 +24,7 @@ if ( ! class_exists( 'SCS_Field_button_set' ) ) {
 
       $value = ( is_array( $this->value ) ) ? $this->value : array_filter( (array) $this->value );
 
-      echo esc_html($this->field_before());
+      echo wp_kses_post($this->field_before());
 
       if ( isset( $this->field['options'] ) ) {
 
@@ -59,7 +59,7 @@ if ( ! class_exists( 'SCS_Field_button_set' ) ) {
 
       }
 
-      echo esc_html($this->field_after());
+      echo wp_kses_post($this->field_after());
 
     }
 

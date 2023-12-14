@@ -25,7 +25,7 @@ if ( ! class_exists( 'SCS_Field_slider' ) ) {
 
       $is_unit = ( ! empty( $args['unit'] ) ) ? ' scs--is-unit' : '';
 
-      echo esc_html($this->field_before());
+      echo wp_kses_post($this->field_before());
 
       echo '<div class="scs--wrap">';
       echo '<div class="scs-slider-ui"></div>';
@@ -35,7 +35,7 @@ if ( ! class_exists( 'SCS_Field_slider' ) ) {
       echo '</div>';
       echo '</div>';
 
-      echo esc_html($this->field_after());
+      echo wp_kses_post($this->field_after());
 
     }
 

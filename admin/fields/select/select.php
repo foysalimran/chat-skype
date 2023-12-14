@@ -28,7 +28,7 @@ if ( ! class_exists( 'SCS_Field_select' ) ) {
 
       $this->value = ( is_array( $this->value ) ) ? $this->value : array_filter( (array) $this->value );
 
-      echo esc_html($this->field_before());
+      echo wp_kses_post($this->field_before());
 
       if ( isset( $this->field['options'] ) ) {
 
@@ -76,7 +76,7 @@ if ( ! class_exists( 'SCS_Field_select' ) ) {
           }
 
           // These attributes has been serialized above.
-          echo '<select name="'. esc_attr( $field_name ) .'"'. $field_class . $multiple_attr . $placeholder_attr . $field_attr . $chosen_data_attr .'>';
+          echo '<select name="'. esc_attr( $field_name ) .'"'. esc_attr($field_class) . esc_attr($multiple_attr) . esc_attr($placeholder_attr) . esc_attr($field_attr) . esc_attr($chosen_data_attr) .'>';
 
           if ( $args['placeholder'] && empty( $args['multiple'] ) ) {
             if ( ! empty( $args['chosen'] ) ) {
@@ -116,7 +116,7 @@ if ( ! class_exists( 'SCS_Field_select' ) ) {
 
       }
 
-      echo esc_html($this->field_after());
+      echo wp_kses_post($this->field_after());
 
     }
 
