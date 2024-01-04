@@ -67,7 +67,7 @@ class Scs_Buttons_Template
                <?php } ?>
             </div>
 
-            <a href="skype:<?php echo $skypeid; ?>?chat" target="_blank"></a>
+            <a href="skype:<?php echo esc_attr($skypeid); ?>?chat" target="_blank"></a>
          </button>
       </div>
    <?php
@@ -95,7 +95,7 @@ class Scs_Buttons_Template
    ?>
 
       <div class="button-wrapper">
-         <a href="https://t.me/<?php echo $skypeid; ?>" class="skySupport-button-2 skySupport-btn-bg sp-btn-bg <?php echo esc_attr($buttonSizes); ?> <?php echo esc_attr($buttonVisibility); ?> <?php echo esc_attr($buttonRounded); ?>">
+         <a href="https://t.me/<?php echo esc_attr($skypeid); ?>" class="skySupport-button-2 skySupport-btn-bg sp-btn-bg <?php echo esc_attr($buttonSizes); ?> <?php echo esc_attr($buttonVisibility); ?> <?php echo esc_attr($buttonRounded); ?>">
             <i class="fa-solid fa-phone"></i><?php echo esc_attr($labelText); ?>
          </a>
       </div>

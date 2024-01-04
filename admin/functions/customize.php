@@ -130,7 +130,7 @@ if ( ! class_exists( 'WP_Customize_Control_SCS' ) && class_exists( 'WP_Customize
 
       $this->field['dependency'] = array();
 
-      echo '<div class="scs-customize-field'. esc_attr( $class ) .'"'. $atts .'>';
+      echo '<div class="scs-customize-field'. esc_attr( $class ) .'"'. esc_attr($atts) .'>';
 
       SCS::field( $this->field, $this->value(), $this->unique, 'customize' );
 
