@@ -27,7 +27,7 @@ if ( ! class_exists( 'SCS_Field_color_group' ) ) {
           $default_attr = ( ! empty( $this->field['default'][$key] ) ) ? ' data-default-color="'. esc_attr( $this->field['default'][$key] ) .'"' : '';
 
           echo '<div class="scs--left scs-field-color">';
-          echo '<div class="scs--title">'. $option .'</div>';
+          echo '<div class="scs--title">'. esc_html($option) .'</div>';
           echo '<input type="text" name="'. esc_attr( $this->field_name( '['. $key .']' ) ) .'" value="'. esc_attr( $color_value ) .'" class="scs-color"'. esc_attr($default_attr) . esc_attr($this->field_attributes()) .'/>';
           echo '</div>';
 

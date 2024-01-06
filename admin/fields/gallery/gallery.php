@@ -40,7 +40,7 @@ if ( ! class_exists( 'SCS_Field_gallery' ) ) {
       echo '</ul>';
 
       echo '<a href="#" class="button button-primary scs-button">'. $args['add_title'] .'</a>';
-      echo '<a href="#" class="button scs-edit-gallery'. esc_attr( $hidden ) .'">'. $args['edit_title'] .'</a>';
+      echo '<a href="#" class="button scs-edit-gallery'. esc_attr( $hidden ) .'">'. esc_html($args['edit_title']) .'</a>';
       echo '<a href="#" class="button scs-warning-primary scs-clear-gallery'. esc_attr( $hidden ) .'">'. $args['clear_title'] .'</a>';
       echo '<input type="hidden" name="'. esc_attr( $this->field_name() ) .'" value="'. esc_attr( $this->value ) .'"'. esc_attr($this->field_attributes()) .'/>';
 

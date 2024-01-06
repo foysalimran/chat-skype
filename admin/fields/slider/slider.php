@@ -30,7 +30,11 @@ if ( ! class_exists( 'SCS_Field_slider' ) ) {
       echo '<div class="scs--wrap">';
       echo '<div class="scs-slider-ui"></div>';
       echo '<div class="scs--input">';
-      echo '<input type="number" name="'. esc_attr( $this->field_name() ) .'" value="'. esc_attr( $this->value ) .'"'. $this->field_attributes( array( 'class' => 'scs-input-number'. esc_attr( $is_unit ) ) ) .' data-min="'. esc_attr( $args['min'] ) .'" data-max="'. esc_attr( $args['max'] ) .'" data-step="'. esc_attr( $args['step'] ) .'" step="any" />';
+      echo '<input type="number" name="' . esc_attr( $this->field_name() ) . '" value="' . esc_attr( $this->value ) . '"'
+    . esc_attr( $this->field_attributes( array( 'class' => 'scs-input-number' . esc_attr( $is_unit ) ) ) )
+    . ' data-min="' . esc_attr( $args['min'] ) . '" data-max="' . esc_attr( $args['max'] ) . '" data-step="' . esc_attr( $args['step'] ) . '" step="any" />';
+
+
       echo ( ! empty( $args['unit'] ) ) ? '<span class="scs--unit">'. esc_attr( $args['unit'] ) .'</span>' : '';
       echo '</div>';
       echo '</div>';

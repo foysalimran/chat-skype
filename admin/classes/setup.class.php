@@ -749,7 +749,8 @@ if (!class_exists('SCS_Setup')) {
       }
 
       // These attributes has been sanitized above.
-      echo wp_kses_post('<div class="scs-field scs-field-' . $field_type . $is_pseudo . $class . $visible . '"' . $depend . '>');
+      echo wp_kses_post('<div class="scs-field scs-field-' . esc_attr($field_type) . esc_attr($is_pseudo) . esc_attr($class) . esc_attr($visible) . '"' . esc_attr($depend) . '>');
+
 
       if (!empty($field_type)) {
 

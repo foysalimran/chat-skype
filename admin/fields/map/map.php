@@ -55,7 +55,7 @@ if ( ! class_exists( 'SCS_Field_map' ) ) {
         echo '<div class="scs--address-field" data-address-field="'. esc_attr( $args['address_field'] ) .'"></div>';
       }
 
-      echo '<div class="scs--map-osm-wrap"><div class="scs--map-osm" data-map="'. esc_attr( wp_json_encode( $settings ) ) .'"'. $style_attr .'></div></div>';
+      echo '<div class="scs--map-osm-wrap"><div class="scs--map-osm" data-map="'. esc_attr( wp_json_encode( $settings ) ) .'"'. esc_attr($style_attr) .'></div></div>';
 
       echo '<div class="scs--map-inputs">';
 

@@ -45,7 +45,7 @@ if ( ! class_exists( 'SCS_Field_dimensions' ) ) {
       if ( ! empty( $args['width'] ) ) {
         $placeholder = ( ! empty( $args['width_placeholder'] ) ) ? ' placeholder="'. esc_attr( $args['width_placeholder'] ) .'"' : '';
         echo '<div class="scs--input">';
-        echo ( ! empty( $args['width_icon'] ) ) ? '<span class="scs--label scs--icon">'. $args['width_icon'] .'</span>' : '';
+        echo ( ! empty( $args['width_icon'] ) ) ? '<span class="scs--label scs--icon">'. esc_html($args['width_icon']) .'</span>' : '';
         echo '<input type="number" name="'. esc_attr( $this->field_name( '[width]' ) ) .'" value="'. esc_attr( $value['width'] ) .'"'. esc_attr($placeholder) .' class="scs-input-number'. esc_attr( $is_unit ) .'" step="any" />';
         echo ( ! empty( $unit ) ) ? '<span class="scs--label scs--unit">'. esc_attr( $args['units'][0] ) .'</span>' : '';
         echo '</div>';

@@ -323,7 +323,7 @@ if ( ! class_exists( 'SCS_Field_typography' ) ) {
       $multiple_attr = ( $is_multiple ) ? ' multiple data-multiple="true"' : '';
       $chosen_rtl    = ( $this->chosen && is_rtl() ) ? ' chosen-rtl' : '';
 
-      $output  = '<select name="'. esc_attr( $this->field_name( '['. $name .']'. $multiple_name ) ) .'" class="scs--'. esc_attr( $name ) . esc_attr( $chosen_rtl ) .'" data-placeholder="'. esc_attr( $placeholder ) .'"'. $multiple_attr .'>';
+      $output  = '<select name="'. esc_attr( $this->field_name( '['. $name .']'. $multiple_name ) ) .'" class="scs--'. esc_attr( $name ) . esc_attr( $chosen_rtl ) .'" data-placeholder="'. esc_attr( $placeholder ) .'"'. essc_attr($multiple_attr) .'>';
       $output .= ( ! empty( $placeholder ) ) ? '<option value="">'. esc_attr( ( ! $this->chosen ) ? esc_attr($placeholder) : '' ) .'</option>' : '';
 
       if ( ! empty( $options ) ) {
@@ -438,7 +438,7 @@ if ( ! class_exists( 'SCS_Field_typography' ) ) {
       if ( $is_google ) {
 
         // set style
-        $font_family = ( ! empty( $this->value['font-family'] ) ) ? $this->value['font-family'] : '';
+        $font_family = ( ! empty( $this->value['font-family'] ) ) ? esc_attr($this->value['font-family']) : '';
         $font_weight = ( ! empty( $this->value['font-weight'] ) ) ? $this->value['font-weight'] : '';
         $font_style  = ( ! empty( $this->value['font-style'] ) ) ? $this->value['font-style'] : '';
 
@@ -487,11 +487,11 @@ if ( ! class_exists( 'SCS_Field_typography' ) ) {
       $important = ( ! empty( $this->field['output_important'] ) ) ? '!important' : '';
       $element   = ( is_array( $this->field['output'] ) ) ? join( ',', $this->field['output'] ) : $this->field['output'];
 
-      $font_family   = ( ! empty( $this->value['font-family'] ) ) ? $this->value['font-family'] : '';
-      $backup_family = ( ! empty( $this->value['backup-font-family'] ) ) ? ', '. $this->value['backup-font-family'] : '';
+      $font_family   = ! empty( $this->value['font-family'] ) ? esc_attr( $this->value['font-family'] ) : '';
+      $backup_family = ! empty( $this->value['backup-font-family'] ) ? ', ' . esc_attr( $this->value['backup-font-family'] ) : '';
 
       if ( $font_family ) {
-        $output .= 'font-family:"'. $font_family .'"'. $backup_family . $important .';';
+          $output .= 'font-family:"' . $font_family . '"' . $backup_family . $important . ';';
       }
 
       // Common font properties

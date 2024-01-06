@@ -215,7 +215,7 @@ if (!class_exists('Scs_El_Widgets')) {
                 '<strong>' . esc_html__('Chat Skype WordPress Plugin', 'chat-skype') . '</strong>',
                 '<strong>' . esc_html__('Elementor', 'chat-skype') . '</strong>'
             );
-            printf('<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', $message);
+            printf('<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', esc_html($message));
         }
 
         /**
@@ -237,7 +237,7 @@ if (!class_exists('Scs_El_Widgets')) {
                 '<strong>' . esc_html__('Elementor', 'chat-skype') . '</strong>',
                 self::MINIMUM_ELEMENTOR_VERSION
             );
-            printf('<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', $message);
+            printf('<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', esc_html($message));
         }
 
         /**
@@ -256,7 +256,7 @@ if (!class_exists('Scs_El_Widgets')) {
                 '<strong>' . esc_html__('PHP', 'chat-skype') . '</strong>',
                 self::MINIMUM_PHP_VERSION
             );
-            printf('<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', $message);
+            printf('<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', esc_html($message));;
         }
 
         /**
