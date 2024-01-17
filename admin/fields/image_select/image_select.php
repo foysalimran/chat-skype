@@ -45,7 +45,7 @@ if ( ! class_exists( 'SCS_Field_image_select' ) ) {
           echo '<div class="scs--sibling scs--image'. esc_attr( $active ) .'">';
             echo '<figure>';
               echo '<img src="'. esc_url( $option ) .'" alt="img-'. esc_attr( $num++ ) .'" />';
-              echo '<input type="'. esc_attr( $type ) .'" name="'. esc_attr( $this->field_name( $extra ) ) .'" value="'. esc_attr( $key ) .'"'. $this->field_attributes() . esc_attr( $checked ) .'/>';
+              echo '<input type="'. esc_attr( $type ) .'" name="'. esc_attr( $this->field_name( $extra ) ) .'" value="'. esc_attr( $key ) .'"'. esc_attr($this->field_attributes()) . esc_attr( $checked ) .'/>';
             echo '</figure>';
           echo '</div>';
 

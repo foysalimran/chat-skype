@@ -85,7 +85,7 @@ if (!class_exists('SCS_Field_spacing')) {
           $placeholder = (!empty($args[$property . '_placeholder'])) ? ' placeholder="' . esc_attr($args[$property . '_placeholder']) . '"' : '';
 
           echo '<div class="scs--input">';
-          echo (!empty($args[$property . '_icon'])) ? '<span class="scs--label scs--icon">' . $args[$property . '_icon'] . '</span>' : '';
+          echo (!empty($args[$property . '_icon'])) ? '<span class="scs--label scs--icon">' . esc_attr($args[$property . '_icon']) . '</span>' : '';
           echo '<input type="number" name="' . esc_attr($this->field_name('[' . $property . ']')) . '" value="' . esc_attr($value[$property]) . '"' . esc_attr($placeholder) . ' class="scs-input-number' . esc_attr($is_unit) . '" step="any" />';
           echo ($unit) ? '<span class="scs--label scs--unit">' . esc_attr($args['units'][0]) . '</span>' : '';
           echo '</div>';

@@ -94,7 +94,7 @@ if ( ! class_exists( 'SCS_Field_border' ) ) {
           $placeholder = ( ! empty( $args[$property.'_placeholder'] ) ) ? ' placeholder="'. esc_attr( $args[$property.'_placeholder'] ) .'"' : '';
 
           echo '<div class="scs--input">';
-          echo ( ! empty( $args[$property.'_icon'] ) ) ? '<span class="scs--label scs--icon">'. $args[$property.'_icon'] .'</span>' : '';
+          echo ( ! empty( $args[$property.'_icon'] ) ) ? '<span class="scs--label scs--icon">'. esc_attr($args[$property.'_icon']) .'</span>' : '';
           echo '<input type="number" name="'. esc_attr( $this->field_name( '['. $property .']' ) ) .'" value="'. esc_attr( $value[$property] ) .'"'. esc_attr($placeholder) .' class="scs-input-number scs--is-unit" step="any" />';
           echo ( ! empty( $args['unit'] ) ) ? '<span class="scs--label scs--unit">'. esc_attr( $args['unit'] ) .'</span>' : '';
           echo '</div>';

@@ -163,7 +163,7 @@ if ( ! class_exists( 'SCS_Abstract' ) ) {
       foreach ( $this->pre_tabs( $sections ) as $section ) {
         if ( ! empty( $section['subs'] ) ) {
           foreach ( $section['subs'] as $sub ) {
-            $sub['ptitle'] = ( ! empty( $section['title'] ) ) ? $section['title'] : '';
+            $sub['ptitle'] = ( ! empty( $section['title'] ) ) ? esc_html($section['title']) : '';
             $result[] = $sub;
           }
         }

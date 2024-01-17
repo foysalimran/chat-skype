@@ -756,7 +756,7 @@ if (!class_exists('SCS_Setup')) {
 
         if (!empty($field['title'])) {
           echo '<div class="scs-title">';
-          echo '<h4>' . $field['title'] . '</h4>';
+          echo '<h4>' . esc_html($field['title']) . '</h4>';
           echo (!empty($field['subtitle'])) ? '<div class="scs-subtitle-text">' . esc_html($field['subtitle']) . '</div>' : '';
           echo '</div>';
         }

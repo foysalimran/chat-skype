@@ -482,7 +482,7 @@ if (!class_exists('SCS_Options')) {
       echo '<div class="scs-header-inner">';
 
       echo '<div class="scs-header-left">';
-      echo '<h1>' . $this->args['framework_title'] . '</h1>';
+      echo '<h1>' . esc_html($this->args['framework_title']) . '</h1>';
       echo '</div>';
 
       echo '<div class="scs-header-right">';
@@ -528,7 +528,7 @@ if (!class_exists('SCS_Options')) {
 
             echo '<li class="scs-tab-item">';
 
-            echo '<a href="#tab=' . esc_attr($tab_id) . '" data-tab-id="' . esc_attr($tab_id) . '" class="scs-arrow">' . $tab_icon . $tab['title'] . $tab_error . '</a>';
+            echo '<a href="#tab=' . esc_attr($tab_id) . '" data-tab-id="' . esc_attr($tab_id) . '" class="scs-arrow">' . $tab_icon . esc_html($tab['title']) . esc_html($tab_error) . '</a>';
 
             echo '<ul>';
 
@@ -538,7 +538,7 @@ if (!class_exists('SCS_Options')) {
               $sub_error = $this->error_check($sub);
               $sub_icon  = (!empty($sub['icon'])) ? '<i class="scs-tab-icon ' . esc_attr($sub['icon']) . '"></i>' : '';
 
-              echo '<li><a href="#tab=' . esc_attr($sub_id) . '" data-tab-id="' . esc_attr($sub_id) . '">' . $sub_icon . $sub['title'] . $sub_error . '</a></li>';
+              echo '<li><a href="#tab=' . esc_attr($sub_id) . '" data-tab-id="' . esc_attr($sub_id) . '">' . $sub_icon . esc_html($sub['title']) . $sub_error . '</a></li>';
             }
 
             echo '</ul>';
@@ -546,7 +546,7 @@ if (!class_exists('SCS_Options')) {
             echo '</li>';
           } else {
 
-            echo '<li class="scs-tab-item"><a href="#tab=' . esc_attr($tab_id) . '" data-tab-id="' . esc_attr($tab_id) . '">' . $tab_icon . $tab['title'] . $tab_error . '</a></li>';
+            echo '<li class="scs-tab-item"><a href="#tab=' . esc_attr($tab_id) . '" data-tab-id="' . esc_attr($tab_id) . '">' . $tab_icon . esc_html($tab['title']) . esc_html($tab_error) . '</a></li>';
           }
         }
 
@@ -562,15 +562,15 @@ if (!class_exists('SCS_Options')) {
       foreach ($this->pre_sections as $section) {
 
         $section_onload = (!$has_nav) ? ' scs-onload' : '';
-        $section_class  = (!empty($section['class'])) ? ' ' . $section['class'] : '';
+        $section_class  = (!empty($section['class'])) ? ' ' . esc_attr($section['class']) : '';
         $section_icon   = (!empty($section['icon'])) ? '<i class="scs-section-icon ' . esc_attr($section['icon']) . '"></i>' : '';
-        $section_title  = (!empty($section['title'])) ? $section['title'] : '';
+        $section_title  = (!empty($section['title'])) ? esc_html($section['title']) : '';
         $section_parent = (!empty($section['ptitle'])) ? sanitize_title($section['ptitle']) . '/' : '';
         $section_slug   = (!empty($section['title'])) ? sanitize_title($section_title) : '';
 
         echo '<div class="scs-section hidden' . esc_attr($section_onload . $section_class) . '" data-section-id="' . esc_attr($section_parent . $section_slug) . '">';
         echo ($has_nav) ? '<div class="scs-section-title"><h3>' . $section_icon . $section_title . '</h3></div>' : '';
-        echo (!empty($section['description'])) ? '<div class="scs-field scs-section-description">' . $section['description'] . '</div>' : '';
+        echo (!empty($section['description'])) ? '<div class="scs-field scs-section-description">' . wp_kses_post($section['description']) . '</div>' : '';
 
         if (!empty($section['fields'])) {
 

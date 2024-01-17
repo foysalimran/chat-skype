@@ -26,7 +26,7 @@ if ( ! class_exists( 'SCS_Field_tabbed' ) ) {
         $tabbed_icon   = ( ! empty( $tab['icon'] ) ) ? '<i class="scs--icon '. esc_attr( $tab['icon'] ) .'"></i>' : '';
         $tabbed_active = ( empty( $key ) ) ? 'scs-tabbed-active' : '';
 
-        echo '<a href="#" class="'. esc_attr( $tabbed_active ) .'"">'. $tabbed_icon . esc_attr( $tab['title'] ) .'</a>';
+        echo '<a href="#" class="'. esc_attr( $tabbed_active ) .'"">'. $tabbed_icon . esc_html( $tab['title'] ) .'</a>';
 
       }
       echo '</div>';
