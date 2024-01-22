@@ -1,26 +1,27 @@
-<?php if ( ! defined( 'ABSPATH' ) ) { die; } // Cannot access directly.
+<?php if ( ! defined( 'ABSPATH' ) ) {
+	die;
+} // Cannot access directly.
 /**
  *
  * Field: notice
  *
  * @since 1.0.0
  * @version 1.0.0
- *
  */
 if ( ! class_exists( 'SCS_Field_notice' ) ) {
-  class SCS_Field_notice extends SCS_Fields {
+	class SCS_Field_notice extends SCS_Fields {
 
-    public function __construct( $field, $value = '', $unique = '', $where = '', $parent = '' ) {
-      parent::__construct( $field, $value, $unique, $where, $parent );
-    }
 
-    public function render() {
+		public function __construct( $field, $value = '', $unique = '', $where = '', $parent = '' ) {
 
-      $style = ( ! empty( $this->field['style'] ) ) ? $this->field['style'] : 'normal';
+			parent::__construct( $field, $value, $unique, $where, $parent );
+		}
 
-      echo ( ! empty( $this->field['content'] ) ) ? '<div class="scs-notice scs-notice-'. esc_attr( $style ) .'">'. wp_kses_post($this->field['content']) .'</div>' : '';
+		public function render() {
 
-    }
+			$style = ( ! empty( $this->field['style'] ) ) ? $this->field['style'] : 'normal';
 
-  }
+			echo ( ! empty( $this->field['content'] ) ) ? '<div class="scs-notice scs-notice-' . esc_attr( $style ) . '">' . wp_kses_post( $this->field['content'] ) . '</div>' : '';
+		}
+	}
 }

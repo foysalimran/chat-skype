@@ -1,5 +1,5 @@
-<?php if (!defined('ABSPATH')) {
-  die;
+<?php if ( ! defined( 'ABSPATH' ) ) {
+	die;
 } // Cannot access directly.
 /**
  *
@@ -7,55 +7,51 @@
  *
  * @since 1.0.0
  * @version 1.0.0
- *
  */
-if (!class_exists('SCS_Field_code_editor')) {
-  class SCS_Field_code_editor extends SCS_Fields
-  {
+if ( ! class_exists( 'SCS_Field_code_editor' ) ) {
+	class SCS_Field_code_editor extends SCS_Fields {
 
-    public $version = '6.65.7';
 
-    public function __construct($field, $value = '', $unique = '', $where = '', $parent = '')
-    {
-      parent::__construct($field, $value, $unique, $where, $parent);
-    }
+		public $version = '6.65.7';
 
-    public function render()
-    {
+		public function __construct( $field, $value = '', $unique = '', $where = '', $parent = '' ) {
+			parent::__construct( $field, $value, $unique, $where, $parent );
+		}
 
-      $default_settings = array(
-        'tabSize'       => 2,
-        'lineNumbers'   => true,
-        'theme'         => 'default',
-        'mode'          => 'htmlmixed',
-      );
+		public function render() {
 
-      $settings = (!empty($this->field['settings'])) ? $this->field['settings'] : array();
-      $settings = wp_parse_args($settings, $default_settings);
+			$default_settings = array(
+				'tabSize'     => 2,
+				'lineNumbers' => true,
+				'theme'       => 'default',
+				'mode'        => 'htmlmixed',
+			);
 
-      echo wp_kses_post($this->field_before());
-      echo '<textarea name="' . esc_attr($this->field_name()) . '"' . esc_attr($this->field_attributes()) . ' data-editor="' . esc_attr(wp_json_encode($settings)) . '">' . esc_attr($this->value) . '</textarea>';
-      echo wp_kses_post($this->field_after());
-    }
+			$settings = ( ! empty( $this->field['settings'] ) ) ? $this->field['settings'] : array();
+			$settings = wp_parse_args( $settings, $default_settings );
 
-    public function enqueue()
-    {
+			echo wp_kses_post( $this->field_before() );
+			echo '<textarea name="' . esc_attr( $this->field_name() ) . '"' . esc_attr( $this->field_attributes() ) . ' data-editor="' . esc_attr( wp_json_encode( $settings ) ) . '">' . esc_attr( $this->value ) . '</textarea>';
+			echo wp_kses_post( $this->field_after() );
+		}
 
-      $page = (!empty($_GET['page'])) ? sanitize_text_field(wp_unslash($_GET['page'])) : '';
+		public function enqueue() {
 
-      // Do not loads CodeMirror in revslider page.
-      if (in_array($page, array('revslider'))) {
-        return;
-      }
+			$page = ( ! empty( $_GET['page'] ) ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 
-      if (!wp_script_is('scs-codemirror')) {
-        wp_enqueue_script('scs-codemirror', SCS_DIR_URL . 'admin/assets/js/codemirror.min.js', array('jquery'), $this->version, true);
-        wp_enqueue_script('scs-codemirror-loadmode', SCS_DIR_URL . 'admin/assets/js/loadmode.min.js', array('scs-codemirror'), $this->version, true);
-      }
+			// Do not loads CodeMirror in revslider page.
+			if ( in_array( $page, array( 'revslider' ) ) ) {
+				return;
+			}
 
-      if (!wp_style_is('scs-codemirror')) {
-        wp_enqueue_style('scs-codemirror', SCS_DIR_URL . 'admin/assets/css/codemirror.min.css', array(), $this->version);
-      }
-    }
-  }
+			if ( ! wp_script_is( 'scs-codemirror' ) ) {
+				wp_enqueue_script( 'scs-codemirror', SCS_DIR_URL . 'admin/assets/js/codemirror.min.js', array( 'jquery' ), $this->version, true );
+				wp_enqueue_script( 'scs-codemirror-loadmode', SCS_DIR_URL . 'admin/assets/js/loadmode.min.js', array( 'scs-codemirror' ), $this->version, true );
+			}
+
+			if ( ! wp_style_is( 'scs-codemirror' ) ) {
+				wp_enqueue_style( 'scs-codemirror', SCS_DIR_URL . 'admin/assets/css/codemirror.min.css', array(), $this->version );
+			}
+		}
+	}
 }

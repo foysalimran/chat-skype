@@ -1,5 +1,5 @@
-<?php if (!defined('ABSPATH')) {
-  die;
+<?php if ( ! defined( 'ABSPATH' ) ) {
+	die;
 } // Cannot access directly.
 /**
  *
@@ -7,160 +7,159 @@
  *
  * @since 1.0.0
  * @version 1.0.0
- *
  */
-if (!class_exists('SCS_Field_spacing')) {
-  class SCS_Field_spacing extends SCS_Fields
-  {
+if ( ! class_exists( 'SCS_Field_spacing' ) ) {
+	class SCS_Field_spacing extends SCS_Fields {
 
-    public function __construct($field, $value = '', $unique = '', $where = '', $parent = '')
-    {
-      parent::__construct($field, $value, $unique, $where, $parent);
-    }
 
-    public function render()
-    {
+		public function __construct( $field, $value = '', $unique = '', $where = '', $parent = '' ) {
+			parent::__construct( $field, $value, $unique, $where, $parent );
+		}
 
-      $args = wp_parse_args($this->field, array(
-        'top_icon'           => '<i class="fas fa-long-arrow-alt-up"></i>',
-        'right_icon'         => '<i class="fas fa-long-arrow-alt-right"></i>',
-        'bottom_icon'        => '<i class="fas fa-long-arrow-alt-down"></i>',
-        'left_icon'          => '<i class="fas fa-long-arrow-alt-left"></i>',
-        'all_icon'           => '<i class="fas fa-arrows-alt"></i>',
-        'top_placeholder'    => esc_html__('top', 'chat-skype'),
-        'right_placeholder'  => esc_html__('right', 'chat-skype'),
-        'bottom_placeholder' => esc_html__('bottom', 'chat-skype'),
-        'left_placeholder'   => esc_html__('left', 'chat-skype'),
-        'all_placeholder'    => esc_html__('all', 'chat-skype'),
-        'top'                => true,
-        'left'               => true,
-        'bottom'             => true,
-        'right'              => true,
-        'unit'               => true,
-        'show_units'         => true,
-        'all'                => false,
-        'units'              => array('px', '%', 'em')
-      ));
+		public function render() {
 
-      $default_values = array(
-        'top'    => '',
-        'right'  => '',
-        'bottom' => '',
-        'left'   => '',
-        'all'    => '',
-        'unit'   => 'px',
-      );
+			$args = wp_parse_args(
+				$this->field,
+				array(
+					'top_icon'           => '<i class="fas fa-long-arrow-alt-up"></i>',
+					'right_icon'         => '<i class="fas fa-long-arrow-alt-right"></i>',
+					'bottom_icon'        => '<i class="fas fa-long-arrow-alt-down"></i>',
+					'left_icon'          => '<i class="fas fa-long-arrow-alt-left"></i>',
+					'all_icon'           => '<i class="fas fa-arrows-alt"></i>',
+					'top_placeholder'    => esc_html__( 'top', 'chat-skype' ),
+					'right_placeholder'  => esc_html__( 'right', 'chat-skype' ),
+					'bottom_placeholder' => esc_html__( 'bottom', 'chat-skype' ),
+					'left_placeholder'   => esc_html__( 'left', 'chat-skype' ),
+					'all_placeholder'    => esc_html__( 'all', 'chat-skype' ),
+					'top'                => true,
+					'left'               => true,
+					'bottom'             => true,
+					'right'              => true,
+					'unit'               => true,
+					'show_units'         => true,
+					'all'                => false,
+					'units'              => array( 'px', '%', 'em' ),
+				)
+			);
 
-      $value   = wp_parse_args($this->value, $default_values);
-      $unit    = (count($args['units']) === 1 && !empty($args['unit'])) ? $args['units'][0] : '';
-      $is_unit = (!empty($unit)) ? ' scs--is-unit' : '';
+			$default_values = array(
+				'top'    => '',
+				'right'  => '',
+				'bottom' => '',
+				'left'   => '',
+				'all'    => '',
+				'unit'   => 'px',
+			);
 
-      echo wp_kses_post($this->field_before());
+			$value   = wp_parse_args( $this->value, $default_values );
+			$unit    = ( count( $args['units'] ) === 1 && ! empty( $args['unit'] ) ) ? $args['units'][0] : '';
+			$is_unit = ( ! empty( $unit ) ) ? ' scs--is-unit' : '';
 
-      echo '<div class="scs--inputs" data-depend-id="' . esc_attr($this->field['id']) . '">';
+			echo wp_kses_post( $this->field_before() );
 
-      if (!empty($args['all'])) {
+			echo '<div class="scs--inputs" data-depend-id="' . esc_attr( $this->field['id'] ) . '">';
 
-        $placeholder = (!empty($args['all_placeholder'])) ? ' placeholder="' . esc_attr($args['all_placeholder']) . '"' : '';
+			if ( ! empty( $args['all'] ) ) {
 
-        echo '<div class="scs--input">';
-        echo (!empty($args['all_icon'])) ? '<span class="scs--label scs--icon">' . esc_html($args['all_icon']) . '</span>' : '';
-        echo '<input type="number" name="' . esc_attr($this->field_name('[all]')) . '" value="' . esc_attr($value['all']) . '"' . esc_attr($placeholder) . ' class="scs-input-number' . esc_attr($is_unit) . '" step="any" />';
-        echo ($unit) ? '<span class="scs--label scs--unit">' . esc_attr($args['units'][0]) . '</span>' : '';
-        echo '</div>';
-      } else {
+				$placeholder = ( ! empty( $args['all_placeholder'] ) ) ? ' placeholder="' . esc_attr( $args['all_placeholder'] ) . '"' : '';
 
-        $properties = array();
+				echo '<div class="scs--input">';
+				echo ( ! empty( $args['all_icon'] ) ) ? '<span class="scs--label scs--icon">' . esc_html( $args['all_icon'] ) . '</span>' : '';
+				echo '<input type="number" name="' . esc_attr( $this->field_name( '[all]' ) ) . '" value="' . esc_attr( $value['all'] ) . '"' . esc_attr( $placeholder ) . ' class="scs-input-number' . esc_attr( $is_unit ) . '" step="any" />';
+				echo ( $unit ) ? '<span class="scs--label scs--unit">' . esc_attr( $args['units'][0] ) . '</span>' : '';
+				echo '</div>';
+			} else {
 
-        foreach (array('top', 'right', 'bottom', 'left') as $prop) {
-          if (!empty($args[$prop])) {
-            $properties[] = $prop;
-          }
-        }
+				$properties = array();
 
-        $properties = ($properties === array('right', 'left')) ? array_reverse($properties) : $properties;
+				foreach ( array( 'top', 'right', 'bottom', 'left' ) as $prop ) {
+					if ( ! empty( $args[ $prop ] ) ) {
+						$properties[] = $prop;
+					}
+				}
 
-        foreach ($properties as $property) {
+				$properties = ( $properties === array( 'right', 'left' ) ) ? array_reverse( $properties ) : $properties;
 
-          $placeholder = (!empty($args[$property . '_placeholder'])) ? ' placeholder="' . esc_attr($args[$property . '_placeholder']) . '"' : '';
+				foreach ( $properties as $property ) {
 
-          echo '<div class="scs--input">';
-          echo (!empty($args[$property . '_icon'])) ? '<span class="scs--label scs--icon">' . esc_attr($args[$property . '_icon']) . '</span>' : '';
-          echo '<input type="number" name="' . esc_attr($this->field_name('[' . $property . ']')) . '" value="' . esc_attr($value[$property]) . '"' . esc_attr($placeholder) . ' class="scs-input-number' . esc_attr($is_unit) . '" step="any" />';
-          echo ($unit) ? '<span class="scs--label scs--unit">' . esc_attr($args['units'][0]) . '</span>' : '';
-          echo '</div>';
-        }
-      }
+					$placeholder = ( ! empty( $args[ $property . '_placeholder' ] ) ) ? ' placeholder="' . esc_attr( $args[ $property . '_placeholder' ] ) . '"' : '';
 
-      if (!empty($args['unit']) && !empty($args['show_units']) && count($args['units']) > 1) {
-        echo '<div class="scs--input">';
-        echo '<select name="' . esc_attr($this->field_name('[unit]')) . '">';
-        foreach ($args['units'] as $unit) {
-          $selected = ($value['unit'] === $unit) ? ' selected' : '';
-          echo '<option value="' . esc_attr($unit) . '"' . esc_attr($selected) . '>' . esc_attr($unit) . '</option>';
-        }
-        echo '</select>';
-        echo '</div>';
-      }
+					echo '<div class="scs--input">';
+					echo ( ! empty( $args[ $property . '_icon' ] ) ) ? '<span class="scs--label scs--icon">' . esc_attr( $args[ $property . '_icon' ] ) . '</span>' : '';
+					echo '<input type="number" name="' . esc_attr( $this->field_name( '[' . $property . ']' ) ) . '" value="' . esc_attr( $value[ $property ] ) . '"' . esc_attr( $placeholder ) . ' class="scs-input-number' . esc_attr( $is_unit ) . '" step="any" />';
+					echo ( $unit ) ? '<span class="scs--label scs--unit">' . esc_attr( $args['units'][0] ) . '</span>' : '';
+					echo '</div>';
+				}
+			}
 
-      echo '</div>';
+			if ( ! empty( $args['unit'] ) && ! empty( $args['show_units'] ) && count( $args['units'] ) > 1 ) {
+				echo '<div class="scs--input">';
+				echo '<select name="' . esc_attr( $this->field_name( '[unit]' ) ) . '">';
+				foreach ( $args['units'] as $unit ) {
+					$selected = ( $value['unit'] === $unit ) ? ' selected' : '';
+					echo '<option value="' . esc_attr( $unit ) . '"' . esc_attr( $selected ) . '>' . esc_attr( $unit ) . '</option>';
+				}
+				echo '</select>';
+				echo '</div>';
+			}
 
-      echo wp_kses_post($this->field_after());
-    }
+			echo '</div>';
 
-    public function output()
-    {
+			echo wp_kses_post( $this->field_after() );
+		}
 
-      $output    = '';
-      $element   = (is_array($this->field['output'])) ? join(',', $this->field['output']) : $this->field['output'];
-      $important = (!empty($this->field['output_important'])) ? '!important' : '';
-      $unit      = (!empty($this->value['unit'])) ? $this->value['unit'] : 'px';
+		public function output() {
 
-      $mode = (!empty($this->field['output_mode'])) ? $this->field['output_mode'] : 'padding';
+			$output    = '';
+			$element   = ( is_array( $this->field['output'] ) ) ? join( ',', $this->field['output'] ) : $this->field['output'];
+			$important = ( ! empty( $this->field['output_important'] ) ) ? '!important' : '';
+			$unit      = ( ! empty( $this->value['unit'] ) ) ? $this->value['unit'] : 'px';
 
-      if ($mode === 'border-radius' || $mode === 'radius') {
+			$mode = ( ! empty( $this->field['output_mode'] ) ) ? $this->field['output_mode'] : 'padding';
 
-        $top    = 'border-top-left-radius';
-        $right  = 'border-top-right-radius';
-        $bottom = 'border-bottom-right-radius';
-        $left   = 'border-bottom-left-radius';
-      } else if ($mode === 'relative' || $mode === 'absolute' || $mode === 'none') {
+			if ( $mode === 'border-radius' || $mode === 'radius' ) {
 
-        $top    = 'top';
-        $right  = 'right';
-        $bottom = 'bottom';
-        $left   = 'left';
-      } else {
+				$top    = 'border-top-left-radius';
+				$right  = 'border-top-right-radius';
+				$bottom = 'border-bottom-right-radius';
+				$left   = 'border-bottom-left-radius';
+			} elseif ( $mode === 'relative' || $mode === 'absolute' || $mode === 'none' ) {
 
-        $top    = $mode . '-top';
-        $right  = $mode . '-right';
-        $bottom = $mode . '-bottom';
-        $left   = $mode . '-left';
-      }
+				$top    = 'top';
+				$right  = 'right';
+				$bottom = 'bottom';
+				$left   = 'left';
+			} else {
 
-      if (!empty($this->field['all']) && isset($this->value['all']) && $this->value['all'] !== '') {
+				$top    = $mode . '-top';
+				$right  = $mode . '-right';
+				$bottom = $mode . '-bottom';
+				$left   = $mode . '-left';
+			}
 
-        $output  = $element . '{';
-        $output .= $top    . ':' . $this->value['all'] . $unit . $important . ';';
-        $output .= $right  . ':' . $this->value['all'] . $unit . $important . ';';
-        $output .= $bottom . ':' . $this->value['all'] . $unit . $important . ';';
-        $output .= $left   . ':' . $this->value['all'] . $unit . $important . ';';
-        $output .= '}';
-      } else {
+			if ( ! empty( $this->field['all'] ) && isset( $this->value['all'] ) && $this->value['all'] !== '' ) {
 
-        $top    = (isset($this->value['top']) && $this->value['top']    !== '') ? $top    . ':' . $this->value['top']    . $unit . $important . ';' : '';
-        $right  = (isset($this->value['right']) && $this->value['right']  !== '') ? $right  . ':' . $this->value['right']  . $unit . $important . ';' : '';
-        $bottom = (isset($this->value['bottom']) && $this->value['bottom'] !== '') ? $bottom . ':' . $this->value['bottom'] . $unit . $important . ';' : '';
-        $left   = (isset($this->value['left']) && $this->value['left']   !== '') ? $left   . ':' . $this->value['left']   . $unit . $important . ';' : '';
+				$output  = $element . '{';
+				$output .= $top . ':' . $this->value['all'] . $unit . $important . ';';
+				$output .= $right . ':' . $this->value['all'] . $unit . $important . ';';
+				$output .= $bottom . ':' . $this->value['all'] . $unit . $important . ';';
+				$output .= $left . ':' . $this->value['all'] . $unit . $important . ';';
+				$output .= '}';
+			} else {
 
-        if ($top !== '' || $right !== '' || $bottom !== '' || $left !== '') {
-          $output = $element . '{' . $top . $right . $bottom . $left . '}';
-        }
-      }
+				$top    = ( isset( $this->value['top'] ) && $this->value['top'] !== '' ) ? $top . ':' . $this->value['top'] . $unit . $important . ';' : '';
+				$right  = ( isset( $this->value['right'] ) && $this->value['right'] !== '' ) ? $right . ':' . $this->value['right'] . $unit . $important . ';' : '';
+				$bottom = ( isset( $this->value['bottom'] ) && $this->value['bottom'] !== '' ) ? $bottom . ':' . $this->value['bottom'] . $unit . $important . ';' : '';
+				$left   = ( isset( $this->value['left'] ) && $this->value['left'] !== '' ) ? $left . ':' . $this->value['left'] . $unit . $important . ';' : '';
 
-      $this->parent->output_css .= $output;
+				if ( $top !== '' || $right !== '' || $bottom !== '' || $left !== '' ) {
+					$output = $element . '{' . $top . $right . $bottom . $left . '}';
+				}
+			}
 
-      return $output;
-    }
-  }
+			$this->parent->output_css .= $output;
+
+			return $output;
+		}
+	}
 }

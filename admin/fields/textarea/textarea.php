@@ -1,58 +1,55 @@
-<?php if ( ! defined( 'ABSPATH' ) ) { die; } // Cannot access directly.
+<?php if ( ! defined( 'ABSPATH' ) ) {
+	die;
+} // Cannot access directly.
 /**
  *
  * Field: textarea
  *
  * @since 1.0.0
  * @version 1.0.0
- *
  */
 if ( ! class_exists( 'SCS_Field_textarea' ) ) {
-  class SCS_Field_textarea extends SCS_Fields {
+	class SCS_Field_textarea extends SCS_Fields {
 
-    public function __construct( $field, $value = '', $unique = '', $where = '', $parent = '' ) {
-      parent::__construct( $field, $value, $unique, $where, $parent );
-    }
 
-    public function render() {
+		public function __construct( $field, $value = '', $unique = '', $where = '', $parent = '' ) {
 
-      echo wp_kses_post($this->field_before());
-      echo esc_attr($this->shortcoder());
-      echo '<textarea name="'. esc_attr( $this->field_name() ) .'"'. esc_attr($this->field_attributes()) .'>'. esc_attr($this->value) .'</textarea>';
-      echo wp_kses_post($this->field_after());
+			parent::__construct( $field, $value, $unique, $where, $parent );
+		}
 
-    }
+		public function render() {
 
-    public function shortcoder() {
+			echo wp_kses_post( $this->field_before() );
+			echo esc_attr( $this->shortcoder() );
+			echo '<textarea name="' . esc_attr( $this->field_name() ) . '"' . esc_attr( $this->field_attributes() ) . '>' . esc_attr( $this->value ) . '</textarea>';
+			echo wp_kses_post( $this->field_after() );
+		}
 
-      if ( ! empty( $this->field['shortcoder'] ) ) {
+		public function shortcoder() {
 
-        $shortcodes = ( is_array( $this->field['shortcoder'] ) ) ? $this->field['shortcoder'] : array_filter( (array) $this->field['shortcoder'] );
-        $instances  = ( ! empty( SCS::$shortcode_instances ) ) ? SCS::$shortcode_instances : array();
+			if ( ! empty( $this->field['shortcoder'] ) ) {
 
-        if ( ! empty( $shortcodes ) && ! empty( $instances ) ) {
+				$shortcodes = ( is_array( $this->field['shortcoder'] ) ) ? $this->field['shortcoder'] : array_filter( (array) $this->field['shortcoder'] );
+				$instances  = ( ! empty( SCS::$shortcode_instances ) ) ? SCS::$shortcode_instances : array();
 
-          foreach ( $shortcodes as $shortcode ) {
+				if ( ! empty( $shortcodes ) && ! empty( $instances ) ) {
 
-            foreach ( $instances as $instance ) {
+					foreach ( $shortcodes as $shortcode ) {
 
-              if ( $instance['modal_id'] === $shortcode ) {
+						foreach ( $instances as $instance ) {
 
-                $id    = $instance['modal_id'];
-                $title = $instance['button_title'];
+							if ( $instance['modal_id'] === $shortcode ) {
 
-                echo '<a href="#" class="button button-primary scs-shortcode-button" data-modal-id="'. esc_attr( $id ) .'">'. esc_html( $title ) .'</a>';
+								$id    = $instance['modal_id'];
+								$title = $instance['button_title'];
 
-              }
+								echo '<a href="#" class="button button-primary scs-shortcode-button" data-modal-id="' . esc_attr( $id ) . '">' . esc_html( $title ) . '</a>';
 
-            }
-
-          }
-
-        }
-
-      }
-
-    }
-  }
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }
