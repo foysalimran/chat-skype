@@ -43,7 +43,7 @@ if ( ! class_exists( 'SCS_Field_palette' ) ) {
 						}
 					}
 
-					echo '<input type="radio" name="' . esc_attr( $this->field_name() ) . '" value="' . esc_attr( $key ) . '"' . esc_attr( $this->field_attributes() ) . esc_attr( $checked ) . '/>';
+					echo '<input type="radio" name="' . esc_attr( $this->field_name() ) . '" value="' . esc_attr( $key ) . '"' . wp_kses_data($this->field_attributes()) . esc_attr( $checked ) . '/>';
 					echo '</div>';
 
 				}

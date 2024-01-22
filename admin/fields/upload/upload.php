@@ -55,7 +55,7 @@ if ( ! class_exists( 'SCS_Field_upload' ) ) {
 			}
 
 			echo '<div class="scs--wrap">';
-			echo '<input type="text" name="' . esc_attr( $this->field_name() ) . '" value="' . esc_attr( $this->value ) . '"' . esc_attr( $this->field_attributes() ) . '/>';
+			echo '<input type="text" name="' . esc_attr( $this->field_name() ) . '" value="' . esc_attr( $this->value ) . '"' . wp_kses_data($this->field_attributes()) . '/>';
 			echo '<a href="#" class="button button-primary scs--button" data-library="' . esc_attr( $library ) . '">' . esc_html( $args['button_title'] ) . '</a>';
 			echo '<a href="#" class="button button-secondary scs-warning-primary scs--remove' . esc_attr( $hidden ) . '">' . esc_html( $args['remove_title'] ) . '</a>';
 			echo '</div>';

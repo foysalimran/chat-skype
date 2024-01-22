@@ -31,7 +31,7 @@ if ( ! class_exists( 'SCS_Field_color_group' ) ) {
 
 					echo '<div class="scs--left scs-field-color">';
 					echo '<div class="scs--title">' . esc_html( $option ) . '</div>';
-					echo '<input type="text" name="' . esc_attr( $this->field_name( '[' . $key . ']' ) ) . '" value="' . esc_attr( $color_value ) . '" class="scs-color"' . esc_attr( $default_attr ) . esc_attr( $this->field_attributes() ) . '/>';
+					echo '<input type="text" name="' . esc_attr( $this->field_name( '[' . $key . ']' ) ) . '" value="' . esc_attr( $color_value ) . '" class="scs-color"' . esc_attr( $default_attr ) . wp_kses_data($this->field_attributes()) . '/>';
 					echo '</div>';
 
 				}

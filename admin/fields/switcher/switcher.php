@@ -30,7 +30,7 @@ if ( ! class_exists( 'SCS_Field_switcher' ) ) {
 			echo '<span class="scs--on">' . esc_attr( $text_on ) . '</span>';
 			echo '<span class="scs--off">' . esc_attr( $text_off ) . '</span>';
 			echo '<span class="scs--ball"></span>';
-			echo '<input type="hidden" name="' . esc_attr( $this->field_name() ) . '" value="' . esc_attr( $this->value ) . '"' . esc_attr( $this->field_attributes() ) . ' />';
+			echo '<input type="hidden" name="' . esc_attr( $this->field_name() ) . '" value="' . esc_attr( $this->value ) . '"' . wp_kses_data($this->field_attributes()) . ' />';
 			echo '</div>';
 
 			echo esc_attr( ( ! empty( $this->field['label'] ) ) ) ? '<span class="scs--label">' . esc_attr( $this->field['label'] ) . '</span>' : '';

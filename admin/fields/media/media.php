@@ -81,7 +81,7 @@ if ( ! class_exists( 'SCS_Field_media' ) ) {
 			}
 
 			echo '<div class="scs--placeholder">';
-			echo '<input type="text" name="' . esc_attr( $this->field_name( '[url]' ) ) . '" value="' . esc_attr( $this->value['url'] ) . '" class="scs--url' . esc_attr( $hidden_url ) . '" readonly="readonly"' . esc_attr( $this->field_attributes() ) . esc_attr( $placeholder ) . ' />';
+			echo '<input type="text" name="' . esc_attr( $this->field_name( '[url]' ) ) . '" value="' . esc_attr( $this->value['url'] ) . '" class="scs--url' . esc_attr( $hidden_url ) . '" readonly="readonly"' . wp_kses_data($this->field_attributes()) . esc_attr( $placeholder ) . ' />';
 			echo '<a href="#" class="button button-primary scs--button" data-library="' . esc_attr( $library ) . '" data-preview-size="' . esc_attr( $args['preview_size'] ) . '">' . esc_html( $args['button_title'] ) . '</a>';
 			echo ( empty( $args['preview'] ) ) ? '<a href="#" class="button button-secondary scs-warning-primary scs--remove' . esc_attr( $hidden_auto ) . '">' . esc_html( $args['remove_title'] ) . '</a>' : '';
 			echo '</div>';

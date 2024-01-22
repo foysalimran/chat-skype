@@ -54,7 +54,7 @@ if ( ! class_exists( 'SCS_Field_checkbox' ) ) {
 								$checked = ( in_array( $sub_key, $value ) ) ? ' checked' : '';
 								echo '<li>';
 								echo '<label>';
-								echo '<input type="checkbox" name="' . esc_attr( $this->field_name( '[]' ) ) . '" value="' . esc_attr( $sub_key ) . '"' . esc_attr( $this->field_attributes() ) . esc_attr( $checked ) . '/>';
+								echo '<input type="checkbox" name="' . esc_attr( $this->field_name( '[]' ) ) . '" value="' . esc_attr( $sub_key ) . '"' . wp_kses_data($this->field_attributes()) . esc_attr( $checked ) . '/>';
 								echo '<span class="scs--text">' . esc_attr( $sub_value ) . '</span>';
 								echo '</label>';
 								echo '</li>';
@@ -68,7 +68,7 @@ if ( ! class_exists( 'SCS_Field_checkbox' ) ) {
 
 							echo '<li>';
 							echo '<label>';
-							echo '<input type="checkbox" name="' . esc_attr( $this->field_name( '[]' ) ) . '" value="' . esc_attr( $option_key ) . '"' . esc_attr( $this->field_attributes() ) . esc_attr( $checked ) . '/>';
+							echo '<input type="checkbox" name="' . esc_attr( $this->field_name( '[]' ) ) . '" value="' . esc_attr( $option_key ) . '"' . wp_kses_data($this->field_attributes()) . esc_attr( $checked ) . '/>';
 							echo '<span class="scs--text">' . esc_attr( $option_value ) . '</span>';
 							echo '</label>';
 							echo '</li>';
@@ -89,8 +89,8 @@ if ( ! class_exists( 'SCS_Field_checkbox' ) ) {
 			} else {
 
 							echo '<label class="scs-checkbox">';
-						echo '<input type="hidden" name="' . esc_attr( $this->field_name() ) . '" value="' . esc_attr( $this->value ) . '" class="scs--input"' . esc_attr( $this->field_attributes() ) . '/>';
-							echo '<input type="checkbox" name="_pseudo" class="scs--checkbox"' . esc_attr( checked( $this->value, 1, false ) ) . esc_attr( $this->field_attributes() ) . '/>';
+						echo '<input type="hidden" name="' . esc_attr( $this->field_name() ) . '" value="' . esc_attr( $this->value ) . '" class="scs--input"' . wp_kses_data($this->field_attributes()) . '/>';
+							echo '<input type="checkbox" name="_pseudo" class="scs--checkbox"' . esc_attr( checked( $this->value, 1, false ) ) . wp_kses_data($this->field_attributes()) . '/>';
 							echo esc_attr( ( ! empty( $this->field['label'] ) ) ) ? '<span class="scs--text">' . esc_attr( $this->field['label'] ) . '</span>' : '';
 						echo '</label>';
 

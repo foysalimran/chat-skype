@@ -21,7 +21,7 @@ if ( ! class_exists( 'SCS_Field_textarea' ) ) {
 
 			echo wp_kses_post( $this->field_before() );
 			echo esc_attr( $this->shortcoder() );
-			echo '<textarea name="' . esc_attr( $this->field_name() ) . '"' . esc_attr( $this->field_attributes() ) . '>' . esc_attr( $this->value ) . '</textarea>';
+			echo '<textarea name="' . esc_attr( $this->field_name() ) . '"' . wp_kses_data($this->field_attributes()) . '>' . esc_attr( $this->value ) . '</textarea>';
 			echo wp_kses_post( $this->field_after() );
 		}
 

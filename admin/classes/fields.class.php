@@ -58,9 +58,13 @@ if ( ! class_exists( 'SCS_Fields' ) ) {
 							$atts .= ' ' . esc_attr( $key );
 					} else {
 							$atts .= ' ' . esc_attr( $key ) . '="' . esc_attr( $value ) . '"';
+
+							
 					}
 				}
 			}
+
+
 
 			return $atts;
 		}

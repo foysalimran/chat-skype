@@ -31,7 +31,7 @@ if ( ! class_exists( 'SCS_Field_code_editor' ) ) {
 			$settings = wp_parse_args( $settings, $default_settings );
 
 			echo wp_kses_post( $this->field_before() );
-			echo '<textarea name="' . esc_attr( $this->field_name() ) . '"' . esc_attr( $this->field_attributes() ) . ' data-editor="' . esc_attr( wp_json_encode( $settings ) ) . '">' . esc_attr( $this->value ) . '</textarea>';
+			echo '<textarea name="' . esc_attr( $this->field_name() ) . '"' . wp_kses_data($this->field_attributes()) . ' data-editor="' . esc_attr( wp_json_encode( $settings ) ) . '">' . esc_attr( $this->value ) . '</textarea>';
 			echo wp_kses_post( $this->field_after() );
 		}
 

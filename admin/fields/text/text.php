@@ -23,7 +23,8 @@ if ( ! class_exists( 'SCS_Field_text' ) ) {
 
 			echo wp_kses_post( $this->field_before() );
 
-			echo '<input type="' . esc_attr( $type ) . '" name="' . esc_attr( $this->field_name() ) . '" value="' . esc_attr( $this->value ) . '"' . esc_attr( $this->field_attributes() ) . ' />';
+			echo '<input type="' . esc_attr( $type ) . '" name="' . esc_attr( $this->field_name() ) . '" value="' . esc_attr( $this->value ) . '"' .  wp_kses_data($this->field_attributes()) . ' />';
+	
 
 			echo wp_kses_post( $this->field_after() );
 		}

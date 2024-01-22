@@ -45,11 +45,11 @@ if ( ! class_exists( 'SCS_Field_date' ) ) {
 					)
 				);
 
-				echo '<label class="scs--from">' . esc_attr( $args['text_from'] ) . ' <input type="text" name="' . esc_attr( $this->field_name( '[from]' ) ) . '" value="' . esc_attr( $value['from'] ) . '"' . esc_attr( $this->field_attributes() ) . '/></label>';
-				echo '<label class="scs--to">' . esc_attr( $args['text_to'] ) . ' <input type="text" name="' . esc_attr( $this->field_name( '[to]' ) ) . '" value="' . esc_attr( $value['to'] ) . '"' . esc_attr( $this->field_attributes() ) . '/></label>';
+				echo '<label class="scs--from">' . esc_attr( $args['text_from'] ) . ' <input type="text" name="' . esc_attr( $this->field_name( '[from]' ) ) . '" value="' . esc_attr( $value['from'] ) . '"' . wp_kses_data($this->field_attributes()) . '/></label>';
+				echo '<label class="scs--to">' . esc_attr( $args['text_to'] ) . ' <input type="text" name="' . esc_attr( $this->field_name( '[to]' ) ) . '" value="' . esc_attr( $value['to'] ) . '"' . wp_kses_data($this->field_attributes()) . '/></label>';
 			} else {
 
-				echo '<input type="text" name="' . esc_attr( $this->field_name() ) . '" value="' . esc_attr( $this->value ) . '"' . esc_attr( $this->field_attributes() ) . '/>';
+				echo '<input type="text" name="' . esc_attr( $this->field_name() ) . '" value="' . esc_attr( $this->value ) . '"' . wp_kses_data($this->field_attributes()) . '/>';
 			}
 
 			echo '<div class="scs-date-settings" data-settings="' . esc_attr( wp_json_encode( $settings ) ) . '"></div>';

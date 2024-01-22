@@ -58,7 +58,7 @@ if ( ! class_exists( 'SCS_Field_link_color' ) ) {
 
 					echo '<div class="scs--left scs-field-color">';
 						echo '<div class="scs--title">' . esc_attr( $color_prop_value ) . '</div>';
-						echo '<input type="text" name="' . esc_attr( $this->field_name( '[' . $color_prop_key . ']' ) ) . '" value="' . esc_attr( $value[ $color_prop_key ] ) . '" class="scs-color"' . esc_attr( $default_attr ) . esc_attr( $this->field_attributes() ) . '/>';
+						echo '<input type="text" name="' . esc_attr( $this->field_name( '[' . $color_prop_key . ']' ) ) . '" value="' . esc_attr( $value[ $color_prop_key ] ) . '" class="scs-color"' . esc_attr( $default_attr ) . wp_kses_data($this->field_attributes()) . '/>';
 					echo '</div>';
 
 				}

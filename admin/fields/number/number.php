@@ -31,7 +31,7 @@ if ( ! class_exists( 'SCS_Field_number' ) ) {
 
 			echo wp_kses_post( $this->field_before() );
 			echo '<div class="scs--wrap">';
-			echo '<input type="number" name="' . esc_attr( $this->field_name() ) . '" value="' . esc_attr( $this->value ) . '"' . esc_attr( $this->field_attributes() ) . ' min="' . esc_attr( $args['min'] ) . '" max="' . esc_attr( $args['max'] ) . '" step="' . esc_attr( $args['step'] ) . '"/>';
+			echo '<input type="number" name="' . esc_attr( $this->field_name() ) . '" value="' . esc_attr( $this->value ) . '"' . wp_kses_data($this->field_attributes()) . ' min="' . esc_attr( $args['min'] ) . '" max="' . esc_attr( $args['max'] ) . '" step="' . esc_attr( $args['step'] ) . '"/>';
 			echo ( ! empty( $args['unit'] ) ) ? '<span class="scs--unit">' . esc_attr( $args['unit'] ) . '</span>' : '';
 			echo '</div>';
 			echo wp_kses_post( $this->field_after() );

@@ -605,7 +605,7 @@ SCS::createOptions(
 		'menu_title'      => esc_html__( 'Chat skype', 'chat-skype' ),
 		'menu_slug'       => 'scs',
 		'menu_icon'       => 'dashicons-format-chat',
-		'framework_title' => 'Chat skype <small>by ThemeAtelier</small>',
+		'framework_title' => 'Chat skype',
 		'show_bar_menu'   => false,
 		'footer_text'     => esc_html__( 'Thank you for using our product', 'chat-skype' ),
 		'theme'           => 'light',
@@ -1007,15 +1007,6 @@ SCS::createSection(
 		'title'  => esc_html__( 'Buttons shortcodes', 'chat-skype' ),
 		'icon'   => 'fas fa-code',
 		'fields' => array(
-			array(
-				'id'       => 'opt-code-editor-3',
-				'type'     => 'code_editor',
-				'title'    => 'CSS Editor',
-				'settings' => array(
-					'theme' => 'ambiance',
-					'mode'  => 'css',
-				),
-			),
 			array(
 				'id'      => 'opt-shortcode-select',
 				'type'    => 'image_select',

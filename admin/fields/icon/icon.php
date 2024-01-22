@@ -36,7 +36,7 @@ if ( ! class_exists( 'SCS_Field_icon' ) ) {
 			echo '<span class="scs-icon-preview' . esc_attr( $hidden ) . '"><i class="' . esc_attr( $this->value ) . '"></i></span>';
 			echo '<a href="#" class="button button-primary scs-icon-add" data-nonce="' . esc_attr( $nonce ) . '">' . esc_html( $args['button_title'] ) . '</a>';
 			echo '<a href="#" class="button scs-warning-primary scs-icon-remove' . esc_attr( $hidden ) . '">' . esc_html( $args['remove_title'] ) . '</a>';
-			echo '<input type="hidden" name="' . esc_attr( $this->field_name() ) . '" value="' . esc_attr( $this->value ) . '" class="scs-icon-value"' . esc_attr( $this->field_attributes() ) . ' />';
+			echo '<input type="hidden" name="' . esc_attr( $this->field_name() ) . '" value="' . esc_attr( $this->value ) . '" class="scs-icon-value"' . wp_kses_data($this->field_attributes()) . ' />';
 			echo '</div>';
 
 			echo wp_kses_post( $this->field_after() );

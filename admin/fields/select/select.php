@@ -70,7 +70,7 @@ if ( ! class_exists( 'SCS_Field_select' ) ) {
 
 					if ( ! empty( $args['chosen'] ) && ! empty( $args['multiple'] ) ) {
 
-						echo '<select name="' . esc_attr( $field_name ) . '" class="scs-hide-select hidden"' . esc_attr( $multiple_attr ) . esc_attr( $field_attr ) . '>';
+						echo '<select name="' . esc_attr( $field_name ) . '" class="scs-hide-select hidden"' . esc_attr( $multiple_attr ) . wp_kses_data( $field_attr ) . '>';
 
 						foreach ( $this->value as $option_key ) {
 							echo '<option value="' . esc_attr( $option_key ) . '" selected>' . esc_attr( $option_key ) . '</option>';

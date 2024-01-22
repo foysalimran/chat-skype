@@ -522,7 +522,7 @@ if ( ! class_exists( 'SCS_Options' ) ) {
 
 						echo '<li class="scs-tab-item">';
 
-						echo '<a href="#tab=' . esc_attr( $tab_id ) . '" data-tab-id="' . esc_attr( $tab_id ) . '" class="scs-arrow">' . $tab_icon . esc_html( $tab['title'] ) . esc_html( $tab_error ) . '</a>';
+						echo '<a href="#tab=' . esc_attr( $tab_id ) . '" data-tab-id="' . esc_attr( $tab_id ) . '" class="scs-arrow">' . wp_kses_post( $tab_icon ) . esc_html( $tab['title'] ) . esc_html( $tab_error ) . '</a>';
 
 						echo '<ul>';
 
@@ -532,7 +532,7 @@ if ( ! class_exists( 'SCS_Options' ) ) {
 								$sub_error = $this->error_check( $sub );
 								$sub_icon  = ( ! empty( $sub['icon'] ) ) ? '<i class="scs-tab-icon ' . esc_attr( $sub['icon'] ) . '"></i>' : '';
 
-								echo '<li><a href="#tab=' . esc_attr( $sub_id ) . '" data-tab-id="' . esc_attr( $sub_id ) . '">' . $sub_icon . esc_html( $sub['title'] ) . $sub_error . '</a></li>';
+								echo '<li><a href="#tab=' . esc_attr( $sub_id ) . '" data-tab-id="' . esc_attr( $sub_id ) . '">' . $sub_icon . esc_html( $sub['title'] ) . esc_html( $sub_error ) . '</a></li>';
 						}
 
 						echo '</ul>';
@@ -540,7 +540,7 @@ if ( ! class_exists( 'SCS_Options' ) ) {
 						echo '</li>';
 					} else {
 
-						echo '<li class="scs-tab-item"><a href="#tab=' . esc_attr( $tab_id ) . '" data-tab-id="' . esc_attr( $tab_id ) . '">' . $tab_icon . esc_html( $tab['title'] ) . esc_html( $tab_error ) . '</a></li>';
+						echo '<li class="scs-tab-item"><a href="#tab=' . esc_attr( $tab_id ) . '" data-tab-id="' . esc_attr( $tab_id ) . '">' . wp_kses_post( $tab_icon ) . esc_html( $tab['title'] ) . esc_html( $tab_error ) . '</a></li>';
 					}
 				}
 
@@ -563,7 +563,7 @@ if ( ! class_exists( 'SCS_Options' ) ) {
 				$section_slug   = ( ! empty( $section['title'] ) ) ? sanitize_title( $section_title ) : '';
 
 				echo '<div class="scs-section hidden' . esc_attr( $section_onload . $section_class ) . '" data-section-id="' . esc_attr( $section_parent . $section_slug ) . '">';
-				echo ( $has_nav ) ? '<div class="scs-section-title"><h3>' . $section_icon . $section_title . '</h3></div>' : '';
+				echo ( $has_nav ) ? '<div class="scs-section-title"><h3>' . wp_kses_post($section_icon) . esc_html($section_title) . '</h3></div>' : '';
 				echo ( ! empty( $section['description'] ) ) ? '<div class="scs-field scs-section-description">' . wp_kses_post( $section['description'] ) . '</div>' : '';
 
 				if ( ! empty( $section['fields'] ) ) {
