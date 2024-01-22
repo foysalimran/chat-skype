@@ -64,7 +64,7 @@ if ( ! class_exists( 'SCS_Field_spacing' ) ) {
 				$placeholder = ( ! empty( $args['all_placeholder'] ) ) ? ' placeholder="' . esc_attr( $args['all_placeholder'] ) . '"' : '';
 
 				echo '<div class="scs--input">';
-				echo ( ! empty( $args['all_icon'] ) ) ? '<span class="scs--label scs--icon">' . esc_html( $args['all_icon'] ) . '</span>' : '';
+				echo ( ! empty( $args['all_icon'] ) ) ? '<span class="scs--label scs--icon">' . wp_kses_post( $args['all_icon'] ) . '</span>' : '';
 				echo '<input type="number" name="' . esc_attr( $this->field_name( '[all]' ) ) . '" value="' . esc_attr( $value['all'] ) . '"' . esc_attr( $placeholder ) . ' class="scs-input-number' . esc_attr( $is_unit ) . '" step="any" />';
 				echo ( $unit ) ? '<span class="scs--label scs--unit">' . esc_attr( $args['units'][0] ) . '</span>' : '';
 				echo '</div>';
@@ -85,7 +85,7 @@ if ( ! class_exists( 'SCS_Field_spacing' ) ) {
 					$placeholder = ( ! empty( $args[ $property . '_placeholder' ] ) ) ? ' placeholder="' . esc_attr( $args[ $property . '_placeholder' ] ) . '"' : '';
 
 					echo '<div class="scs--input">';
-					echo ( ! empty( $args[ $property . '_icon' ] ) ) ? '<span class="scs--label scs--icon">' . esc_attr( $args[ $property . '_icon' ] ) . '</span>' : '';
+					echo ( ! empty( $args[ $property . '_icon' ] ) ) ? '<span class="scs--label scs--icon">' . wp_kses_post( $args[ $property . '_icon' ] ) . '</span>' : '';
 					echo '<input type="number" name="' . esc_attr( $this->field_name( '[' . $property . ']' ) ) . '" value="' . esc_attr( $value[ $property ] ) . '"' . esc_attr( $placeholder ) . ' class="scs-input-number' . esc_attr( $is_unit ) . '" step="any" />';
 					echo ( $unit ) ? '<span class="scs--label scs--unit">' . esc_attr( $args['units'][0] ) . '</span>' : '';
 					echo '</div>';
