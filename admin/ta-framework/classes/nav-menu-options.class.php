@@ -113,8 +113,8 @@ if ( ! class_exists( 'SCS_Nav_Menu_Options' ) ) {
 
           echo '<div class="scs-fields">';
 
-          echo ( $section_title || $section_icon ) ? '<div class="scs-nav-menu-title"><h4>'. $section_icon . $section_title .'</h4></div>' : '';
-          echo ( ! empty( $section['description'] ) ) ? '<div class="scs-field scs-section-description">'. $section['description'] .'</div>' : '';
+          echo ( $section_title || $section_icon ) ? '<div class="scs-nav-menu-title"><h4>'. wp_kses_post($section_icon) . esc_html($section_title) .'</h4></div>' : '';
+          echo ( ! empty( $section['description'] ) ) ? '<div class="scs-field scs-section-description">'. wp_kses_post($section['description']) .'</div>' : '';
 
           if ( ! empty( $section['fields'] ) ) {
 

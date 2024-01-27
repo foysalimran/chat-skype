@@ -105,8 +105,8 @@ if ( ! class_exists( 'SCS_Profile_Options' ) ) {
         $section_icon  = ( ! empty( $section['icon'] ) ) ? '<i class="scs-section-icon '. esc_attr( $section['icon'] ) .'"></i>' : '';
         $section_title = ( ! empty( $section['title'] ) ) ? $section['title'] : '';
 
-        echo ( $section_title || $section_icon ) ? '<h2>'. $section_icon . $section_title .'</h2>' : '';
-        echo ( ! empty( $section['description'] ) ) ? '<div class="scs-field scs-section-description">'. $section['description'] .'</div>' : '';
+        echo ( $section_title || $section_icon ) ? '<h2>'. wp_kses_post($section_icon) . esc_html($section_title) .'</h2>' : '';
+        echo ( ! empty( $section['description'] ) ) ? '<div class="scs-field scs-section-description">'. wp_kses_post($section['description']) .'</div>' : '';
 
         if ( ! empty( $section['fields'] ) ) {
 
