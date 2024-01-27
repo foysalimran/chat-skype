@@ -29,7 +29,7 @@ if ( ! class_exists( 'SCS_Field_select' ) ) {
 				)
 			);
 
-			$this->value = ( is_array( $this->value ) ) ? $this->value : array_filter( (array) $this->value );
+			$this->value = ( is_array( $this->value ) ) ? wp_kses_post($this->value) : array_filter( (array) $this->value );
 
 			echo wp_kses_post( $this->field_before() );
 

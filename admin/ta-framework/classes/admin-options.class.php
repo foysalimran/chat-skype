@@ -504,7 +504,7 @@ if ( ! class_exists( 'SCS_Options' ) ) {
             $notice_class = ( ! empty( $this->notice ) ) ? 'scs-form-show' : '';
             $notice_text  = ( ! empty( $this->notice ) ) ? $this->notice : '';
 
-            echo '<div class="scs-form-result scs-form-success '. esc_attr( $notice_class ) .'">'. $notice_text .'</div>';
+            echo '<div class="scs-form-result scs-form-success '. esc_attr( $notice_class ) .'">'. wp_kses_post($notice_text) .'</div>';
 
             echo ( $this->args['show_form_warning'] ) ? '<div class="scs-form-result scs-form-warning">'. esc_html__( 'You have unsaved changes, save your changes!', 'chat-skype' ) .'</div>' : '';
 
@@ -641,7 +641,7 @@ if ( ! class_exists( 'SCS_Options' ) ) {
           echo ( $this->args['show_reset_all'] ) ? '<input type="submit" name="scs_transient[reset]" class="button scs-warning-primary scs-reset-all scs-confirm" value="'. ( ( $this->args['show_reset_section'] ) ? esc_html__( 'Reset All', 'chat-skype' ) : esc_html__( 'Reset', 'chat-skype' ) ) .'" data-confirm="'. esc_html__( 'Are you sure you want to reset all settings to default values?', 'chat-skype' ) .'">' : '';
           echo '</div>';
 
-          echo ( ! empty( $this->args['footer_text'] ) ) ? '<div class="scs-copyright">'. $this->args['footer_text'] .'</div>' : '';
+          echo ( ! empty( $this->args['footer_text'] ) ) ? '<div class="scs-copyright">'. wp_kses_post($this->args['footer_text']) .'</div>' : '';
 
           echo '<div class="clear"></div>';
           echo '</div>';
@@ -654,7 +654,7 @@ if ( ! class_exists( 'SCS_Options' ) ) {
 
         echo '<div class="clear"></div>';
 
-        echo ( ! empty( $this->args['footer_after'] ) ) ? $this->args['footer_after'] : '';
+        echo ( ! empty( $this->args['footer_after'] ) ) ? wp_kses_post($this->args['footer_after']) : '';
 
       echo '</div>';
 
