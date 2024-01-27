@@ -70,5 +70,5 @@ require_once SCS_DIR_PATH . 'inc/class-custom-buttons-templates.php';
 require_once SCS_DIR_PATH . '/view/chat-bubbles/chat-bubbles.php';
 
 // include framework for admin panel
-require_once SCS_DIR_PATH . 'admin/codestar-framework.php';
+require_once SCS_DIR_PATH . 'admin/ta-framework/codestar-framework.php';
 require_once SCS_DIR_PATH . 'inc/scs-plugin-options.php';

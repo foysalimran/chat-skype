@@ -634,7 +634,6 @@ SCS::createSection(
 				'desc'    => esc_html__( 'Add your skype ID. eg: myskypeid1222', 'chat-skype' ),
 			),
 
-
 			// changeing timezone
 			array(
 				'id'          => 'select-timezone',
