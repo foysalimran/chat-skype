@@ -13,7 +13,12 @@ if ( ! class_exists( 'SCS_Field_accordion' ) ) {
 		public function __construct( $field, $value = '', $unique = '', $where = '', $parent = '' ) {
 			parent::__construct( $field, $value, $unique, $where, $parent );
 		}
-
+		
+		/**
+		 * render
+		 *
+		 * @return void
+		 */
 		public function render() {
 
 			$unallows = array( 'accordion' );
