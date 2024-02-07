@@ -38,7 +38,7 @@ if ( ! class_exists( 'SCS_Field_checkbox' ) ) {
 
 				if ( is_array( $options ) && ! empty( $options ) ) {
 
-					echo '<ul' . wp_kses_post($inline_class) . '>';
+					echo '<ul' . wp_kses_post( $inline_class ) . '>';
 
 					foreach ( $options as $option_key => $option_value ) {
 
@@ -86,7 +86,7 @@ if ( ! class_exists( 'SCS_Field_checkbox' ) ) {
 			} else {
 
 					echo '<label class="scs-checkbox">';
-					echo '<input type="hidden" name="' . esc_attr( $this->field_name() ) . '" value="' . esc_attr($this->value) . '" class="scs--input"' . wp_kses_post( $this->field_attributes() ) . '/>';
+					echo '<input type="hidden" name="' . esc_attr( $this->field_name() ) . '" value="' . esc_attr( $this->value ) . '" class="scs--input"' . wp_kses_post( $this->field_attributes() ) . '/>';
 					echo '<input type="checkbox" name="_pseudo" class="scs--checkbox"' . esc_attr( checked( $this->value, 1, false ) ) . wp_kses_post( $this->field_attributes() ) . '/>';
 					echo ( ! empty( $this->field['label'] ) ) ? '<span class="scs--text">' . esc_attr( $this->field['label'] ) . '</span>' : '';
 					echo '</label>';

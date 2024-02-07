@@ -1,411 +1,392 @@
-<?php if ( ! defined( 'ABSPATH' ) ) { die; } // Cannot access directly.
+<?php if ( ! defined( 'ABSPATH' ) ) {
+	die; } // Cannot access directly.
 /**
  *
  * Metabox Class
  *
  * @since 1.0.0
  * @version 1.0.0
- *
  */
 if ( ! class_exists( 'SCS_Metabox' ) ) {
-  class SCS_Metabox extends SCS_Abstract{
-
-    // constans
-    public $unique         = '';
-    public $abstract       = 'metabox';
-    public $sections       = array();
-    public $pre_fields     = array();
-    public $post_type      = array();
-    public $args           = array(
-      'title'              => '',
-      'post_type'          => 'post',
-      'data_type'          => 'serialize',
-      'context'            => 'advanced',
-      'priority'           => 'default',
-      'exclude_post_types' => array(),
-      'page_templates'     => '',
-      'post_formats'       => '',
-      'show_reset'         => false,
-      'show_restore'       => false,
-      'enqueue_webfont'    => true,
-      'async_webfont'      => false,
-      'output_css'         => true,
-      'nav'                => 'normal',
-      'theme'              => 'dark',
-      'class'              => '',
-      'defaults'           => array(),
-    );
-
-    // run metabox construct
-    public function __construct( $key, $params = array() ) {
+	class SCS_Metabox extends SCS_Abstract {
+
+		// constans
+		public $unique     = '';
+		public $abstract   = 'metabox';
+		public $sections   = array();
+		public $pre_fields = array();
+		public $post_type  = array();
+		public $args       = array(
+			'title'              => '',
+			'post_type'          => 'post',
+			'data_type'          => 'serialize',
+			'context'            => 'advanced',
+			'priority'           => 'default',
+			'exclude_post_types' => array(),
+			'page_templates'     => '',
+			'post_formats'       => '',
+			'show_reset'         => false,
+			'show_restore'       => false,
+			'enqueue_webfont'    => true,
+			'async_webfont'      => false,
+			'output_css'         => true,
+			'nav'                => 'normal',
+			'theme'              => 'dark',
+			'class'              => '',
+			'defaults'           => array(),
+		);
+
+		// run metabox construct
+		public function __construct( $key, $params = array() ) {
+
+			$this->unique         = $key;
+			$this->args           = apply_filters( "scs_{$this->unique}_args", wp_parse_args( $params['args'], $this->args ), $this );
+			$this->sections       = apply_filters( "scs_{$this->unique}_sections", $params['sections'], $this );
+			$this->post_type      = ( is_array( $this->args['post_type'] ) ) ? $this->args['post_type'] : array_filter( (array) $this->args['post_type'] );
+			$this->post_formats   = ( is_array( $this->args['post_formats'] ) ) ? $this->args['post_formats'] : array_filter( (array) $this->args['post_formats'] );
+			$this->page_templates = ( is_array( $this->args['page_templates'] ) ) ? $this->args['page_templates'] : array_filter( (array) $this->args['page_templates'] );
+			$this->pre_fields     = $this->pre_fields( $this->sections );
+
+			add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ) );
+			add_action( 'save_post', array( $this, 'save_meta_box' ) );
+			add_action( 'edit_attachment', array( $this, 'save_meta_box' ) );
+
+			if ( ! empty( $this->page_templates ) || ! empty( $this->post_formats ) || ! empty( $this->args['class'] ) ) {
+				foreach ( $this->post_type as $post_type ) {
+					add_filter( 'postbox_classes_' . $post_type . '_' . $this->unique, array( $this, 'add_metabox_classes' ) );
+				}
+			}
+
+			// wp enqeueu for typography and output css
+			parent::__construct();
+		}
+
+		// instance
+		public static function instance( $key, $params = array() ) {
+			return new self( $key, $params );
+		}
+
+		public function add_metabox_classes( $classes ) {
+
+			global $post;
+
+			if ( ! empty( $this->post_formats ) ) {
+
+				$saved_post_format = ( is_object( $post ) ) ? get_post_format( $post ) : false;
+				$saved_post_format = ( ! empty( $saved_post_format ) ) ? $saved_post_format : 'default';
+
+				$classes[] = 'scs-post-formats';
+
+				// Sanitize post format for standard to default
+				if ( ( $key = array_search( 'standard', $this->post_formats ) ) !== false ) {
+					$this->post_formats[ $key ] = 'default';
+				}
+
+				foreach ( $this->post_formats as $format ) {
+					$classes[] = 'scs-post-format-' . $format;
+				}
+
+				if ( ! in_array( $saved_post_format, $this->post_formats ) ) {
+					$classes[] = 'scs-metabox-hide';
+				} else {
+					$classes[] = 'scs-metabox-show';
+				}
+			}
 
-      $this->unique         = $key;
-      $this->args           = apply_filters( "scs_{$this->unique}_args", wp_parse_args( $params['args'], $this->args ), $this );
-      $this->sections       = apply_filters( "scs_{$this->unique}_sections", $params['sections'], $this );
-      $this->post_type      = ( is_array( $this->args['post_type'] ) ) ? $this->args['post_type'] : array_filter( (array) $this->args['post_type'] );
-      $this->post_formats   = ( is_array( $this->args['post_formats'] ) ) ? $this->args['post_formats'] : array_filter( (array) $this->args['post_formats'] );
-      $this->page_templates = ( is_array( $this->args['page_templates'] ) ) ? $this->args['page_templates'] : array_filter( (array) $this->args['page_templates'] );
-      $this->pre_fields     = $this->pre_fields( $this->sections );
+			if ( ! empty( $this->page_templates ) ) {
 
-      add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ) );
-      add_action( 'save_post', array( $this, 'save_meta_box' ) );
-      add_action( 'edit_attachment', array( $this, 'save_meta_box' ) );
+				$saved_template = ( is_object( $post ) && ! empty( $post->page_template ) ) ? $post->page_template : 'default';
 
-      if ( ! empty( $this->page_templates ) || ! empty( $this->post_formats ) || ! empty( $this->args['class'] ) ) {
-        foreach ( $this->post_type as $post_type ) {
-          add_filter( 'postbox_classes_'. $post_type .'_'. $this->unique, array( $this, 'add_metabox_classes' ) );
-        }
-      }
+				$classes[] = 'scs-page-templates';
 
-      // wp enqeueu for typography and output css
-      parent::__construct();
+				foreach ( $this->page_templates as $template ) {
+					$classes[] = 'scs-page-' . preg_replace( '/[^a-zA-Z0-9]+/', '-', strtolower( $template ) );
+				}
 
-    }
+				if ( ! in_array( $saved_template, $this->page_templates ) ) {
+					$classes[] = 'scs-metabox-hide';
+				} else {
+					$classes[] = 'scs-metabox-show';
+				}
+			}
 
-    // instance
-    public static function instance( $key, $params = array() ) {
-      return new self( $key, $params );
-    }
+			if ( ! empty( $this->args['class'] ) ) {
+				$classes[] = $this->args['class'];
+			}
 
-    public function add_metabox_classes( $classes ) {
+			return $classes;
+		}
 
-      global $post;
+		// add metabox
+		public function add_meta_box( $post_type ) {
 
-      if ( ! empty( $this->post_formats ) ) {
+			if ( ! in_array( $post_type, $this->args['exclude_post_types'] ) ) {
+				add_meta_box( $this->unique, $this->args['title'], array( $this, 'add_meta_box_content' ), $this->post_type, $this->args['context'], $this->args['priority'], $this->args );
+			}
+		}
 
-        $saved_post_format = ( is_object( $post ) ) ? get_post_format( $post ) : false;
-        $saved_post_format = ( ! empty( $saved_post_format ) ) ? $saved_post_format : 'default';
+		// get default value
+		public function get_default( $field ) {
 
-        $classes[] = 'scs-post-formats';
+			$default = ( isset( $field['default'] ) ) ? $field['default'] : '';
+			$default = ( isset( $this->args['defaults'][ $field['id'] ] ) ) ? $this->args['defaults'][ $field['id'] ] : $default;
 
-        // Sanitize post format for standard to default
-        if ( ( $key = array_search( 'standard', $this->post_formats ) ) !== false ) {
-          $this->post_formats[$key] = 'default';
-        }
+			return $default;
+		}
 
-        foreach ( $this->post_formats as $format ) {
-          $classes[] = 'scs-post-format-'. $format;
-        }
+		// get meta value
+		public function get_meta_value( $field ) {
 
-        if ( ! in_array( $saved_post_format, $this->post_formats ) ) {
-          $classes[] = 'scs-metabox-hide';
-        } else {
-          $classes[] = 'scs-metabox-show';
-        }
+			global $post;
 
-      }
+			$value = null;
 
-      if ( ! empty( $this->page_templates ) ) {
+			if ( is_object( $post ) && ! empty( $field['id'] ) ) {
 
-        $saved_template = ( is_object( $post ) && ! empty( $post->page_template ) ) ? $post->page_template : 'default';
+				if ( $this->args['data_type'] !== 'serialize' ) {
+					$meta  = get_post_meta( $post->ID, $field['id'] );
+					$value = ( isset( $meta[0] ) ) ? $meta[0] : null;
+				} else {
+					$meta  = get_post_meta( $post->ID, $this->unique, true );
+					$value = ( isset( $meta[ $field['id'] ] ) ) ? $meta[ $field['id'] ] : null;
+				}
+			}
 
-        $classes[] = 'scs-page-templates';
+			$default = ( isset( $field['id'] ) ) ? $this->get_default( $field ) : '';
+			$value   = ( isset( $value ) ) ? $value : $default;
 
-        foreach ( $this->page_templates as $template ) {
-          $classes[] = 'scs-page-'. preg_replace( '/[^a-zA-Z0-9]+/', '-', strtolower( $template ) );
-        }
+			return $value;
+		}
 
-        if ( ! in_array( $saved_template, $this->page_templates ) ) {
-          $classes[] = 'scs-metabox-hide';
-        } else {
-          $classes[] = 'scs-metabox-show';
-        }
+		// add metabox content
+		public function add_meta_box_content( $post, $callback ) {
 
-      }
+			global $post;
 
-      if ( ! empty( $this->args['class'] ) ) {
-        $classes[] = $this->args['class'];
-      }
+			$has_nav   = ( count( $this->sections ) > 1 && $this->args['context'] !== 'side' ) ? true : false;
+			$show_all  = ( ! $has_nav ) ? ' scs-show-all' : '';
+			$post_type = ( is_object( $post ) ) ? $post->post_type : '';
+			$errors    = ( is_object( $post ) ) ? get_post_meta( $post->ID, '_scs_errors_' . $this->unique, true ) : array();
+			$errors    = ( ! empty( $errors ) ) ? $errors : array();
+			$theme     = ( $this->args['theme'] ) ? ' scs-theme-' . $this->args['theme'] : '';
+			$nav_type  = ( $this->args['nav'] === 'inline' ) ? 'inline' : 'normal';
 
-      return $classes;
+			if ( is_object( $post ) && ! empty( $errors ) ) {
+				delete_post_meta( $post->ID, '_scs_errors_' . $this->unique );
+			}
 
-    }
+			wp_nonce_field( 'scs_metabox_nonce', 'scs_metabox_nonce' . $this->unique );
 
-    // add metabox
-    public function add_meta_box( $post_type ) {
+			echo '<div class="scs scs-metabox' . esc_attr( $theme ) . '">';
 
-      if ( ! in_array( $post_type, $this->args['exclude_post_types'] ) ) {
-        add_meta_box( $this->unique, $this->args['title'], array( $this, 'add_meta_box_content' ), $this->post_type, $this->args['context'], $this->args['priority'], $this->args );
-      }
+			echo '<div class="scs-wrapper' . esc_attr( $show_all ) . '">';
 
-    }
+			if ( $has_nav ) {
 
-    // get default value
-    public function get_default( $field ) {
+				echo '<div class="scs-nav scs-nav-' . esc_attr( $nav_type ) . ' scs-nav-metabox">';
 
-      $default = ( isset( $field['default'] ) ) ? $field['default'] : '';
-      $default = ( isset( $this->args['defaults'][$field['id']] ) ) ? $this->args['defaults'][$field['id']] : $default;
+				echo '<ul>';
 
-      return $default;
+				$tab_key = 0;
 
-    }
+				foreach ( $this->sections as $section ) {
 
-    // get meta value
-    public function get_meta_value( $field ) {
+					if ( ! empty( $section['post_type'] ) && ! in_array( $post_type, array_filter( (array) $section['post_type'] ) ) ) {
+						continue;
+					}
 
-      global $post;
+					$tab_error = ( ! empty( $errors['sections'][ $tab_key ] ) ) ? '<i class="scs-label-error scs-error">!</i>' : '';
+					$tab_icon  = ( ! empty( $section['icon'] ) ) ? '<i class="scs-tab-icon ' . esc_attr( $section['icon'] ) . '"></i>' : '';
 
-      $value = null;
+					echo '<li><a href="#">' . wp_kses_post( $tab_icon ) . esc_html( $tab['title'] ) . esc_html( $tab_error ) . '</a></li>';
 
-      if ( is_object( $post ) && ! empty( $field['id'] ) ) {
+					++$tab_key;
 
-        if ( $this->args['data_type'] !== 'serialize' ) {
-          $meta  = get_post_meta( $post->ID, $field['id'] );
-          $value = ( isset( $meta[0] ) ) ? $meta[0] : null;
-        } else {
-          $meta  = get_post_meta( $post->ID, $this->unique, true );
-          $value = ( isset( $meta[$field['id']] ) ) ? $meta[$field['id']] : null;
-        }
+				}
 
-      }
+				echo '</ul>';
 
-      $default = ( isset( $field['id'] ) ) ? $this->get_default( $field ) : '';
-      $value   = ( isset( $value ) ) ? $value : $default;
+				echo '</div>';
 
-      return $value;
+			}
 
-    }
+			echo '<div class="scs-content">';
 
-    // add metabox content
-    public function add_meta_box_content( $post, $callback ) {
+			echo '<div class="scs-sections">';
 
-      global $post;
+			$section_key = 0;
 
-      $has_nav   = ( count( $this->sections ) > 1 && $this->args['context'] !== 'side' ) ? true : false;
-      $show_all  = ( ! $has_nav ) ? ' scs-show-all' : '';
-      $post_type = ( is_object ( $post ) ) ? $post->post_type : '';
-      $errors    = ( is_object ( $post ) ) ? get_post_meta( $post->ID, '_scs_errors_'. $this->unique, true ) : array();
-      $errors    = ( ! empty( $errors ) ) ? $errors : array();
-      $theme     = ( $this->args['theme'] ) ? ' scs-theme-'. $this->args['theme'] : '';
-      $nav_type  = ( $this->args['nav'] === 'inline' ) ? 'inline' : 'normal';
+			foreach ( $this->sections as $section ) {
 
-      if ( is_object ( $post ) && ! empty( $errors ) ) {
-        delete_post_meta( $post->ID, '_scs_errors_'. $this->unique );
-      }
+				if ( ! empty( $section['post_type'] ) && ! in_array( $post_type, array_filter( (array) $section['post_type'] ) ) ) {
+					continue;
+				}
 
-      wp_nonce_field( 'scs_metabox_nonce', 'scs_metabox_nonce'. $this->unique );
+				$section_onload = ( ! $has_nav ) ? ' scs-onload' : '';
+				$section_class  = ( ! empty( $section['class'] ) ) ? ' ' . $section['class'] : '';
+				$section_title  = ( ! empty( $section['title'] ) ) ? $section['title'] : '';
+				$section_icon   = ( ! empty( $section['icon'] ) ) ? '<i class="scs-section-icon ' . esc_attr( $section['icon'] ) . '"></i>' : '';
 
-      echo '<div class="scs scs-metabox'. esc_attr( $theme ) .'">';
+				echo '<div class="scs-section hidden' . esc_attr( $section_onload . $section_class ) . '">';
 
-        echo '<div class="scs-wrapper'. esc_attr( $show_all ) .'">';
+				echo ( $section_title || $section_icon ) ? '<div class="scs-section-title"><h3>' . wp_kses_post( $section_icon ) . esc_html( $section_title ) . '</h3></div>' : '';
+				echo ( ! empty( $section['description'] ) ) ? '<div class="scs-field scs-section-description">' . wp_kses_post( $section['description'] ) . '</div>' : '';
 
-          if ( $has_nav ) {
+				if ( ! empty( $section['fields'] ) ) {
 
-            echo '<div class="scs-nav scs-nav-'. esc_attr( $nav_type ) .' scs-nav-metabox">';
+					foreach ( $section['fields'] as $field ) {
 
-              echo '<ul>';
+						if ( ! empty( $field['id'] ) && ! empty( $errors['fields'][ $field['id'] ] ) ) {
+							$field['_error'] = $errors['fields'][ $field['id'] ];
+						}
 
-              $tab_key = 0;
+						if ( ! empty( $field['id'] ) ) {
+							$field['default'] = $this->get_default( $field );
+						}
 
-              foreach ( $this->sections as $section ) {
+						SCS::field( $field, $this->get_meta_value( $field ), $this->unique, 'metabox' );
 
-                if ( ! empty( $section['post_type'] ) && ! in_array( $post_type, array_filter( (array) $section['post_type'] ) ) ) {
-                  continue;
-                }
+					}
+				} else {
 
-                $tab_error = ( ! empty( $errors['sections'][$tab_key] ) ) ? '<i class="scs-label-error scs-error">!</i>' : '';
-                $tab_icon  = ( ! empty( $section['icon'] ) ) ? '<i class="scs-tab-icon '. esc_attr( $section['icon'] ) .'"></i>' : '';
+					echo '<div class="scs-no-option">' . esc_html__( 'No data available.', 'chat-skype' ) . '</div>';
 
-                echo '<li><a href="#">'. wp_kses_post($tab_icon) . esc_html($tab['title']) . esc_html($tab_error) .'</a></li>';
+				}
 
-                $tab_key++;
+				echo '</div>';
 
-              }
+				++$section_key;
 
-              echo '</ul>';
+			}
 
-            echo '</div>';
+			echo '</div>';
 
-          }
+			if ( ! empty( $this->args['show_restore'] ) || ! empty( $this->args['show_reset'] ) ) {
 
-          echo '<div class="scs-content">';
+				echo '<div class="scs-sections-reset">';
+				echo '<label>';
+				echo '<input type="checkbox" name="' . esc_attr( $this->unique ) . '[_reset]" />';
+				echo '<span class="button scs-button-reset">' . esc_html__( 'Reset', 'chat-skype' ) . '</span>';
+				echo '<span class="button scs-button-cancel">' . sprintf( '<small>( %s )</small> %s', esc_html__( 'update post', 'chat-skype' ), esc_html__( 'Cancel', 'chat-skype' ) ) . '</span>';
+				echo '</label>';
+				echo '</div>';
 
-            echo '<div class="scs-sections">';
+			}
 
-            $section_key = 0;
+			echo '</div>';
 
-            foreach ( $this->sections as $section ) {
+			echo ( $has_nav && $nav_type === 'normal' ) ? '<div class="scs-nav-background"></div>' : '';
 
-              if ( ! empty( $section['post_type'] ) && ! in_array( $post_type, array_filter( (array) $section['post_type'] ) ) ) {
-                continue;
-              }
+			echo '<div class="clear"></div>';
 
-              $section_onload = ( ! $has_nav ) ? ' scs-onload' : '';
-              $section_class  = ( ! empty( $section['class'] ) ) ? ' '. $section['class'] : '';
-              $section_title  = ( ! empty( $section['title'] ) ) ? $section['title'] : '';
-              $section_icon   = ( ! empty( $section['icon'] ) ) ? '<i class="scs-section-icon '. esc_attr( $section['icon'] ) .'"></i>' : '';
+			echo '</div>';
 
-              echo '<div class="scs-section hidden'. esc_attr( $section_onload . $section_class ) .'">';
+			echo '</div>';
+		}
 
-              echo ( $section_title || $section_icon ) ? '<div class="scs-section-title"><h3>'. wp_kses_post($section_icon) . esc_html($section_title) .'</h3></div>' : '';
-              echo ( ! empty( $section['description'] ) ) ? '<div class="scs-field scs-section-description">'. wp_kses_post($section['description']) .'</div>' : '';
+		// save metabox
+		public function save_meta_box( $post_id ) {
 
-              if ( ! empty( $section['fields'] ) ) {
+			$count    = 1;
+			$data     = array();
+			$errors   = array();
+			$noncekey = 'scs_metabox_nonce' . $this->unique;
+			$nonce    = ( ! empty( $_POST[ $noncekey ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ $noncekey ] ) ) : '';
 
-                foreach ( $section['fields'] as $field ) {
+			if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ! wp_verify_nonce( $nonce, 'scs_metabox_nonce' ) ) {
+				return $post_id;
+			}
 
-                  if ( ! empty( $field['id'] ) && ! empty( $errors['fields'][$field['id']] ) ) {
-                    $field['_error'] = $errors['fields'][$field['id']];
-                  }
+			// XSS ok.
+			// No worries, This "POST" requests is sanitizing in the below foreach.
+			$request = ( ! empty( $_POST[ $this->unique ] ) ) ? $_POST[ $this->unique ] : array();
 
-                  if ( ! empty( $field['id'] ) ) {
-                    $field['default'] = $this->get_default( $field );
-                  }
+			if ( ! empty( $request ) ) {
 
-                  SCS::field( $field, $this->get_meta_value( $field ), $this->unique, 'metabox' );
+				foreach ( $this->sections as $section ) {
 
-                }
+					if ( ! empty( $section['fields'] ) ) {
 
-              } else {
+						foreach ( $section['fields'] as $field ) {
 
-                echo '<div class="scs-no-option">'. esc_html__( 'No data available.', 'chat-skype' ) .'</div>';
+							if ( ! empty( $field['id'] ) ) {
 
-              }
+								$field_id    = $field['id'];
+								$field_value = isset( $request[ $field_id ] ) ? $request[ $field_id ] : '';
 
-              echo '</div>';
+								// Sanitize "post" request of field.
+								if ( ! isset( $field['sanitize'] ) ) {
 
-              $section_key++;
+									if ( is_array( $field_value ) ) {
+											$data[ $field_id ] = wp_kses_post_deep( $field_value );
+									} else {
+										$data[ $field_id ] = wp_kses_post( $field_value );
+									}
+								} elseif ( isset( $field['sanitize'] ) && is_callable( $field['sanitize'] ) ) {
 
-            }
+											$data[ $field_id ] = call_user_func( $field['sanitize'], $field_value );
 
-            echo '</div>';
+								} else {
 
-            if ( ! empty( $this->args['show_restore'] ) || ! empty( $this->args['show_reset'] ) ) {
+									$data[ $field_id ] = $field_value;
 
-              echo '<div class="scs-sections-reset">';
-              echo '<label>';
-              echo '<input type="checkbox" name="'. esc_attr( $this->unique ) .'[_reset]" />';
-              echo '<span class="button scs-button-reset">'. esc_html__( 'Reset', 'chat-skype' ) .'</span>';
-              echo '<span class="button scs-button-cancel">'. sprintf( '<small>( %s )</small> %s', esc_html__( 'update post', 'chat-skype' ), esc_html__( 'Cancel', 'chat-skype' ) ) .'</span>';
-              echo '</label>';
-              echo '</div>';
+								}
 
-            }
+								// Validate "post" request of field.
+								if ( isset( $field['validate'] ) && is_callable( $field['validate'] ) ) {
 
-          echo '</div>';
+										$has_validated = call_user_func( $field['validate'], $field_value );
 
-          echo ( $has_nav && $nav_type === 'normal' ) ? '<div class="scs-nav-background"></div>' : '';
+									if ( ! empty( $has_validated ) ) {
 
-          echo '<div class="clear"></div>';
+										$errors['sections'][ $count ]  = true;
+										$errors['fields'][ $field_id ] = $has_validated;
+										$data[ $field_id ]             = $this->get_meta_value( $field );
 
-        echo '</div>';
+									}
+								}
+							}
+						}
+					}
 
-      echo '</div>';
+					++$count;
 
-    }
+				}
+			}
 
-    // save metabox
-    public function save_meta_box( $post_id ) {
+			$data = apply_filters( "scs_{$this->unique}_save", $data, $post_id, $this );
 
-      $count    = 1;
-      $data     = array();
-      $errors   = array();
-      $noncekey = 'scs_metabox_nonce'. $this->unique;
-      $nonce    = ( ! empty( $_POST[ $noncekey ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ $noncekey ] ) ) : '';
+			do_action( "scs_{$this->unique}_save_before", $data, $post_id, $this );
 
-      if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ! wp_verify_nonce( $nonce, 'scs_metabox_nonce' ) ) {
-        return $post_id;
-      }
+			if ( empty( $data ) || ! empty( $request['_reset'] ) ) {
 
-      // XSS ok.
-      // No worries, This "POST" requests is sanitizing in the below foreach.
-      $request = ( ! empty( $_POST[ $this->unique ] ) ) ? $_POST[ $this->unique ] : array();
+				if ( $this->args['data_type'] !== 'serialize' ) {
+					foreach ( $this->pre_fields as $field ) {
+						if ( ! empty( $field['id'] ) ) {
+							delete_post_meta( $post_id, $field['id'] );
+						}
+					}
+				} else {
+					delete_post_meta( $post_id, $this->unique );
+				}
+			} else {
 
-      if ( ! empty( $request ) ) {
+				if ( $this->args['data_type'] !== 'serialize' ) {
+					foreach ( $data as $key => $value ) {
+						update_post_meta( $post_id, $key, $value );
+					}
+				} else {
+					update_post_meta( $post_id, $this->unique, $data );
+				}
 
-        foreach ( $this->sections as $section ) {
+				if ( ! empty( $errors ) ) {
+					update_post_meta( $post_id, '_scs_errors_' . $this->unique, $errors );
+				}
+			}
 
-          if ( ! empty( $section['fields'] ) ) {
+			do_action( "scs_{$this->unique}_saved", $data, $post_id, $this );
 
-            foreach ( $section['fields'] as $field ) {
-
-              if ( ! empty( $field['id'] ) ) {
-
-                $field_id    = $field['id'];
-                $field_value = isset( $request[$field_id] ) ? $request[$field_id] : '';
-
-                // Sanitize "post" request of field.
-                if ( ! isset( $field['sanitize'] ) ) {
-
-                  if( is_array( $field_value ) ) {
-                    $data[$field_id] = wp_kses_post_deep( $field_value );
-                  } else {
-                    $data[$field_id] = wp_kses_post( $field_value );
-                  }
-
-                } else if( isset( $field['sanitize'] ) && is_callable( $field['sanitize'] ) ) {
-
-                  $data[$field_id] = call_user_func( $field['sanitize'], $field_value );
-
-                } else {
-
-                  $data[$field_id] = $field_value;
-
-                }
-
-                // Validate "post" request of field.
-                if ( isset( $field['validate'] ) && is_callable( $field['validate'] ) ) {
-
-                  $has_validated = call_user_func( $field['validate'], $field_value );
-
-                  if ( ! empty( $has_validated ) ) {
-
-                    $errors['sections'][$count] = true;
-                    $errors['fields'][$field_id] = $has_validated;
-                    $data[$field_id] = $this->get_meta_value( $field );
-
-                  }
-
-                }
-
-              }
-
-            }
-
-          }
-
-          $count++;
-
-        }
-
-      }
-
-      $data = apply_filters( "scs_{$this->unique}_save", $data, $post_id, $this );
-
-      do_action( "scs_{$this->unique}_save_before", $data, $post_id, $this );
-
-      if ( empty( $data ) || ! empty( $request['_reset'] ) ) {
-
-        if ( $this->args['data_type'] !== 'serialize' ) {
-          foreach ( $this->pre_fields as $field ) {
-            if ( ! empty( $field['id'] ) ) {
-              delete_post_meta( $post_id, $field['id'] );
-            }
-          }
-        } else {
-          delete_post_meta( $post_id, $this->unique );
-        }
-
-      } else {
-
-        if ( $this->args['data_type'] !== 'serialize' ) {
-          foreach ( $data as $key => $value ) {
-            update_post_meta( $post_id, $key, $value );
-          }
-        } else {
-          update_post_meta( $post_id, $this->unique, $data );
-        }
-
-        if ( ! empty( $errors ) ) {
-          update_post_meta( $post_id, '_scs_errors_'. $this->unique, $errors );
-        }
-
-      }
-
-      do_action( "scs_{$this->unique}_saved", $data, $post_id, $this );
-
-      do_action( "scs_{$this->unique}_save_after", $data, $post_id, $this );
-
-    }
-  }
+			do_action( "scs_{$this->unique}_save_after", $data, $post_id, $this );
+		}
+	}
 }

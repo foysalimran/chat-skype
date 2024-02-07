@@ -7,8 +7,8 @@
  * @since 1.0.0
  * @version 1.0.0
  */
-if ( ! class_exists( 'SCS_Field_upload' ) ) {
-	class SCS_Field_upload extends SCS_Fields {
+if ( ! class_exists( 'SCS_Field_Upload' ) ) {
+	class SCS_Field_Upload extends SCS_Fields {
 
 		public function __construct( $field, $value = '', $unique = '', $where = '', $parent = '' ) {
 			parent::__construct( $field, $value, $unique, $where, $parent );

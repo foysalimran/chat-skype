@@ -29,7 +29,7 @@ if ( ! class_exists( 'SCS_Field_select' ) ) {
 				)
 			);
 
-			$this->value = ( is_array( $this->value ) ) ? wp_kses_post($this->value) : array_filter( (array) $this->value );
+			$this->value = ( is_array( $this->value ) ) ? wp_kses_post( $this->value ) : array_filter( (array) $this->value );
 
 			echo wp_kses_post( $this->field_before() );
 
@@ -67,7 +67,7 @@ if ( ! class_exists( 'SCS_Field_select' ) ) {
 
 					if ( ! empty( $args['chosen'] ) && ! empty( $args['multiple'] ) ) {
 
-						echo '<select name="' . esc_attr($field_name) . '" class="scs-hide-select hidden"' . wp_kses_post($multiple_attr . $field_attr) . '>';
+						echo '<select name="' . esc_attr( $field_name ) . '" class="scs-hide-select hidden"' . wp_kses_post( $multiple_attr . $field_attr ) . '>';
 						foreach ( $this->value as $option_key ) {
 								echo '<option value="' . esc_attr( $option_key ) . '" selected>' . esc_attr( $option_key ) . '</option>';
 						}
@@ -79,7 +79,7 @@ if ( ! class_exists( 'SCS_Field_select' ) ) {
 					}
 
 					// These attributes has been serialized above.
-					echo '<select name="' . esc_attr( $field_name ) . '"' . wp_kses_post($field_class . $multiple_attr . $placeholder_attr . $field_attr . $chosen_data_attr) . '>';
+					echo '<select name="' . esc_attr( $field_name ) . '"' . wp_kses_post( $field_class . $multiple_attr . $placeholder_attr . $field_attr . $chosen_data_attr ) . '>';
 
 					if ( $args['placeholder'] && empty( $args['multiple'] ) ) {
 						if ( ! empty( $args['chosen'] ) ) {

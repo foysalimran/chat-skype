@@ -1,17 +1,22 @@
 <?php
-
 /**
  *
  * @package    Chat skype support Wp plugin
  * @version    1.0
  * @author     ThemeAtelier
+ * @description Creaate custom shortcode for this plugin.
  * @Websites: https://themeatelier.net/
  */
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
-add_shortcode( 'scs', 'scs_custom_buttons_shortcode' );
+/**
+ * scs_custom_buttons_shortcode
+ *
+ * @param  mixed $atts
+ * @return void
+ */
 function scs_custom_buttons_shortcode( $atts ) {
 	$atts = shortcode_atts(
 		array(
@@ -44,3 +49,4 @@ function scs_custom_buttons_shortcode( $atts ) {
 
 	return ob_get_clean();
 }
+add_shortcode( 'scs', 'scs_custom_buttons_shortcode' );

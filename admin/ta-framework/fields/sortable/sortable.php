@@ -7,8 +7,8 @@
  * @since 1.0.0
  * @version 1.0.0
  */
-if ( ! class_exists( 'SCS_Field_sortable' ) ) {
-	class SCS_Field_sortable extends SCS_Fields {
+if ( ! class_exists( 'SCS_Field_Sortable' ) ) {
+	class SCS_Field_Sortable extends SCS_Fields {
 
 		public function __construct( $field, $value = '', $unique = '', $where = '', $parent = '' ) {
 			parent::__construct( $field, $value, $unique, $where, $parent );

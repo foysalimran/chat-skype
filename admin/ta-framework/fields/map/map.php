@@ -55,13 +55,13 @@ if ( ! class_exists( 'SCS_Field_map' ) ) {
 
 			if ( empty( $args['address_field'] ) ) {
 				echo '<div class="scs--map-search">';
-				echo '<input type="text" name="' . esc_attr( $this->field_name( '[address]' ) ) . '" value="' . esc_attr( $value['address'] ) . '"' . wp_kses_post($this->field_attributes( $placeholder )) . ' />';
+				echo '<input type="text" name="' . esc_attr( $this->field_name( '[address]' ) ) . '" value="' . esc_attr( $value['address'] ) . '"' . wp_kses_post( $this->field_attributes( $placeholder ) ) . ' />';
 				echo '</div>';
 			} else {
 				echo '<div class="scs--address-field" data-address-field="' . esc_attr( $args['address_field'] ) . '"></div>';
 			}
 
-			echo '<div class="scs--map-osm-wrap"><div class="scs--map-osm" data-map="' . esc_attr( wp_json_encode( $settings ) ) . '"' . wp_kses_post($style_attr) . '></div></div>';
+			echo '<div class="scs--map-osm-wrap"><div class="scs--map-osm" data-map="' . esc_attr( wp_json_encode( $settings ) ) . '"' . wp_kses_post( $style_attr ) . '></div></div>';
 
 			echo '<div class="scs--map-inputs">';
 

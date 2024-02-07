@@ -48,8 +48,8 @@ if ( ! class_exists( 'SCS_Field_dimensions' ) ) {
 			if ( ! empty( $args['width'] ) ) {
 				$placeholder = ( ! empty( $args['width_placeholder'] ) ) ? ' placeholder="' . esc_attr( $args['width_placeholder'] ) . '"' : '';
 				echo '<div class="scs--input">';
-				echo ( ! empty( $args['width_icon'] ) ) ? '<span class="scs--label scs--icon">' . wp_kses_post($args['width_icon']) . '</span>' : '';
-				echo '<input type="number" name="' . esc_attr( $this->field_name( '[width]' ) ) . '" value="' . esc_attr( $value['width'] ) . '"' . wp_kses_post($placeholder) . ' class="scs-input-number' . esc_attr( $is_unit ) . '" step="any" />';
+				echo ( ! empty( $args['width_icon'] ) ) ? '<span class="scs--label scs--icon">' . wp_kses_post( $args['width_icon'] ) . '</span>' : '';
+				echo '<input type="number" name="' . esc_attr( $this->field_name( '[width]' ) ) . '" value="' . esc_attr( $value['width'] ) . '"' . wp_kses_post( $placeholder ) . ' class="scs-input-number' . esc_attr( $is_unit ) . '" step="any" />';
 				echo ( ! empty( $unit ) ) ? '<span class="scs--label scs--unit">' . esc_attr( $args['units'][0] ) . '</span>' : '';
 				echo '</div>';
 			}
@@ -57,8 +57,8 @@ if ( ! class_exists( 'SCS_Field_dimensions' ) ) {
 			if ( ! empty( $args['height'] ) ) {
 				$placeholder = ( ! empty( $args['height_placeholder'] ) ) ? ' placeholder="' . esc_attr( $args['height_placeholder'] ) . '"' : '';
 				echo '<div class="scs--input">';
-				echo ( ! empty( $args['height_icon'] ) ) ? '<span class="scs--label scs--icon">' . wp_kses_post($args['height_icon']) . '</span>' : '';
-				echo '<input type="number" name="' . esc_attr( $this->field_name( '[height]' ) ) . '" value="' . esc_attr( $value['height'] ) . '"' . wp_kses_post($placeholder) . ' class="scs-input-number' . esc_attr( $is_unit ) . '" step="any" />';
+				echo ( ! empty( $args['height_icon'] ) ) ? '<span class="scs--label scs--icon">' . wp_kses_post( $args['height_icon'] ) . '</span>' : '';
+				echo '<input type="number" name="' . esc_attr( $this->field_name( '[height]' ) ) . '" value="' . esc_attr( $value['height'] ) . '"' . wp_kses_post( $placeholder ) . ' class="scs-input-number' . esc_attr( $is_unit ) . '" step="any" />';
 				echo ( ! empty( $unit ) ) ? '<span class="scs--label scs--unit">' . esc_attr( $args['units'][0] ) . '</span>' : '';
 				echo '</div>';
 			}

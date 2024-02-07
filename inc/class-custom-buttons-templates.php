@@ -33,9 +33,9 @@ class Scs_Buttons_Template {
 		$agentPhoto       = $atts['photo'];
 		$agentName        = $atts['name'];
 		$agentDesignation = $atts['designation'];
-		$labelText        = $atts['label'];
-		$onlineText       = $atts['online'];
-		$offlineText      = $atts['offline'];
+		$label_text       = $atts['label'];
+		$online_text      = $atts['online'];
+		$offline_text     = $atts['offline'];
 		// availablity
 		$avlTimezone  = $atts['timezone'];
 		$avlSunday    = $atts['sunday'];
@@ -67,14 +67,14 @@ class Scs_Buttons_Template {
 							?>
 						/ <?php echo esc_html( $agentDesignation ); ?><?php } ?></p>
 				<?php } ?>
-				<?php if ( $labelText ) { ?>
-					<p class="title"><?php echo esc_html( $labelText ); ?></p>
+				<?php if ( $label_text ) { ?>
+					<p class="title"><?php echo esc_html( $label_text ); ?></p>
 				<?php } ?>
-				<?php if ( $onlineText ) { ?>
-					<p class="online"><?php echo esc_html( $onlineText ); ?></p>
+				<?php if ( $online_text ) { ?>
+					<p class="online"><?php echo esc_html( $online_text ); ?></p>
 				<?php } ?>
-				<?php if ( $offlineText ) { ?>
-					<p class="offline"><?php echo esc_html( $offlineText ); ?></p>
+				<?php if ( $offline_text ) { ?>
+					<p class="offline"><?php echo esc_html( $offline_text ); ?></p>
 				<?php } ?>
 			</div>
 
@@ -101,12 +101,12 @@ class Scs_Buttons_Template {
 		}
 		$buttonSizes   = $atts['sizes'];
 		$buttonRounded = $atts['rounded'];
-		$labelText     = $atts['label'];
+		$label_text    = $atts['label'];
 		?>
 
 		<div class="button-wrapper">
 		<a href="https://t.me/<?php echo esc_attr( $skypeid ); ?>" class="skySupport-button-2 skySupport-btn-bg sp-btn-bg <?php echo esc_attr( $buttonSizes ); ?> <?php echo esc_attr( $buttonVisibility ); ?> <?php echo esc_attr( $buttonRounded ); ?>">
-			<i class="fa-solid fa-phone"></i><?php echo esc_attr( $labelText ); ?>
+			<i class="fa-solid fa-phone"></i><?php echo esc_attr( $label_text ); ?>
 		</a>
 		</div>
 		<?php

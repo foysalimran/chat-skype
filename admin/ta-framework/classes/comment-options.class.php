@@ -1,334 +1,317 @@
-<?php if ( ! defined( 'ABSPATH' ) ) { die; } // Cannot access directly.
+<?php if ( ! defined( 'ABSPATH' ) ) {
+	die; } // Cannot access directly.
 /**
  *
  * Comment Metabox Class
  *
  * @since 1.0.0
  * @version 1.0.0
- *
  */
 if ( ! class_exists( 'SCS_Comment_Metabox' ) ) {
-  class SCS_Comment_Metabox extends SCS_Abstract{
+	class SCS_Comment_Metabox extends SCS_Abstract {
+
+		// constans
+		public $unique     = '';
+		public $abstract   = 'comment_metabox';
+		public $sections   = array();
+		public $pre_fields = array();
+		public $args       = array(
+			'title'        => '',
+			'data_type'    => 'serialize',
+			'priority'     => 'default',
+			'show_reset'   => false,
+			'show_restore' => false,
+			'nav'          => 'normal',
+			'theme'        => 'dark',
+			'class'        => '',
+			'defaults'     => array(),
+		);
 
-    // constans
-    public $unique     = '';
-    public $abstract   = 'comment_metabox';
-    public $sections   = array();
-    public $pre_fields = array();
-    public $args       = array(
-      'title'          => '',
-      'data_type'      => 'serialize',
-      'priority'       => 'default',
-      'show_reset'     => false,
-      'show_restore'   => false,
-      'nav'            => 'normal',
-      'theme'          => 'dark',
-      'class'          => '',
-      'defaults'       => array(),
-    );
+		// run comment metabox construct
+		public function __construct( $key, $params = array() ) {
 
-    // run comment metabox construct
-    public function __construct( $key, $params = array() ) {
+			$this->unique     = $key;
+			$this->args       = apply_filters( "scs_{$this->unique}_args", wp_parse_args( $params['args'], $this->args ), $this );
+			$this->sections   = apply_filters( "scs_{$this->unique}_sections", $params['sections'], $this );
+			$this->pre_fields = $this->pre_fields( $this->sections );
 
-      $this->unique     = $key;
-      $this->args       = apply_filters( "scs_{$this->unique}_args", wp_parse_args( $params['args'], $this->args ), $this );
-      $this->sections   = apply_filters( "scs_{$this->unique}_sections", $params['sections'], $this );
-      $this->pre_fields = $this->pre_fields( $this->sections );
+			add_action( 'add_meta_boxes_comment', array( $this, 'add_comment_meta_box' ) );
+			add_action( 'edit_comment', array( $this, 'save_comment_meta_box' ) );
 
-      add_action( 'add_meta_boxes_comment', array( $this, 'add_comment_meta_box' ) );
-      add_action( 'edit_comment', array( $this, 'save_comment_meta_box' ) );
+			if ( ! empty( $this->args['class'] ) ) {
+				add_filter( 'postbox_classes_comment_' . $this->unique, array( $this, 'add_comment_metabox_classes' ) );
+			}
+		}
 
-      if ( ! empty( $this->args['class'] ) ) {
-        add_filter( 'postbox_classes_comment_'. $this->unique, array( $this, 'add_comment_metabox_classes' ) );
-      }
+		// instance
+		public static function instance( $key, $params = array() ) {
+			return new self( $key, $params );
+		}
 
-    }
+		public function add_comment_metabox_classes( $classes ) {
 
-    // instance
-    public static function instance( $key, $params = array() ) {
-      return new self( $key, $params );
-    }
+			if ( ! empty( $this->args['class'] ) ) {
+				$classes[] = $this->args['class'];
+			}
 
-    public function add_comment_metabox_classes( $classes ) {
+			return $classes;
+		}
 
-      if ( ! empty( $this->args['class'] ) ) {
-        $classes[] = $this->args['class'];
-      }
+		// add comment metabox
+		public function add_comment_meta_box( $post_type ) {
 
-      return $classes;
+			add_meta_box( $this->unique, $this->args['title'], array( $this, 'add_comment_meta_box_content' ), 'comment', 'normal', $this->args['priority'], $this->args );
+		}
 
-    }
+		// get default value
+		public function get_default( $field ) {
 
-    // add comment metabox
-    public function add_comment_meta_box( $post_type ) {
+			$default = ( isset( $field['default'] ) ) ? $field['default'] : '';
+			$default = ( isset( $this->args['defaults'][ $field['id'] ] ) ) ? $this->args['defaults'][ $field['id'] ] : $default;
 
-      add_meta_box( $this->unique, $this->args['title'], array( $this, 'add_comment_meta_box_content' ), 'comment', 'normal', $this->args['priority'], $this->args );
+			return $default;
+		}
 
-    }
+		// get meta value
+		public function get_meta_value( $comment_id, $field ) {
 
-    // get default value
-    public function get_default( $field ) {
+			$value = null;
 
-      $default = ( isset( $field['default'] ) ) ? $field['default'] : '';
-      $default = ( isset( $this->args['defaults'][$field['id']] ) ) ? $this->args['defaults'][$field['id']] : $default;
+			if ( ! empty( $comment_id ) && ! empty( $field['id'] ) ) {
 
-      return $default;
+				if ( $this->args['data_type'] !== 'serialize' ) {
+					$meta  = get_comment_meta( $comment_id, $field['id'] );
+					$value = ( isset( $meta[0] ) ) ? $meta[0] : null;
+				} else {
+					$meta  = get_comment_meta( $comment_id, $this->unique, true );
+					$value = ( isset( $meta[ $field['id'] ] ) ) ? $meta[ $field['id'] ] : null;
+				}
+			}
 
-    }
+			$default = ( isset( $field['id'] ) ) ? $this->get_default( $field ) : '';
+			$value   = ( isset( $value ) ) ? $value : $default;
 
-    // get meta value
-    public function get_meta_value( $comment_id, $field ) {
+			return $value;
+		}
 
-      $value = null;
+		// add comment metabox content
+		public function add_comment_meta_box_content( $comment, $callback ) {
 
-      if ( ! empty( $comment_id ) && ! empty( $field['id'] ) ) {
+			$has_nav  = ( count( $this->sections ) > 1 ) ? true : false;
+			$show_all = ( ! $has_nav ) ? ' scs-show-all' : '';
+			$errors   = ( is_object( $comment ) ) ? get_comment_meta( $comment->comment_ID, '_scs_errors_' . $this->unique, true ) : array();
+			$errors   = ( ! empty( $errors ) ) ? $errors : array();
+			$theme    = ( $this->args['theme'] ) ? ' scs-theme-' . $this->args['theme'] : '';
+			$nav_type = ( $this->args['nav'] === 'inline' ) ? 'inline' : 'normal';
 
-        if ( $this->args['data_type'] !== 'serialize' ) {
-          $meta  = get_comment_meta( $comment_id, $field['id'] );
-          $value = ( isset( $meta[0] ) ) ? $meta[0] : null;
-        } else {
-          $meta  = get_comment_meta( $comment_id, $this->unique, true );
-          $value = ( isset( $meta[$field['id']] ) ) ? $meta[$field['id']] : null;
-        }
+			if ( is_object( $comment ) && ! empty( $errors ) ) {
+				delete_comment_meta( $comment->comment_ID, '_scs_errors_' . $this->unique );
+			}
 
-      }
+			wp_nonce_field( 'scs_comment_metabox_nonce', 'scs_comment_metabox_nonce' . $this->unique );
 
-      $default = ( isset( $field['id'] ) ) ? $this->get_default( $field ) : '';
-      $value   = ( isset( $value ) ) ? $value : $default;
+			echo '<div class="scs scs-comment-metabox' . esc_attr( $theme ) . '">';
 
-      return $value;
+			echo '<div class="scs-wrapper' . esc_attr( $show_all ) . '">';
 
-    }
+			if ( $has_nav ) {
 
-    // add comment metabox content
-    public function add_comment_meta_box_content( $comment, $callback ) {
+				echo '<div class="scs-nav scs-nav-' . esc_attr( $nav_type ) . ' scs-nav-metabox">';
 
-      $has_nav  = ( count( $this->sections ) > 1 ) ? true : false;
-      $show_all = ( ! $has_nav ) ? ' scs-show-all' : '';
-      $errors   = ( is_object ( $comment ) ) ? get_comment_meta( $comment->comment_ID, '_scs_errors_'. $this->unique, true ) : array();
-      $errors   = ( ! empty( $errors ) ) ? $errors : array();
-      $theme    = ( $this->args['theme'] ) ? ' scs-theme-'. $this->args['theme'] : '';
-      $nav_type = ( $this->args['nav'] === 'inline' ) ? 'inline' : 'normal';
+				echo '<ul>';
 
-      if ( is_object( $comment ) && ! empty( $errors ) ) {
-        delete_comment_meta( $comment->comment_ID, '_scs_errors_'. $this->unique );
-      }
+				$tab_key = 1;
 
-      wp_nonce_field( 'scs_comment_metabox_nonce', 'scs_comment_metabox_nonce'. $this->unique );
+				foreach ( $this->sections as $section ) {
 
-      echo '<div class="scs scs-comment-metabox'. esc_attr( $theme ) .'">';
+					$tab_icon  = ( ! empty( $section['icon'] ) ) ? '<i class="scs-tab-icon ' . esc_attr( $section['icon'] ) . '"></i>' : '';
+					$tab_error = ( ! empty( $errors['sections'][ $tab_key ] ) ) ? '<i class="scs-label-error scs-error">!</i>' : '';
 
-        echo '<div class="scs-wrapper'. esc_attr( $show_all ) .'">';
+					echo '<li><a href="#">' . wp_kses_post( $tab_icon ) . esc_html( $tab['title'] ) . esc_html( $tab_error ) . '</a></li>';
 
-          if ( $has_nav ) {
+					++$tab_key;
 
-            echo '<div class="scs-nav scs-nav-'. esc_attr( $nav_type ) .' scs-nav-metabox">';
+				}
 
-              echo '<ul>';
+				echo '</ul>';
 
-              $tab_key = 1;
+				echo '</div>';
 
-              foreach ( $this->sections as $section ) {
+			}
 
-                $tab_icon  = ( ! empty( $section['icon'] ) ) ? '<i class="scs-tab-icon '. esc_attr( $section['icon'] ) .'"></i>' : '';
-                $tab_error = ( ! empty( $errors['sections'][$tab_key] ) ) ? '<i class="scs-label-error scs-error">!</i>' : '';
+			echo '<div class="scs-content">';
 
-                echo '<li><a href="#">'. wp_kses_post($tab_icon) . esc_html($tab['title']) . esc_html($tab_error) .'</a></li>';
+			echo '<div class="scs-sections">';
 
-                $tab_key++;
+			$section_key = 1;
 
-              }
+			foreach ( $this->sections as $section ) {
 
-              echo '</ul>';
+				$section_onload = ( ! $has_nav ) ? ' scs-onload' : '';
+				$section_class  = ( ! empty( $section['class'] ) ) ? ' ' . $section['class'] : '';
+				$section_title  = ( ! empty( $section['title'] ) ) ? $section['title'] : '';
+				$section_icon   = ( ! empty( $section['icon'] ) ) ? '<i class="scs-section-icon ' . esc_attr( $section['icon'] ) . '"></i>' : '';
 
-            echo '</div>';
+				echo '<div class="scs-section hidden' . esc_attr( $section_onload . $section_class ) . '">';
 
-          }
+				echo ( $section_title || $section_icon ) ? '<div class="scs-section-title"><h3>' . wp_kses_post( $section_icon ) . esc_html( $section_title ) . '</h3></div>' : '';
+				echo ( ! empty( $section['description'] ) ) ? '<div class="scs-field scs-section-description">' . wp_kses_post( $section['description'] ) . '</div>' : '';
 
-          echo '<div class="scs-content">';
+				if ( ! empty( $section['fields'] ) ) {
 
-            echo '<div class="scs-sections">';
+					foreach ( $section['fields'] as $field ) {
 
-            $section_key = 1;
+						if ( ! empty( $field['id'] ) && ! empty( $errors['fields'][ $field['id'] ] ) ) {
+							$field['_error'] = $errors['fields'][ $field['id'] ];
+						}
 
-            foreach ( $this->sections as $section ) {
+						if ( ! empty( $field['id'] ) ) {
+							$field['default'] = $this->get_default( $field );
+						}
 
-              $section_onload = ( ! $has_nav ) ? ' scs-onload' : '';
-              $section_class  = ( ! empty( $section['class'] ) ) ? ' '. $section['class'] : '';
-              $section_title  = ( ! empty( $section['title'] ) ) ? $section['title'] : '';
-              $section_icon   = ( ! empty( $section['icon'] ) ) ? '<i class="scs-section-icon '. esc_attr( $section['icon'] ) .'"></i>' : '';
+						SCS::field( $field, $this->get_meta_value( $comment->comment_ID, $field ), $this->unique, 'comment_metabox' );
 
-              echo '<div class="scs-section hidden'. esc_attr( $section_onload . $section_class ) .'">';
+					}
+				} else {
 
-              echo ( $section_title || $section_icon ) ? '<div class="scs-section-title"><h3>'. wp_kses_post($section_icon) . esc_html($section_title) .'</h3></div>' : '';
-              echo ( ! empty( $section['description'] ) ) ? '<div class="scs-field scs-section-description">'. wp_kses_post($section['description']) .'</div>' : '';
+					echo '<div class="scs-no-option">' . esc_html__( 'No data available.', 'chat-skype' ) . '</div>';
 
-              if ( ! empty( $section['fields'] ) ) {
+				}
 
-                foreach ( $section['fields'] as $field ) {
+				echo '</div>';
 
-                  if ( ! empty( $field['id'] ) && ! empty( $errors['fields'][$field['id']] ) ) {
-                    $field['_error'] = $errors['fields'][$field['id']];
-                  }
+				++$section_key;
 
-                  if ( ! empty( $field['id'] ) ) {
-                    $field['default'] = $this->get_default( $field );
-                  }
+			}
 
-                  SCS::field( $field, $this->get_meta_value( $comment->comment_ID, $field ), $this->unique, 'comment_metabox' );
+			echo '</div>';
 
-                }
+			if ( ! empty( $this->args['show_restore'] ) || ! empty( $this->args['show_reset'] ) ) {
 
-              } else {
+				echo '<div class="scs-sections-reset">';
+				echo '<label>';
+				echo '<input type="checkbox" name="' . esc_attr( $this->unique ) . '[_reset]" />';
+				echo '<span class="button scs-button-reset">' . esc_html__( 'Reset', 'chat-skype' ) . '</span>';
+				echo '<span class="button scs-button-cancel">' . sprintf( '<small>( %s )</small> %s', esc_html__( 'update post', 'chat-skype' ), esc_html__( 'Cancel', 'chat-skype' ) ) . '</span>';
+				echo '</label>';
+				echo '</div>';
 
-                echo '<div class="scs-no-option">'. esc_html__( 'No data available.', 'chat-skype' ) .'</div>';
+			}
 
-              }
+			echo '</div>';
 
-              echo '</div>';
+			echo ( $has_nav && $nav_type === 'normal' ) ? '<div class="scs-nav-background"></div>' : '';
 
-              $section_key++;
+			echo '<div class="clear"></div>';
 
-            }
+			echo '</div>';
 
-            echo '</div>';
+			echo '</div>';
+		}
 
-            if ( ! empty( $this->args['show_restore'] ) || ! empty( $this->args['show_reset'] ) ) {
+		// save comment metabox
+		public function save_comment_meta_box( $comment_id ) {
 
-              echo '<div class="scs-sections-reset">';
-              echo '<label>';
-              echo '<input type="checkbox" name="'. esc_attr( $this->unique ) .'[_reset]" />';
-              echo '<span class="button scs-button-reset">'. esc_html__( 'Reset', 'chat-skype' ) .'</span>';
-              echo '<span class="button scs-button-cancel">'. sprintf( '<small>( %s )</small> %s', esc_html__( 'update post', 'chat-skype' ), esc_html__( 'Cancel', 'chat-skype' ) ) .'</span>';
-              echo '</label>';
-              echo '</div>';
+			$count    = 1;
+			$data     = array();
+			$errors   = array();
+			$noncekey = 'scs_comment_metabox_nonce' . $this->unique;
+			$nonce    = ( ! empty( $_POST[ $noncekey ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ $noncekey ] ) ) : '';
 
-            }
+			if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ! wp_verify_nonce( $nonce, 'scs_comment_metabox_nonce' ) ) {
+				return $comment_id;
+			}
 
-          echo '</div>';
+			// XSS ok.
+			// No worries, This "POST" requests is sanitizing in the below foreach.
+			$request = ( ! empty( $_POST[ $this->unique ] ) ) ? $_POST[ $this->unique ] : array();
 
-          echo ( $has_nav && $nav_type === 'normal' ) ? '<div class="scs-nav-background"></div>' : '';
+			if ( ! empty( $request ) ) {
 
-          echo '<div class="clear"></div>';
+				foreach ( $this->sections as $section ) {
 
-        echo '</div>';
+					if ( ! empty( $section['fields'] ) ) {
 
-      echo '</div>';
+						foreach ( $section['fields'] as $field ) {
 
-    }
+							if ( ! empty( $field['id'] ) ) {
 
-    // save comment metabox
-    public function save_comment_meta_box( $comment_id ) {
+								$field_id    = $field['id'];
+								$field_value = isset( $request[ $field_id ] ) ? $request[ $field_id ] : '';
 
-      $count    = 1;
-      $data     = array();
-      $errors   = array();
-      $noncekey = 'scs_comment_metabox_nonce'. $this->unique;
-      $nonce    = ( ! empty( $_POST[ $noncekey ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ $noncekey ] ) ) : '';
+								// Sanitize "post" request of field.
+								if ( ! isset( $field['sanitize'] ) ) {
 
-      if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ! wp_verify_nonce( $nonce, 'scs_comment_metabox_nonce' ) ) {
-        return $comment_id;
-      }
+									if ( is_array( $field_value ) ) {
+											$data[ $field_id ] = wp_kses_post_deep( $field_value );
+									} else {
+										$data[ $field_id ] = wp_kses_post( $field_value );
+									}
+								} elseif ( isset( $field['sanitize'] ) && is_callable( $field['sanitize'] ) ) {
 
-      // XSS ok.
-      // No worries, This "POST" requests is sanitizing in the below foreach.
-      $request = ( ! empty( $_POST[ $this->unique ] ) ) ? $_POST[ $this->unique ] : array();
+											$data[ $field_id ] = call_user_func( $field['sanitize'], $field_value );
 
-      if ( ! empty( $request ) ) {
+								} else {
 
-        foreach ( $this->sections as $section ) {
+									$data[ $field_id ] = $field_value;
 
-          if ( ! empty( $section['fields'] ) ) {
+								}
 
-            foreach ( $section['fields'] as $field ) {
+								// Validate "post" request of field.
+								if ( isset( $field['validate'] ) && is_callable( $field['validate'] ) ) {
 
-              if ( ! empty( $field['id'] ) ) {
+										$has_validated = call_user_func( $field['validate'], $field_value );
 
-                $field_id    = $field['id'];
-                $field_value = isset( $request[$field_id] ) ? $request[$field_id] : '';
+									if ( ! empty( $has_validated ) ) {
 
-                // Sanitize "post" request of field.
-                if ( ! isset( $field['sanitize'] ) ) {
+										$errors['sections'][ $count ]  = true;
+										$errors['fields'][ $field_id ] = $has_validated;
+										$data[ $field_id ]             = $this->get_meta_value( $comment_id, $field );
 
-                  if( is_array( $field_value ) ) {
-                    $data[$field_id] = wp_kses_post_deep( $field_value );
-                  } else {
-                    $data[$field_id] = wp_kses_post( $field_value );
-                  }
+									}
+								}
+							}
+						}
+					}
 
-                } else if( isset( $field['sanitize'] ) && is_callable( $field['sanitize'] ) ) {
+					++$count;
 
-                  $data[$field_id] = call_user_func( $field['sanitize'], $field_value );
+				}
+			}
 
-                } else {
+			$data = apply_filters( "scs_{$this->unique}_save", $data, $comment_id, $this );
 
-                  $data[$field_id] = $field_value;
+			do_action( "scs_{$this->unique}_save_before", $data, $comment_id, $this );
 
-                }
+			if ( empty( $data ) || ! empty( $request['_reset'] ) ) {
 
-                // Validate "post" request of field.
-                if ( isset( $field['validate'] ) && is_callable( $field['validate'] ) ) {
+				if ( $this->args['data_type'] !== 'serialize' ) {
+					foreach ( $this->pre_fields as $field ) {
+						if ( ! empty( $field['id'] ) ) {
+							delete_comment_meta( $comment_id, $field['id'] );
+						}
+					}
+				} else {
+					delete_comment_meta( $comment_id, $this->unique );
+				}
+			} else {
 
-                  $has_validated = call_user_func( $field['validate'], $field_value );
+				if ( $this->args['data_type'] !== 'serialize' ) {
+					foreach ( $data as $key => $value ) {
+						update_comment_meta( $comment_id, $key, $value );
+					}
+				} else {
+					update_comment_meta( $comment_id, $this->unique, $data );
+				}
 
-                  if ( ! empty( $has_validated ) ) {
+				if ( ! empty( $errors ) ) {
+					update_comment_meta( $comment_id, '_scs_errors_' . $this->unique, $errors );
+				}
+			}
 
-                    $errors['sections'][$count] = true;
-                    $errors['fields'][$field_id] = $has_validated;
-                    $data[$field_id] = $this->get_meta_value( $comment_id, $field );
+			do_action( "scs_{$this->unique}_saved", $data, $comment_id, $this );
 
-                  }
-
-                }
-
-              }
-
-            }
-
-          }
-
-          $count++;
-
-        }
-
-      }
-
-      $data = apply_filters( "scs_{$this->unique}_save", $data, $comment_id, $this );
-
-      do_action( "scs_{$this->unique}_save_before", $data, $comment_id, $this );
-
-      if ( empty( $data ) || ! empty( $request['_reset'] ) ) {
-
-        if ( $this->args['data_type'] !== 'serialize' ) {
-          foreach ( $this->pre_fields as $field ) {
-            if ( ! empty( $field['id'] ) ) {
-              delete_comment_meta( $comment_id, $field['id'] );
-            }
-          }
-        } else {
-          delete_comment_meta( $comment_id, $this->unique );
-        }
-
-      } else {
-
-        if ( $this->args['data_type'] !== 'serialize' ) {
-          foreach ( $data as $key => $value ) {
-            update_comment_meta( $comment_id, $key, $value );
-          }
-        } else {
-          update_comment_meta( $comment_id, $this->unique, $data );
-        }
-
-        if ( ! empty( $errors ) ) {
-          update_comment_meta( $comment_id, '_scs_errors_'. $this->unique, $errors );
-        }
-
-      }
-
-      do_action( "scs_{$this->unique}_saved", $data, $comment_id, $this );
-
-      do_action( "scs_{$this->unique}_save_after", $data, $comment_id, $this );
-
-    }
-  }
+			do_action( "scs_{$this->unique}_save_after", $data, $comment_id, $this );
+		}
+	}
 }

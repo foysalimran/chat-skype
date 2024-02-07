@@ -1,668 +1,651 @@
-<?php if ( ! defined( 'ABSPATH' ) ) { die; } // Cannot access directly.
+<?php if ( ! defined( 'ABSPATH' ) ) {
+	die; } // Cannot access directly.
 /**
  *
  * Options Class
  *
  * @since 1.0.0
  * @version 1.0.0
- *
  */
 if ( ! class_exists( 'SCS_Options' ) ) {
-  class SCS_Options extends SCS_Abstract {
-
-    // constans
-    public $unique       = '';
-    public $notice       = '';
-    public $abstract     = 'options';
-    public $sections     = array();
-    public $options      = array();
-    public $errors       = array();
-    public $pre_tabs     = array();
-    public $pre_fields   = array();
-    public $pre_sections = array();
-    public $args         = array(
-
-      // framework title
-      'framework_title'         => 'Codestar Framework <small>by Codestar</small>',
-      'framework_class'         => '',
-
-      // menu settings
-      'menu_title'              => '',
-      'menu_slug'               => '',
-      'menu_type'               => 'menu',
-      'menu_capability'         => 'manage_options',
-      'menu_icon'               => null,
-      'menu_position'           => null,
-      'menu_hidden'             => false,
-      'menu_parent'             => '',
-      'sub_menu_title'          => '',
-
-      // menu extras
-      'show_bar_menu'           => true,
-      'show_sub_menu'           => true,
-      'show_in_network'         => true,
-      'show_in_customizer'      => false,
-
-      'show_search'             => true,
-      'show_reset_all'          => true,
-      'show_reset_section'      => true,
-      'show_footer'             => true,
-      'show_all_options'        => true,
-      'show_form_warning'       => true,
-      'sticky_header'           => true,
-      'save_defaults'           => true,
-      'ajax_save'               => true,
-      'form_action'             => '',
-
-      // admin bar menu settings
-      'admin_bar_menu_icon'     => '',
-      'admin_bar_menu_priority' => 50,
-
-      // footer
-      'footer_text'             => 'Thank you for creating with Codestar Framework',
-      'footer_after'            => '',
-      'footer_credit'           => '',
-
-      // database model
-      'database'                => '', // options, transient, theme_mod, network
-      'transient_time'          => 0,
-
-      // contextual help
-      'contextual_help'         => array(),
-      'contextual_help_sidebar' => '',
-
-      // typography options
-      'enqueue_webfont'         => true,
-      'async_webfont'           => false,
-
-      // others
-      'output_css'              => true,
-
-      // theme
-      'nav'                     => 'normal',
-      'theme'                   => 'dark',
-      'class'                   => '',
-
-      // external default values
-      'defaults'                => array(),
-
-    );
-
-    // run framework construct
-    public function __construct( $key, $params = array() ) {
-
-      $this->unique   = $key;
-      $this->args     = apply_filters( "scs_{$this->unique}_args", wp_parse_args( $params['args'], $this->args ), $this );
-      $this->sections = apply_filters( "scs_{$this->unique}_sections", $params['sections'], $this );
-
-      // run only is admin panel options, avoid performance loss
-      $this->pre_tabs     = $this->pre_tabs( $this->sections );
-      $this->pre_fields   = $this->pre_fields( $this->sections );
-      $this->pre_sections = $this->pre_sections( $this->sections );
-
-      $this->get_options();
-      $this->set_options();
-      $this->save_defaults();
-
-      add_action( 'admin_menu', array( $this, 'add_admin_menu' ) );
-      add_action( 'admin_bar_menu', array( $this, 'add_admin_bar_menu' ), $this->args['admin_bar_menu_priority'] );
-      add_action( 'wp_ajax_scs_'. $this->unique .'_ajax_save', array( $this, 'ajax_save' ) );
-
-      if ( $this->args['database'] === 'network' && ! empty( $this->args['show_in_network'] ) ) {
-        add_action( 'network_admin_menu', array( $this, 'add_admin_menu' ) );
-      }
+	class SCS_Options extends SCS_Abstract {
+
+		// constans
+		public $unique       = '';
+		public $notice       = '';
+		public $abstract     = 'options';
+		public $sections     = array();
+		public $options      = array();
+		public $errors       = array();
+		public $pre_tabs     = array();
+		public $pre_fields   = array();
+		public $pre_sections = array();
+		public $args         = array(
+
+			// framework title
+			'framework_title'         => 'Codestar Framework <small>by Codestar</small>',
+			'framework_class'         => '',
+
+			// menu settings
+			'menu_title'              => '',
+			'menu_slug'               => '',
+			'menu_type'               => 'menu',
+			'menu_capability'         => 'manage_options',
+			'menu_icon'               => null,
+			'menu_position'           => null,
+			'menu_hidden'             => false,
+			'menu_parent'             => '',
+			'sub_menu_title'          => '',
+
+			// menu extras
+			'show_bar_menu'           => true,
+			'show_sub_menu'           => true,
+			'show_in_network'         => true,
+			'show_in_customizer'      => false,
+
+			'show_search'             => true,
+			'show_reset_all'          => true,
+			'show_reset_section'      => true,
+			'show_footer'             => true,
+			'show_all_options'        => true,
+			'show_form_warning'       => true,
+			'sticky_header'           => true,
+			'save_defaults'           => true,
+			'ajax_save'               => true,
+			'form_action'             => '',
+
+			// admin bar menu settings
+			'admin_bar_menu_icon'     => '',
+			'admin_bar_menu_priority' => 50,
+
+			// footer
+			'footer_text'             => 'Thank you for creating with Codestar Framework',
+			'footer_after'            => '',
+			'footer_credit'           => '',
+
+			// database model
+			'database'                => '', // options, transient, theme_mod, network
+			'transient_time'          => 0,
+
+			// contextual help
+			'contextual_help'         => array(),
+			'contextual_help_sidebar' => '',
+
+			// typography options
+			'enqueue_webfont'         => true,
+			'async_webfont'           => false,
+
+			// others
+			'output_css'              => true,
+
+			// theme
+			'nav'                     => 'normal',
+			'theme'                   => 'dark',
+			'class'                   => '',
+
+			// external default values
+			'defaults'                => array(),
+
+		);
+
+		// run framework construct
+		public function __construct( $key, $params = array() ) {
+
+			$this->unique   = $key;
+			$this->args     = apply_filters( "scs_{$this->unique}_args", wp_parse_args( $params['args'], $this->args ), $this );
+			$this->sections = apply_filters( "scs_{$this->unique}_sections", $params['sections'], $this );
+
+			// run only is admin panel options, avoid performance loss
+			$this->pre_tabs     = $this->pre_tabs( $this->sections );
+			$this->pre_fields   = $this->pre_fields( $this->sections );
+			$this->pre_sections = $this->pre_sections( $this->sections );
+
+			$this->get_options();
+			$this->set_options();
+			$this->save_defaults();
+
+			add_action( 'admin_menu', array( $this, 'add_admin_menu' ) );
+			add_action( 'admin_bar_menu', array( $this, 'add_admin_bar_menu' ), $this->args['admin_bar_menu_priority'] );
+			add_action( 'wp_ajax_scs_' . $this->unique . '_ajax_save', array( $this, 'ajax_save' ) );
+
+			if ( $this->args['database'] === 'network' && ! empty( $this->args['show_in_network'] ) ) {
+				add_action( 'network_admin_menu', array( $this, 'add_admin_menu' ) );
+			}
+
+			// wp enqeueu for typography and output css
+			parent::__construct();
+		}
+
+		// instance
+		public static function instance( $key, $params = array() ) {
+			return new self( $key, $params );
+		}
+
+		// add admin bar menu
+		public function add_admin_bar_menu( $wp_admin_bar ) {
+
+			if ( ! current_user_can( $this->args['menu_capability'] ) ) {
+				return;
+			}
+
+			if ( is_network_admin() && ( $this->args['database'] !== 'network' || $this->args['show_in_network'] !== true ) ) {
+				return;
+			}
+
+			if ( ! empty( $this->args['show_bar_menu'] ) && empty( $this->args['menu_hidden'] ) ) {
+
+				global $submenu;
+
+				$menu_slug = $this->args['menu_slug'];
+				$menu_icon = ( ! empty( $this->args['admin_bar_menu_icon'] ) ) ? '<span class="scs-ab-icon ab-icon ' . esc_attr( $this->args['admin_bar_menu_icon'] ) . '"></span>' : '';
+
+				$wp_admin_bar->add_node(
+					array(
+						'id'    => $menu_slug,
+						'title' => $menu_icon . esc_attr( $this->args['menu_title'] ),
+						'href'  => esc_url( ( is_network_admin() ) ? network_admin_url( 'admin.php?page=' . $menu_slug ) : admin_url( 'admin.php?page=' . $menu_slug ) ),
+					)
+				);
+
+				if ( ! empty( $submenu[ $menu_slug ] ) ) {
+					foreach ( $submenu[ $menu_slug ] as $menu_key => $menu_value ) {
+						$wp_admin_bar->add_node(
+							array(
+								'parent' => $menu_slug,
+								'id'     => $menu_slug . '-' . $menu_key,
+								'title'  => $menu_value[0],
+								'href'   => esc_url( ( is_network_admin() ) ? network_admin_url( 'admin.php?page=' . $menu_value[2] ) : admin_url( 'admin.php?page=' . $menu_value[2] ) ),
+							)
+						);
+					}
+				}
+			}
+		}
+
+		public function ajax_save() {
 
-      // wp enqeueu for typography and output css
-      parent::__construct();
+			$result = $this->set_options( true );
 
-    }
+			if ( ! $result ) {
+				wp_send_json_error( array( 'error' => esc_html__( 'Error while saving the changes.', 'chat-skype' ) ) );
+			} else {
+				wp_send_json_success(
+					array(
+						'notice' => $this->notice,
+						'errors' => $this->errors,
+					)
+				);
+			}
+		}
 
-    // instance
-    public static function instance( $key, $params = array() ) {
-      return new self( $key, $params );
-    }
+		// get default value
+		public function get_default( $field ) {
 
-    // add admin bar menu
-    public function add_admin_bar_menu( $wp_admin_bar ) {
+			$default = ( isset( $field['default'] ) ) ? $field['default'] : '';
+			$default = ( isset( $this->args['defaults'][ $field['id'] ] ) ) ? $this->args['defaults'][ $field['id'] ] : $default;
 
-      if ( ! current_user_can( $this->args['menu_capability'] ) ) {
-        return;
-      }
+			return $default;
+		}
 
-      if ( is_network_admin() && ( $this->args['database'] !== 'network' || $this->args['show_in_network'] !== true ) ) {
-        return;
-      }
+		// save defaults and set new fields value to main options
+		public function save_defaults() {
 
-      if ( ! empty( $this->args['show_bar_menu'] ) && empty( $this->args['menu_hidden'] ) ) {
+			$tmp_options = $this->options;
 
-        global $submenu;
+			foreach ( $this->pre_fields as $field ) {
+				if ( ! empty( $field['id'] ) ) {
+					$this->options[ $field['id'] ] = ( isset( $this->options[ $field['id'] ] ) ) ? $this->options[ $field['id'] ] : $this->get_default( $field );
+				}
+			}
 
-        $menu_slug = $this->args['menu_slug'];
-        $menu_icon = ( ! empty( $this->args['admin_bar_menu_icon'] ) ) ? '<span class="scs-ab-icon ab-icon '. esc_attr( $this->args['admin_bar_menu_icon'] ) .'"></span>' : '';
+			if ( $this->args['save_defaults'] && empty( $tmp_options ) ) {
+				$this->save_options( $this->options );
+			}
+		}
 
-        $wp_admin_bar->add_node( array(
-          'id'    => $menu_slug,
-          'title' => $menu_icon . esc_attr( $this->args['menu_title'] ),
-          'href'  => esc_url( ( is_network_admin() ) ? network_admin_url( 'admin.php?page='. $menu_slug ) : admin_url( 'admin.php?page='. $menu_slug ) ),
-        ) );
+		// set options
+		public function set_options( $ajax = false ) {
 
-        if ( ! empty( $submenu[$menu_slug] ) ) {
-          foreach ( $submenu[$menu_slug] as $menu_key => $menu_value ) {
-            $wp_admin_bar->add_node( array(
-              'parent' => $menu_slug,
-              'id'     => $menu_slug .'-'. $menu_key,
-              'title'  => $menu_value[0],
-              'href'   => esc_url( ( is_network_admin() ) ? network_admin_url( 'admin.php?page='. $menu_value[2] ) : admin_url( 'admin.php?page='. $menu_value[2] ) ),
-            ) );
-          }
-        }
+			// XSS ok.
+			// No worries, This "POST" requests is sanitizing in the below foreach. see #L337 - #L341
+			$response = ( $ajax && ! empty( $_POST['data'] ) ) ? json_decode( wp_unslash( trim( $_POST['data'] ) ), true ) : $_POST;
 
-      }
+			// Set variables.
+			$data      = array();
+			$noncekey  = 'scs_options_nonce' . $this->unique;
+			$nonce     = ( ! empty( $response[ $noncekey ] ) ) ? $response[ $noncekey ] : '';
+			$options   = ( ! empty( $response[ $this->unique ] ) ) ? $response[ $this->unique ] : array();
+			$transient = ( ! empty( $response['scs_transient'] ) ) ? $response['scs_transient'] : array();
 
-    }
+			if ( wp_verify_nonce( $nonce, 'scs_options_nonce' ) ) {
 
-    public function ajax_save() {
+				$importing  = false;
+				$section_id = ( ! empty( $transient['section'] ) ) ? $transient['section'] : '';
 
-      $result = $this->set_options( true );
+				if ( ! $ajax && ! empty( $response['scs_import_data'] ) ) {
 
-      if ( ! $result ) {
-        wp_send_json_error( array( 'error' => esc_html__( 'Error while saving the changes.', 'chat-skype' ) ) );
-      } else {
-        wp_send_json_success( array( 'notice' => $this->notice, 'errors' => $this->errors ) );
-      }
+					// XSS ok.
+					// No worries, This "POST" requests is sanitizing in the below foreach. see #L337 - #L341
+					$import_data  = json_decode( wp_unslash( trim( $response['scs_import_data'] ) ), true );
+					$options      = ( is_array( $import_data ) && ! empty( $import_data ) ) ? $import_data : array();
+					$importing    = true;
+					$this->notice = esc_html__( 'Settings successfully imported.', 'chat-skype' );
 
-    }
+				}
 
-    // get default value
-    public function get_default( $field ) {
+				if ( ! empty( $transient['reset'] ) ) {
 
-      $default = ( isset( $field['default'] ) ) ? $field['default'] : '';
-      $default = ( isset( $this->args['defaults'][$field['id']] ) ) ? $this->args['defaults'][$field['id']] : $default;
+					foreach ( $this->pre_fields as $field ) {
+						if ( ! empty( $field['id'] ) ) {
+							$data[ $field['id'] ] = $this->get_default( $field );
+						}
+					}
 
-      return $default;
+					$this->notice = esc_html__( 'Default settings restored.', 'chat-skype' );
 
-    }
+				} elseif ( ! empty( $transient['reset_section'] ) && ! empty( $section_id ) ) {
 
-    // save defaults and set new fields value to main options
-    public function save_defaults() {
+					if ( ! empty( $this->pre_sections[ $section_id - 1 ]['fields'] ) ) {
 
-      $tmp_options = $this->options;
+						foreach ( $this->pre_sections[ $section_id - 1 ]['fields'] as $field ) {
+							if ( ! empty( $field['id'] ) ) {
+								$data[ $field['id'] ] = $this->get_default( $field );
+							}
+						}
+					}
 
-      foreach ( $this->pre_fields as $field ) {
-        if ( ! empty( $field['id'] ) ) {
-          $this->options[$field['id']] = ( isset( $this->options[$field['id']] ) ) ? $this->options[$field['id']] : $this->get_default( $field );
-        }
-      }
+					$data = wp_parse_args( $data, $this->options );
 
-      if ( $this->args['save_defaults'] && empty( $tmp_options ) ) {
-        $this->save_options( $this->options );
-      }
+					$this->notice = esc_html__( 'Default settings restored.', 'chat-skype' );
 
-    }
+				} else {
 
-    // set options
-    public function set_options( $ajax = false ) {
+					// sanitize and validate
+					foreach ( $this->pre_fields as $field ) {
 
-      // XSS ok.
-      // No worries, This "POST" requests is sanitizing in the below foreach. see #L337 - #L341
-      $response  = ( $ajax && ! empty( $_POST['data'] ) ) ? json_decode( wp_unslash( trim( $_POST['data'] ) ), true ) : $_POST;
-      
+						if ( ! empty( $field['id'] ) ) {
 
+								$field_id    = $field['id'];
+								$field_value = isset( $options[ $field_id ] ) ? $options[ $field_id ] : '';
 
+								// Ajax and Importing doing wp_unslash already.
+							if ( ! $ajax && ! $importing ) {
+								$field_value = wp_unslash( $field_value );
+							}
 
-      // Set variables.
-      $data      = array();
-      $noncekey  = 'scs_options_nonce'. $this->unique;
-      $nonce     = ( ! empty( $response[$noncekey] ) ) ? $response[$noncekey] : '';
-      $options   = ( ! empty( $response[$this->unique] ) ) ? $response[$this->unique] : array();
-      $transient = ( ! empty( $response['scs_transient'] ) ) ? $response['scs_transient'] : array();
+							// Sanitize "post" request of field.
+							if ( ! isset( $field['sanitize'] ) ) {
 
-      if ( wp_verify_nonce( $nonce, 'scs_options_nonce' ) ) {
+								if ( is_array( $field_value ) ) {
 
-        $importing  = false;
-        $section_id = ( ! empty( $transient['section'] ) ) ? $transient['section'] : '';
+									$data[ $field_id ] = wp_kses_post_deep( $field_value );
 
-        if ( ! $ajax && ! empty( $response[ 'scs_import_data' ] ) ) {
+								} else {
 
-          // XSS ok.
-          // No worries, This "POST" requests is sanitizing in the below foreach. see #L337 - #L341
-          $import_data  = json_decode( wp_unslash( trim( $response[ 'scs_import_data' ] ) ), true );
-          $options      = ( is_array( $import_data ) && ! empty( $import_data ) ) ? $import_data : array();
-          $importing    = true;
-          $this->notice = esc_html__( 'Settings successfully imported.', 'chat-skype' );
+									$data[ $field_id ] = wp_kses_post( $field_value );
 
-        }
+								}
+							} elseif ( isset( $field['sanitize'] ) && is_callable( $field['sanitize'] ) ) {
 
-        if ( ! empty( $transient['reset'] ) ) {
+										$data[ $field_id ] = call_user_func( $field['sanitize'], $field_value );
 
-          foreach ( $this->pre_fields as $field ) {
-            if ( ! empty( $field['id'] ) ) {
-              $data[$field['id']] = $this->get_default( $field );
-            }
-          }
+							} else {
 
-          $this->notice = esc_html__( 'Default settings restored.', 'chat-skype' );
+								$data[ $field_id ] = $field_value;
 
-        } else if ( ! empty( $transient['reset_section'] ) && ! empty( $section_id ) ) {
+							}
 
-          if ( ! empty( $this->pre_sections[$section_id-1]['fields'] ) ) {
+							// Validate "post" request of field.
+							if ( isset( $field['validate'] ) && is_callable( $field['validate'] ) ) {
 
-            foreach ( $this->pre_sections[$section_id-1]['fields'] as $field ) {
-              if ( ! empty( $field['id'] ) ) {
-                $data[$field['id']] = $this->get_default( $field );
-              }
-            }
+								$has_validated = call_user_func( $field['validate'], $field_value );
 
-          }
+								if ( ! empty( $has_validated ) ) {
 
-          $data = wp_parse_args( $data, $this->options );
+									$data[ $field_id ]         = ( isset( $this->options[ $field_id ] ) ) ? $this->options[ $field_id ] : '';
+									$this->errors[ $field_id ] = $has_validated;
 
-          $this->notice = esc_html__( 'Default settings restored.', 'chat-skype' );
+								}
+							}
+						}
+					}
+				}
 
-        } else {
+				$data = apply_filters( "scs_{$this->unique}_save", $data, $this );
 
-          // sanitize and validate
-          foreach ( $this->pre_fields as $field ) {
+				do_action( "scs_{$this->unique}_save_before", $data, $this );
 
-            if ( ! empty( $field['id'] ) ) {
+				$this->options = $data;
 
-              $field_id    = $field['id'];
-              $field_value = isset( $options[$field_id] ) ? $options[$field_id] : '';
+				$this->save_options( $data );
 
-              // Ajax and Importing doing wp_unslash already.
-              if ( ! $ajax && ! $importing ) {
-                $field_value = wp_unslash( $field_value );
-              }
+				do_action( "scs_{$this->unique}_save_after", $data, $this );
 
-              // Sanitize "post" request of field.
-              if ( ! isset( $field['sanitize'] ) ) {
+				if ( empty( $this->notice ) ) {
+					$this->notice = esc_html__( 'Settings saved.', 'chat-skype' );
+				}
 
-                if( is_array( $field_value ) ) {
+				return true;
 
-                  $data[$field_id] = wp_kses_post_deep( $field_value );
+			}
 
-                } else {
+			return false;
+		}
 
-                  $data[$field_id] = wp_kses_post( $field_value );
+		// save options database
+		public function save_options( $data ) {
 
-                }
+			if ( $this->args['database'] === 'transient' ) {
+				set_transient( $this->unique, $data, $this->args['transient_time'] );
+			} elseif ( $this->args['database'] === 'theme_mod' ) {
+				set_theme_mod( $this->unique, $data );
+			} elseif ( $this->args['database'] === 'network' ) {
+				update_site_option( $this->unique, $data );
+			} else {
+				update_option( $this->unique, $data );
+			}
 
-              } else if( isset( $field['sanitize'] ) && is_callable( $field['sanitize'] ) ) {
+			do_action( "scs_{$this->unique}_saved", $data, $this );
+		}
 
-                $data[$field_id] = call_user_func( $field['sanitize'], $field_value );
+		// get options from database
+		public function get_options() {
 
-              } else {
+			if ( $this->args['database'] === 'transient' ) {
+				$this->options = get_transient( $this->unique );
+			} elseif ( $this->args['database'] === 'theme_mod' ) {
+				$this->options = get_theme_mod( $this->unique );
+			} elseif ( $this->args['database'] === 'network' ) {
+				$this->options = get_site_option( $this->unique );
+			} else {
+				$this->options = get_option( $this->unique );
+			}
 
-                $data[$field_id] = $field_value;
+			if ( empty( $this->options ) ) {
+				$this->options = array();
+			}
 
-              }
+			return $this->options;
+		}
 
-              // Validate "post" request of field.
-              if ( isset( $field['validate'] ) && is_callable( $field['validate'] ) ) {
+		// admin menu
+		public function add_admin_menu() {
 
-                $has_validated = call_user_func( $field['validate'], $field_value );
+			extract( $this->args );
 
-                if ( ! empty( $has_validated ) ) {
+			if ( $menu_type === 'submenu' ) {
 
-                  $data[$field_id] = ( isset( $this->options[$field_id] ) ) ? $this->options[$field_id] : '';
-                  $this->errors[$field_id] = $has_validated;
+				$menu_page = call_user_func( 'add_submenu_page', $menu_parent, esc_attr( $menu_title ), esc_attr( $menu_title ), $menu_capability, $menu_slug, array( $this, 'add_options_html' ) );
 
-                }
+			} else {
 
-              }
+				$menu_page = call_user_func( 'add_menu_page', esc_attr( $menu_title ), esc_attr( $menu_title ), $menu_capability, $menu_slug, array( $this, 'add_options_html' ), $menu_icon, $menu_position );
 
-            }
+				if ( ! empty( $sub_menu_title ) ) {
+					call_user_func( 'add_submenu_page', $menu_slug, esc_attr( $sub_menu_title ), esc_attr( $sub_menu_title ), $menu_capability, $menu_slug, array( $this, 'add_options_html' ) );
+				}
 
-          }
+				if ( ! empty( $this->args['show_sub_menu'] ) && count( $this->pre_tabs ) > 1 ) {
 
-        }
+					// create submenus
+					foreach ( $this->pre_tabs as $section ) {
+						call_user_func( 'add_submenu_page', $menu_slug, esc_attr( $section['title'] ), esc_attr( $section['title'] ), $menu_capability, $menu_slug . '#tab=' . sanitize_title( $section['title'] ), '__return_null' );
+					}
 
-        $data = apply_filters( "scs_{$this->unique}_save", $data, $this );
+					remove_submenu_page( $menu_slug, $menu_slug );
 
-        do_action( "scs_{$this->unique}_save_before", $data, $this );
+				}
 
-        $this->options = $data;
+				if ( ! empty( $menu_hidden ) ) {
+					remove_menu_page( $menu_slug );
+				}
+			}
 
-        $this->save_options( $data );
+			add_action( 'load-' . $menu_page, array( $this, 'add_page_on_load' ) );
+		}
 
-        do_action( "scs_{$this->unique}_save_after", $data, $this );
+		public function add_page_on_load() {
 
-        if ( empty( $this->notice ) ) {
-          $this->notice = esc_html__( 'Settings saved.', 'chat-skype' );
-        }
+			if ( ! empty( $this->args['contextual_help'] ) ) {
 
-        return true;
+				$screen = get_current_screen();
 
-      }
+				foreach ( $this->args['contextual_help'] as $tab ) {
+					$screen->add_help_tab( $tab );
+				}
 
-      return false;
+				if ( ! empty( $this->args['contextual_help_sidebar'] ) ) {
+					$screen->set_help_sidebar( $this->args['contextual_help_sidebar'] );
+				}
+			}
 
-    }
+			if ( ! empty( $this->args['footer_credit'] ) ) {
+				add_filter( 'admin_footer_text', array( $this, 'add_admin_footer_text' ) );
+			}
+		}
 
-    // save options database
-    public function save_options( $data ) {
+		public function add_admin_footer_text() {
+			echo wp_kses_post( $this->args['footer_credit'] );
+		}
 
-      if ( $this->args['database'] === 'transient' ) {
-        set_transient( $this->unique, $data, $this->args['transient_time'] );
-      } else if ( $this->args['database'] === 'theme_mod' ) {
-        set_theme_mod( $this->unique, $data );
-      } else if ( $this->args['database'] === 'network' ) {
-        update_site_option( $this->unique, $data );
-      } else {
-        update_option( $this->unique, $data );
-      }
+		public function error_check( $sections, $err = '' ) {
 
-      do_action( "scs_{$this->unique}_saved", $data, $this );
+			if ( ! $this->args['ajax_save'] ) {
 
-    }
+				if ( ! empty( $sections['fields'] ) ) {
+					foreach ( $sections['fields'] as $field ) {
+						if ( ! empty( $field['id'] ) ) {
+							if ( array_key_exists( $field['id'], $this->errors ) ) {
+								$err = '<span class="scs-label-error">!</span>';
+							}
+						}
+					}
+				}
 
-    // get options from database
-    public function get_options() {
+				if ( ! empty( $sections['subs'] ) ) {
+					foreach ( $sections['subs'] as $sub ) {
+						$err = $this->error_check( $sub, $err );
+					}
+				}
 
-      if ( $this->args['database'] === 'transient' ) {
-        $this->options = get_transient( $this->unique );
-      } else if ( $this->args['database'] === 'theme_mod' ) {
-        $this->options = get_theme_mod( $this->unique );
-      } else if ( $this->args['database'] === 'network' ) {
-        $this->options = get_site_option( $this->unique );
-      } else {
-        $this->options = get_option( $this->unique );
-      }
+				if ( ! empty( $sections['id'] ) && array_key_exists( $sections['id'], $this->errors ) ) {
+					$err = $this->errors[ $sections['id'] ];
+				}
+			}
 
-      if ( empty( $this->options ) ) {
-        $this->options = array();
-      }
+			return $err;
+		}
 
-      return $this->options;
+		// option page html output
+		public function add_options_html() {
 
-    }
+			$has_nav       = ( count( $this->pre_tabs ) > 1 ) ? true : false;
+			$show_all      = ( ! $has_nav ) ? ' scs-show-all' : '';
+			$ajax_class    = ( $this->args['ajax_save'] ) ? ' scs-save-ajax' : '';
+			$sticky_class  = ( $this->args['sticky_header'] ) ? ' scs-sticky-header' : '';
+			$wrapper_class = ( $this->args['framework_class'] ) ? ' ' . $this->args['framework_class'] : '';
+			$theme         = ( $this->args['theme'] ) ? ' scs-theme-' . $this->args['theme'] : '';
+			$class         = ( $this->args['class'] ) ? ' ' . $this->args['class'] : '';
+			$nav_type      = ( $this->args['nav'] === 'inline' ) ? 'inline' : 'normal';
+			$form_action   = ( $this->args['form_action'] ) ? $this->args['form_action'] : '';
 
-    // admin menu
-    public function add_admin_menu() {
+			do_action( 'scs_options_before' );
 
-      extract( $this->args );
+			echo '<div class="scs scs-options' . esc_attr( $theme . $class . $wrapper_class ) . '" data-slug="' . esc_attr( $this->args['menu_slug'] ) . '" data-unique="' . esc_attr( $this->unique ) . '">';
 
-      if ( $menu_type === 'submenu' ) {
+			echo '<div class="scs-container">';
 
-        $menu_page = call_user_func( 'add_submenu_page', $menu_parent, esc_attr( $menu_title ), esc_attr( $menu_title ), $menu_capability, $menu_slug, array( $this, 'add_options_html' ) );
+			echo '<form method="post" action="' . esc_attr( $form_action ) . '" enctype="multipart/form-data" id="scs-form" autocomplete="off" novalidate="novalidate">';
 
-      } else {
+			echo '<input type="hidden" class="scs-section-id" name="scs_transient[section]" value="1">';
 
-        $menu_page = call_user_func( 'add_menu_page', esc_attr( $menu_title ), esc_attr( $menu_title ), $menu_capability, $menu_slug, array( $this, 'add_options_html' ), $menu_icon, $menu_position );
+			wp_nonce_field( 'scs_options_nonce', 'scs_options_nonce' . $this->unique );
 
-        if ( ! empty( $sub_menu_title ) ) {
-          call_user_func( 'add_submenu_page', $menu_slug, esc_attr( $sub_menu_title ), esc_attr( $sub_menu_title ), $menu_capability, $menu_slug, array( $this, 'add_options_html' ) );
-        }
+			echo '<div class="scs-header' . esc_attr( $sticky_class ) . '">';
+			echo '<div class="scs-header-inner">';
 
-        if ( ! empty( $this->args['show_sub_menu'] ) && count( $this->pre_tabs ) > 1 ) {
+			echo '<div class="scs-header-left">';
+			echo '<h1>' . $this->args['framework_title'] . '</h1>';
+			echo '</div>';
 
-          // create submenus
-          foreach ( $this->pre_tabs as $section ) {
-            call_user_func( 'add_submenu_page', $menu_slug, esc_attr( $section['title'] ),  esc_attr( $section['title'] ), $menu_capability, $menu_slug .'#tab='. sanitize_title( $section['title'] ), '__return_null' );
-          }
+			echo '<div class="scs-header-right">';
 
-          remove_submenu_page( $menu_slug, $menu_slug );
+			$notice_class = ( ! empty( $this->notice ) ) ? 'scs-form-show' : '';
+			$notice_text  = ( ! empty( $this->notice ) ) ? $this->notice : '';
 
-        }
+			echo '<div class="scs-form-result scs-form-success ' . esc_attr( $notice_class ) . '">' . wp_kses_post( $notice_text ) . '</div>';
 
-        if ( ! empty( $menu_hidden ) ) {
-          remove_menu_page( $menu_slug );
-        }
+			echo ( $this->args['show_form_warning'] ) ? '<div class="scs-form-result scs-form-warning">' . esc_html__( 'You have unsaved changes, save your changes!', 'chat-skype' ) . '</div>' : '';
 
-      }
+			echo ( $has_nav && $this->args['show_all_options'] ) ? '<div class="scs-expand-all" title="' . esc_html__( 'show all settings', 'chat-skype' ) . '"><i class="fas fa-outdent"></i></div>' : '';
 
-      add_action( 'load-'. $menu_page, array( $this, 'add_page_on_load' ) );
+			echo ( $this->args['show_search'] ) ? '<div class="scs-search"><input type="text" name="scs-search" placeholder="' . esc_html__( 'Search...', 'chat-skype' ) . '" autocomplete="off" /></div>' : '';
 
-    }
+			echo '<div class="scs-buttons">';
+			echo '<input type="submit" name="' . esc_attr( $this->unique ) . '[_nonce][save]" class="button button-primary scs-top-save scs-save' . esc_attr( $ajax_class ) . '" value="' . esc_html__( 'Save', 'chat-skype' ) . '" data-save="' . esc_html__( 'Saving...', 'chat-skype' ) . '">';
+			echo ( $this->args['show_reset_section'] ) ? '<input type="submit" name="scs_transient[reset_section]" class="button button-secondary scs-reset-section scs-confirm" value="' . esc_html__( 'Reset Section', 'chat-skype' ) . '" data-confirm="' . esc_html__( 'Are you sure to reset this section options?', 'chat-skype' ) . '">' : '';
+			echo ( $this->args['show_reset_all'] ) ? '<input type="submit" name="scs_transient[reset]" class="button scs-warning-primary scs-reset-all scs-confirm" value="' . ( ( $this->args['show_reset_section'] ) ? esc_html__( 'Reset All', 'chat-skype' ) : esc_html__( 'Reset', 'chat-skype' ) ) . '" data-confirm="' . esc_html__( 'Are you sure you want to reset all settings to default values?', 'chat-skype' ) . '">' : '';
+			echo '</div>';
 
-    public function add_page_on_load() {
+			echo '</div>';
 
-      if ( ! empty( $this->args['contextual_help'] ) ) {
+			echo '<div class="clear"></div>';
+			echo '</div>';
+			echo '</div>';
 
-        $screen = get_current_screen();
+			echo '<div class="scs-wrapper' . esc_attr( $show_all ) . '">';
 
-        foreach ( $this->args['contextual_help'] as $tab ) {
-          $screen->add_help_tab( $tab );
-        }
+			if ( $has_nav ) {
 
-        if ( ! empty( $this->args['contextual_help_sidebar'] ) ) {
-          $screen->set_help_sidebar( $this->args['contextual_help_sidebar'] );
-        }
+				echo '<div class="scs-nav scs-nav-' . esc_attr( $nav_type ) . ' scs-nav-options">';
 
-      }
+				echo '<ul>';
 
-      if ( ! empty( $this->args['footer_credit'] ) ) {
-        add_filter( 'admin_footer_text', array( $this, 'add_admin_footer_text' ) );
-      }
+				foreach ( $this->pre_tabs as $tab ) {
 
-    }
+					$tab_id    = sanitize_title( $tab['title'] );
+					$tab_error = $this->error_check( $tab );
+					$tab_icon  = ( ! empty( $tab['icon'] ) ) ? '<i class="scs-tab-icon ' . esc_attr( $tab['icon'] ) . '"></i>' : '';
 
-    public function add_admin_footer_text() {
-      echo wp_kses_post( $this->args['footer_credit'] );
-    }
+					if ( ! empty( $tab['subs'] ) ) {
 
-    public function error_check( $sections, $err = '' ) {
+						echo '<li class="scs-tab-item">';
 
-      if ( ! $this->args['ajax_save'] ) {
+						echo '<a href="#tab=' . esc_attr( $tab_id ) . '" data-tab-id="' . esc_attr( $tab_id ) . '" class="scs-arrow">' . wp_kses_post( $tab_icon ) . esc_html( $tab['title'] ) . esc_html( $tab_error ) . '</a>';
 
-        if ( ! empty( $sections['fields'] ) ) {
-          foreach ( $sections['fields'] as $field ) {
-            if ( ! empty( $field['id'] ) ) {
-              if ( array_key_exists( $field['id'], $this->errors ) ) {
-                $err = '<span class="scs-label-error">!</span>';
-              }
-            }
-          }
-        }
+						echo '<ul>';
 
-        if ( ! empty( $sections['subs'] ) ) {
-          foreach ( $sections['subs'] as $sub ) {
-            $err = $this->error_check( $sub, $err );
-          }
-        }
+						foreach ( $tab['subs'] as $sub ) {
 
-        if ( ! empty( $sections['id'] ) && array_key_exists( $sections['id'], $this->errors ) ) {
-          $err = $this->errors[$sections['id']];
-        }
+							$sub_id    = $tab_id . '/' . sanitize_title( $sub['title'] );
+							$sub_error = $this->error_check( $sub );
+							$sub_icon  = ( ! empty( $sub['icon'] ) ) ? '<i class="scs-tab-icon ' . esc_attr( $sub['icon'] ) . '"></i>' : '';
 
-      }
+							echo '<li><a href="#tab=' . esc_attr( $sub_id ) . '" data-tab-id="' . esc_attr( $sub_id ) . '">' . $sub_icon . $sub['title'] . $sub_error . '</a></li>';
 
-      return $err;
-    }
+						}
 
-    // option page html output
-    public function add_options_html() {
+						echo '</ul>';
 
-      $has_nav       = ( count( $this->pre_tabs ) > 1 ) ? true : false;
-      $show_all      = ( ! $has_nav ) ? ' scs-show-all' : '';
-      $ajax_class    = ( $this->args['ajax_save'] ) ? ' scs-save-ajax' : '';
-      $sticky_class  = ( $this->args['sticky_header'] ) ? ' scs-sticky-header' : '';
-      $wrapper_class = ( $this->args['framework_class'] ) ? ' '. $this->args['framework_class'] : '';
-      $theme         = ( $this->args['theme'] ) ? ' scs-theme-'. $this->args['theme'] : '';
-      $class         = ( $this->args['class'] ) ? ' '. $this->args['class'] : '';
-      $nav_type      = ( $this->args['nav'] === 'inline' ) ? 'inline' : 'normal';
-      $form_action   = ( $this->args['form_action'] ) ? $this->args['form_action'] : '';
+						echo '</li>';
 
-      do_action( 'scs_options_before' );
+					} else {
 
-      echo '<div class="scs scs-options'. esc_attr( $theme . $class . $wrapper_class ) .'" data-slug="'. esc_attr( $this->args['menu_slug'] ) .'" data-unique="'. esc_attr( $this->unique ) .'">';
+						echo '<li class="scs-tab-item"><a href="#tab=' . esc_attr( $tab_id ) . '" data-tab-id="' . esc_attr( $tab_id ) . '">' . wp_kses_post( $tab_icon ) . esc_html( $tab['title'] ) . esc_html( $tab_error ) . '</a></li>';
 
-        echo '<div class="scs-container">';
+					}
+				}
 
-        echo '<form method="post" action="'. esc_attr( $form_action ) .'" enctype="multipart/form-data" id="scs-form" autocomplete="off" novalidate="novalidate">';
+				echo '</ul>';
 
-        echo '<input type="hidden" class="scs-section-id" name="scs_transient[section]" value="1">';
+				echo '</div>';
 
-        wp_nonce_field( 'scs_options_nonce', 'scs_options_nonce'. $this->unique );
+			}
 
-        echo '<div class="scs-header'. esc_attr( $sticky_class ) .'">';
-        echo '<div class="scs-header-inner">';
+			echo '<div class="scs-content">';
 
-          echo '<div class="scs-header-left">';
-          echo '<h1>'. $this->args['framework_title'] .'</h1>';
-          echo '</div>';
+			echo '<div class="scs-sections">';
 
-          echo '<div class="scs-header-right">';
+			foreach ( $this->pre_sections as $section ) {
 
-            $notice_class = ( ! empty( $this->notice ) ) ? 'scs-form-show' : '';
-            $notice_text  = ( ! empty( $this->notice ) ) ? $this->notice : '';
+				$section_onload = ( ! $has_nav ) ? ' scs-onload' : '';
+				$section_class  = ( ! empty( $section['class'] ) ) ? ' ' . $section['class'] : '';
+				$section_icon   = ( ! empty( $section['icon'] ) ) ? '<i class="scs-section-icon ' . esc_attr( $section['icon'] ) . '"></i>' : '';
+				$section_title  = ( ! empty( $section['title'] ) ) ? $section['title'] : '';
+				$section_parent = ( ! empty( $section['ptitle'] ) ) ? sanitize_title( $section['ptitle'] ) . '/' : '';
+				$section_slug   = ( ! empty( $section['title'] ) ) ? sanitize_title( $section_title ) : '';
 
-            echo '<div class="scs-form-result scs-form-success '. esc_attr( $notice_class ) .'">'. wp_kses_post($notice_text) .'</div>';
+				echo '<div class="scs-section hidden' . esc_attr( $section_onload . $section_class ) . '" data-section-id="' . esc_attr( $section_parent . $section_slug ) . '">';
+				echo ( $has_nav ) ? '<div class="scs-section-title"><h3>' . wp_kses_post( $section_icon ) . esc_html( $section_title ) . '</h3></div>' : '';
+				echo ( ! empty( $section['description'] ) ) ? '<div class="scs-field scs-section-description">' . wp_kses_post( $section['description'] ) . '</div>' : '';
 
-            echo ( $this->args['show_form_warning'] ) ? '<div class="scs-form-result scs-form-warning">'. esc_html__( 'You have unsaved changes, save your changes!', 'chat-skype' ) .'</div>' : '';
+				if ( ! empty( $section['fields'] ) ) {
 
-            echo ( $has_nav && $this->args['show_all_options'] ) ? '<div class="scs-expand-all" title="'. esc_html__( 'show all settings', 'chat-skype' ) .'"><i class="fas fa-outdent"></i></div>' : '';
+					foreach ( $section['fields'] as $field ) {
 
-            echo ( $this->args['show_search'] ) ? '<div class="scs-search"><input type="text" name="scs-search" placeholder="'. esc_html__( 'Search...', 'chat-skype' ) .'" autocomplete="off" /></div>' : '';
+						$is_field_error = $this->error_check( $field );
 
-            echo '<div class="scs-buttons">';
-            echo '<input type="submit" name="'. esc_attr( $this->unique ) .'[_nonce][save]" class="button button-primary scs-top-save scs-save'. esc_attr( $ajax_class ) .'" value="'. esc_html__( 'Save', 'chat-skype' ) .'" data-save="'. esc_html__( 'Saving...', 'chat-skype' ) .'">';
-            echo ( $this->args['show_reset_section'] ) ? '<input type="submit" name="scs_transient[reset_section]" class="button button-secondary scs-reset-section scs-confirm" value="'. esc_html__( 'Reset Section', 'chat-skype' ) .'" data-confirm="'. esc_html__( 'Are you sure to reset this section options?', 'chat-skype' ) .'">' : '';
-            echo ( $this->args['show_reset_all'] ) ? '<input type="submit" name="scs_transient[reset]" class="button scs-warning-primary scs-reset-all scs-confirm" value="'. ( ( $this->args['show_reset_section'] ) ? esc_html__( 'Reset All', 'chat-skype' ) : esc_html__( 'Reset', 'chat-skype' ) ) .'" data-confirm="'. esc_html__( 'Are you sure you want to reset all settings to default values?', 'chat-skype' ) .'">' : '';
-            echo '</div>';
+						if ( ! empty( $is_field_error ) ) {
+							$field['_error'] = $is_field_error;
+						}
 
-          echo '</div>';
+						if ( ! empty( $field['id'] ) ) {
+							$field['default'] = $this->get_default( $field );
+						}
 
-          echo '<div class="clear"></div>';
-          echo '</div>';
-        echo '</div>';
+						$value = ( ! empty( $field['id'] ) && isset( $this->options[ $field['id'] ] ) ) ? $this->options[ $field['id'] ] : '';
 
-        echo '<div class="scs-wrapper'. esc_attr( $show_all ) .'">';
+						SCS::field( $field, $value, $this->unique, 'options' );
 
-          if ( $has_nav ) {
+					}
+				} else {
 
-            echo '<div class="scs-nav scs-nav-'. esc_attr( $nav_type ) .' scs-nav-options">';
+								echo '<div class="scs-no-option">' . esc_html__( 'No data available.', 'chat-skype' ) . '</div>';
 
-              echo '<ul>';
+				}
 
-              foreach ( $this->pre_tabs as $tab ) {
+				echo '</div>';
 
-                $tab_id    = sanitize_title( $tab['title'] );
-                $tab_error = $this->error_check( $tab );
-                $tab_icon  = ( ! empty( $tab['icon'] ) ) ? '<i class="scs-tab-icon '. esc_attr( $tab['icon'] ) .'"></i>' : '';
+			}
 
-                if ( ! empty( $tab['subs'] ) ) {
+			echo '</div>';
 
-                  echo '<li class="scs-tab-item">';
+			echo '<div class="clear"></div>';
 
-                    echo '<a href="#tab='. esc_attr( $tab_id ) .'" data-tab-id="'. esc_attr( $tab_id ) .'" class="scs-arrow">'. wp_kses_post($tab_icon) . esc_html($tab['title']) . esc_html($tab_error) .'</a>';
+			echo '</div>';
 
-                    echo '<ul>';
+			echo ( $has_nav && $nav_type === 'normal' ) ? '<div class="scs-nav-background"></div>' : '';
 
-                    foreach ( $tab['subs'] as $sub ) {
+			echo '</div>';
 
-                      $sub_id    = $tab_id .'/'. sanitize_title( $sub['title'] );
-                      $sub_error = $this->error_check( $sub );
-                      $sub_icon  = ( ! empty( $sub['icon'] ) ) ? '<i class="scs-tab-icon '. esc_attr( $sub['icon'] ) .'"></i>' : '';
+			if ( ! empty( $this->args['show_footer'] ) ) {
 
-                      echo '<li><a href="#tab='. esc_attr( $sub_id ) .'" data-tab-id="'. esc_attr( $sub_id ) .'">'. $sub_icon . $sub['title'] . $sub_error .'</a></li>';
+				echo '<div class="scs-footer">';
 
-                    }
+				echo '<div class="scs-buttons">';
+				echo '<input type="submit" name="scs_transient[save]" class="button button-primary scs-save' . esc_attr( $ajax_class ) . '" value="' . esc_html__( 'Save', 'chat-skype' ) . '" data-save="' . esc_html__( 'Saving...', 'chat-skype' ) . '">';
+				echo ( $this->args['show_reset_section'] ) ? '<input type="submit" name="scs_transient[reset_section]" class="button button-secondary scs-reset-section scs-confirm" value="' . esc_html__( 'Reset Section', 'chat-skype' ) . '" data-confirm="' . esc_html__( 'Are you sure to reset this section options?', 'chat-skype' ) . '">' : '';
+				echo ( $this->args['show_reset_all'] ) ? '<input type="submit" name="scs_transient[reset]" class="button scs-warning-primary scs-reset-all scs-confirm" value="' . ( ( $this->args['show_reset_section'] ) ? esc_html__( 'Reset All', 'chat-skype' ) : esc_html__( 'Reset', 'chat-skype' ) ) . '" data-confirm="' . esc_html__( 'Are you sure you want to reset all settings to default values?', 'chat-skype' ) . '">' : '';
+				echo '</div>';
 
-                    echo '</ul>';
+				echo ( ! empty( $this->args['footer_text'] ) ) ? '<div class="scs-copyright">' . wp_kses_post( $this->args['footer_text'] ) . '</div>' : '';
 
-                  echo '</li>';
+				echo '<div class="clear"></div>';
+				echo '</div>';
 
-                } else {
+			}
 
-                  echo '<li class="scs-tab-item"><a href="#tab='. esc_attr( $tab_id ) .'" data-tab-id="'. esc_attr( $tab_id ) .'">'. wp_kses_post($tab_icon) . esc_html($tab['title']) . esc_html($tab_error) .'</a></li>';
+			echo '</form>';
 
-                }
+			echo '</div>';
 
-              }
+			echo '<div class="clear"></div>';
 
-              echo '</ul>';
+			echo ( ! empty( $this->args['footer_after'] ) ) ? wp_kses_post( $this->args['footer_after'] ) : '';
 
-            echo '</div>';
+			echo '</div>';
 
-          }
-
-          echo '<div class="scs-content">';
-
-            echo '<div class="scs-sections">';
-
-            foreach ( $this->pre_sections as $section ) {
-
-              $section_onload = ( ! $has_nav ) ? ' scs-onload' : '';
-              $section_class  = ( ! empty( $section['class'] ) ) ? ' '. $section['class'] : '';
-              $section_icon   = ( ! empty( $section['icon'] ) ) ? '<i class="scs-section-icon '. esc_attr( $section['icon'] ) .'"></i>' : '';
-              $section_title  = ( ! empty( $section['title'] ) ) ? $section['title'] : '';
-              $section_parent = ( ! empty( $section['ptitle'] ) ) ? sanitize_title( $section['ptitle'] ) .'/' : '';
-              $section_slug   = ( ! empty( $section['title'] ) ) ? sanitize_title( $section_title ) : '';
-
-              echo '<div class="scs-section hidden'. esc_attr( $section_onload . $section_class ) .'" data-section-id="'. esc_attr( $section_parent . $section_slug ) .'">';
-              echo ( $has_nav ) ? '<div class="scs-section-title"><h3>'. wp_kses_post($section_icon) . esc_html($section_title) .'</h3></div>' : '';
-              echo ( ! empty( $section['description'] ) ) ? '<div class="scs-field scs-section-description">'. wp_kses_post($section['description']) .'</div>' : '';
-
-              if ( ! empty( $section['fields'] ) ) {
-
-                foreach ( $section['fields'] as $field ) {
-
-                  $is_field_error = $this->error_check( $field );
-
-                  if ( ! empty( $is_field_error ) ) {
-                    $field['_error'] = $is_field_error;
-                  }
-
-                  if ( ! empty( $field['id'] ) ) {
-                    $field['default'] = $this->get_default( $field );
-                  }
-
-                  $value = ( ! empty( $field['id'] ) && isset( $this->options[$field['id']] ) ) ? $this->options[$field['id']] : '';
-
-                  SCS::field( $field, $value, $this->unique, 'options' );
-
-                }
-
-              } else {
-
-                echo '<div class="scs-no-option">'. esc_html__( 'No data available.', 'chat-skype' ) .'</div>';
-
-              }
-
-              echo '</div>';
-
-            }
-
-            echo '</div>';
-
-            echo '<div class="clear"></div>';
-
-          echo '</div>';
-
-          echo ( $has_nav && $nav_type === 'normal' ) ? '<div class="scs-nav-background"></div>' : '';
-
-        echo '</div>';
-
-        if ( ! empty( $this->args['show_footer'] ) ) {
-
-          echo '<div class="scs-footer">';
-
-          echo '<div class="scs-buttons">';
-          echo '<input type="submit" name="scs_transient[save]" class="button button-primary scs-save'. esc_attr( $ajax_class ) .'" value="'. esc_html__( 'Save', 'chat-skype' ) .'" data-save="'. esc_html__( 'Saving...', 'chat-skype' ) .'">';
-          echo ( $this->args['show_reset_section'] ) ? '<input type="submit" name="scs_transient[reset_section]" class="button button-secondary scs-reset-section scs-confirm" value="'. esc_html__( 'Reset Section', 'chat-skype' ) .'" data-confirm="'. esc_html__( 'Are you sure to reset this section options?', 'chat-skype' ) .'">' : '';
-          echo ( $this->args['show_reset_all'] ) ? '<input type="submit" name="scs_transient[reset]" class="button scs-warning-primary scs-reset-all scs-confirm" value="'. ( ( $this->args['show_reset_section'] ) ? esc_html__( 'Reset All', 'chat-skype' ) : esc_html__( 'Reset', 'chat-skype' ) ) .'" data-confirm="'. esc_html__( 'Are you sure you want to reset all settings to default values?', 'chat-skype' ) .'">' : '';
-          echo '</div>';
-
-          echo ( ! empty( $this->args['footer_text'] ) ) ? '<div class="scs-copyright">'. wp_kses_post($this->args['footer_text']) .'</div>' : '';
-
-          echo '<div class="clear"></div>';
-          echo '</div>';
-
-        }
-
-        echo '</form>';
-
-        echo '</div>';
-
-        echo '<div class="clear"></div>';
-
-        echo ( ! empty( $this->args['footer_after'] ) ) ? wp_kses_post($this->args['footer_after']) : '';
-
-      echo '</div>';
-
-      do_action( 'scs_options_after' );
-
-    }
-  }
+			do_action( 'scs_options_after' );
+		}
+	}
 }

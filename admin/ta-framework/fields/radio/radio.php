@@ -35,7 +35,7 @@ if ( ! class_exists( 'SCS_Field_radio' ) ) {
 
 				if ( is_array( $options ) && ! empty( $options ) ) {
 
-					echo '<ul' . wp_kses_post($inline_class) . '>';
+					echo '<ul' . wp_kses_post( $inline_class ) . '>';
 
 					foreach ( $options as $option_key => $option_value ) {
 

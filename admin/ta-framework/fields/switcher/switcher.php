@@ -23,7 +23,7 @@ if ( ! class_exists( 'SCS_Field_switcher' ) ) {
 
 			echo wp_kses_post( $this->field_before() );
 
-			echo '<div class="scs--switcher' . esc_attr( $active ) . '"' . wp_kses_post($text_width) . '>';
+			echo '<div class="scs--switcher' . esc_attr( $active ) . '"' . wp_kses_post( $text_width ) . '>';
 			echo '<span class="scs--on">' . esc_attr( $text_on ) . '</span>';
 			echo '<span class="scs--off">' . esc_attr( $text_off ) . '</span>';
 			echo '<span class="scs--ball"></span>';

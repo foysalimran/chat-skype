@@ -18,7 +18,7 @@ if ( ! class_exists( 'SCS_Field_notice' ) ) {
 
 			$style = ( ! empty( $this->field['style'] ) ) ? $this->field['style'] : 'normal';
 
-			echo ( ! empty( $this->field['content'] ) ) ? '<div class="scs-notice scs-notice-' . esc_attr( $style ) . '">' . wp_kses_post($this->field['content']) . '</div>' : '';
+			echo ( ! empty( $this->field['content'] ) ) ? '<div class="scs-notice scs-notice-' . esc_attr( $style ) . '">' . wp_kses_post( $this->field['content'] ) . '</div>' : '';
 		}
 	}
 }

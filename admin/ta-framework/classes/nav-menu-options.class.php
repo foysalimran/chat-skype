@@ -1,259 +1,241 @@
-<?php if ( ! defined( 'ABSPATH' ) ) { die; } // Cannot access directly.
+<?php if ( ! defined( 'ABSPATH' ) ) {
+	die; } // Cannot access directly.
 /**
  *
  * Nav Menu Options Class
  *
  * @since 1.0.0
  * @version 1.0.0
- *
  */
 if ( ! class_exists( 'SCS_Nav_Menu_Options' ) ) {
-  class SCS_Nav_Menu_Options extends SCS_Abstract{
+	class SCS_Nav_Menu_Options extends SCS_Abstract {
 
-    // constans
-    public $unique     = '';
-    public $abstract   = 'menu';
-    public $sections   = array();
-    public $pre_fields = array();
-    public $args       = array(
-      'data_type'      => 'serialize',
-      'class'          => '',
-      'defaults'       => array(),
-    );
+		// constans
+		public $unique     = '';
+		public $abstract   = 'menu';
+		public $sections   = array();
+		public $pre_fields = array();
+		public $args       = array(
+			'data_type' => 'serialize',
+			'class'     => '',
+			'defaults'  => array(),
+		);
 
-    // run menu construct
-    public function __construct( $key, $params ) {
+		// run menu construct
+		public function __construct( $key, $params ) {
 
-      $this->unique     = $key;
-      $this->args       = apply_filters( "scs_{$this->unique}_args", wp_parse_args( $params['args'], $this->args ), $this );
-      $this->sections   = apply_filters( "scs_{$this->unique}_sections", $params['sections'], $this );
-      $this->pre_fields = $this->pre_fields( $this->sections );
+			$this->unique     = $key;
+			$this->args       = apply_filters( "scs_{$this->unique}_args", wp_parse_args( $params['args'], $this->args ), $this );
+			$this->sections   = apply_filters( "scs_{$this->unique}_sections", $params['sections'], $this );
+			$this->pre_fields = $this->pre_fields( $this->sections );
 
-      add_action( 'wp_nav_menu_item_custom_fields', array( $this, 'wp_nav_menu_item_custom_fields' ), 10, 4 );
-      add_action( 'wp_update_nav_menu_item', array( $this, 'wp_update_nav_menu_item' ), 10, 3 );
+			add_action( 'wp_nav_menu_item_custom_fields', array( $this, 'wp_nav_menu_item_custom_fields' ), 10, 4 );
+			add_action( 'wp_update_nav_menu_item', array( $this, 'wp_update_nav_menu_item' ), 10, 3 );
 
-      add_filter( 'wp_edit_nav_menu_walker', array( $this, 'wp_edit_nav_menu_walker' ), 10, 2 );
+			add_filter( 'wp_edit_nav_menu_walker', array( $this, 'wp_edit_nav_menu_walker' ), 10, 2 );
+		}
 
-    }
+		// instance
+		public static function instance( $key, $params ) {
+			return new self( $key, $params );
+		}
 
-    // instance
-    public static function instance( $key, $params ) {
-      return new self( $key, $params );
-    }
+		public function wp_edit_nav_menu_walker( $class, $menu_id ) {
 
-    public function wp_edit_nav_menu_walker( $class, $menu_id ) {
+			global $wp_version;
 
-      global $wp_version;
+			if ( version_compare( $wp_version, '5.4.0', '<' ) ) {
 
-      if( version_compare( $wp_version, '5.4.0', '<' ) ) {
+				if ( ! class_exists( 'SCS_Walker_Nav_Menu_Edit' ) ) {
+					SCS::include_plugin_file( 'functions/walker.php' );
+				}
 
-        if ( ! class_exists( 'SCS_Walker_Nav_Menu_Edit' ) ) {
-          SCS::include_plugin_file( 'functions/walker.php' );
-        }
+				return 'SCS_Walker_Nav_Menu_Edit';
 
-        return 'SCS_Walker_Nav_Menu_Edit';
+			}
 
-      }
+			return $class;
+		}
 
-      return $class;
+		// get default value
+		public function get_default( $field ) {
 
-    }
+			$default = ( isset( $field['default'] ) ) ? $field['default'] : '';
+			$default = ( isset( $this->args['defaults'][ $field['id'] ] ) ) ? $this->args['defaults'][ $field['id'] ] : $default;
 
-    // get default value
-    public function get_default( $field ) {
+			return $default;
+		}
 
-      $default = ( isset( $field['default'] ) ) ? $field['default'] : '';
-      $default = ( isset( $this->args['defaults'][$field['id']] ) ) ? $this->args['defaults'][$field['id']] : $default;
+		// get meta value
+		public function get_meta_value( $menu_item_id, $field ) {
 
-      return $default;
+			$value = null;
 
-    }
+			if ( ! empty( $menu_item_id ) && ! empty( $field['id'] ) ) {
 
-    // get meta value
-    public function get_meta_value( $menu_item_id, $field ) {
+				if ( $this->args['data_type'] !== 'serialize' ) {
+					$meta  = get_post_meta( $menu_item_id, $field['id'] );
+					$value = ( isset( $meta[0] ) ) ? $meta[0] : null;
+				} else {
+					$meta  = get_post_meta( $menu_item_id, $this->unique, true );
+					$value = ( isset( $meta[ $field['id'] ] ) ) ? $meta[ $field['id'] ] : null;
+				}
+			}
 
-      $value = null;
+			$default = ( isset( $field['id'] ) ) ? $this->get_default( $field ) : '';
+			$value   = ( isset( $value ) ) ? $value : $default;
 
-      if ( ! empty( $menu_item_id ) && ! empty( $field['id'] ) ) {
+			return $value;
+		}
 
-        if ( $this->args['data_type'] !== 'serialize' ) {
-          $meta  = get_post_meta( $menu_item_id, $field['id'] );
-          $value = ( isset( $meta[0] ) ) ? $meta[0] : null;
-        } else {
-          $meta  = get_post_meta( $menu_item_id, $this->unique, true );
-          $value = ( isset( $meta[$field['id']] ) ) ? $meta[$field['id']] : null;
-        }
+		public function wp_nav_menu_item_custom_fields( $menu_item_id, $item, $depth, $args ) {
 
-      }
+			$errors = ( ! empty( $menu_item_id ) ) ? get_post_meta( $menu_item_id, '_scs_errors_' . $this->unique, true ) : array();
+			$errors = ( ! empty( $errors ) ) ? $errors : array();
+			$class  = ( $this->args['class'] ) ? ' ' . $this->args['class'] : '';
 
-      $default = ( isset( $field['id'] ) ) ? $this->get_default( $field ) : '';
-      $value   = ( isset( $value ) ) ? $value : $default;
+			if ( ! empty( $errors ) ) {
+				delete_post_meta( $menu_item_id, '_scs_errors_' . $this->unique );
+			}
 
-      return $value;
+			echo '<div class="scs scs-nav-menu-options' . esc_attr( $class ) . '">';
 
-    }
+			foreach ( $this->sections as $section ) {
 
-    //
-    public function wp_nav_menu_item_custom_fields( $menu_item_id, $item, $depth, $args ) {
+				$section_icon  = ( ! empty( $section['icon'] ) ) ? '<i class="scs-nav-menu-icon ' . esc_attr( $section['icon'] ) . '"></i>' : '';
+				$section_title = ( ! empty( $section['title'] ) ) ? $section['title'] : '';
 
-      $errors = ( ! empty( $menu_item_id ) ) ? get_post_meta( $menu_item_id, '_scs_errors_'. $this->unique, true ) : array();
-      $errors = ( ! empty( $errors ) ) ? $errors : array();
-      $class  = ( $this->args['class'] ) ? ' '. $this->args['class'] : '';
+				echo '<div class="scs-fields">';
 
-      if ( ! empty( $errors ) ) {
-        delete_post_meta( $menu_item_id, '_scs_errors_'. $this->unique );
-      }
+				echo ( $section_title || $section_icon ) ? '<div class="scs-nav-menu-title"><h4>' . wp_kses_post( $section_icon ) . esc_html( $section_title ) . '</h4></div>' : '';
+				echo ( ! empty( $section['description'] ) ) ? '<div class="scs-field scs-section-description">' . wp_kses_post( $section['description'] ) . '</div>' : '';
 
-      echo '<div class="scs scs-nav-menu-options'. esc_attr( $class ) .'">';
+				if ( ! empty( $section['fields'] ) ) {
 
-        foreach ( $this->sections as $section ) {
+					foreach ( $section['fields'] as $field ) {
 
-          $section_icon  = ( ! empty( $section['icon'] ) ) ? '<i class="scs-nav-menu-icon '. esc_attr( $section['icon'] ) .'"></i>' : '';
-          $section_title = ( ! empty( $section['title'] ) ) ? $section['title'] : '';
+						if ( ! empty( $field['id'] ) && ! empty( $errors['fields'][ $field['id'] ] ) ) {
+								$field['_error'] = $errors['fields'][ $field['id'] ];
+						}
 
-          echo '<div class="scs-fields">';
+						if ( ! empty( $field['id'] ) ) {
+							$field['default'] = $this->get_default( $field );
+						}
 
-          echo ( $section_title || $section_icon ) ? '<div class="scs-nav-menu-title"><h4>'. wp_kses_post($section_icon) . esc_html($section_title) .'</h4></div>' : '';
-          echo ( ! empty( $section['description'] ) ) ? '<div class="scs-field scs-section-description">'. wp_kses_post($section['description']) .'</div>' : '';
+						SCS::field( $field, $this->get_meta_value( $menu_item_id, $field ), $this->unique . '[' . $menu_item_id . ']', 'menu' );
 
-          if ( ! empty( $section['fields'] ) ) {
+					}
+				}
 
-            foreach ( $section['fields'] as $field ) {
+				echo '</div>';
 
-              if ( ! empty( $field['id'] ) && ! empty( $errors['fields'][$field['id']] ) ) {
-                $field['_error'] = $errors['fields'][$field['id']];
-              }
+			}
 
-              if ( ! empty( $field['id'] ) ) {
-                $field['default'] = $this->get_default( $field );
-              }
+			echo '</div>';
+		}
 
-              SCS::field( $field, $this->get_meta_value( $menu_item_id, $field ), $this->unique .'['. $menu_item_id .']', 'menu' );
+		public function wp_update_nav_menu_item( $menu_id, $menu_item_db_id, $menu_item_args ) {
 
-            }
+			$count    = 1;
+			$data     = array();
+			$errors   = array();
+			$noncekey = 'update-nav-menu-nonce';
+			$nonce    = ( ! empty( $_POST[ $noncekey ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ $noncekey ] ) ) : '';
 
-          }
+			if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ! wp_verify_nonce( $nonce, 'update-nav_menu' ) ) {
+				return $menu_item_db_id;
+			}
 
-          echo '</div>';
+			// XSS ok.
+			// No worries, This "POST" requests is sanitizing in the below foreach.
+			$request = ( ! empty( $_POST[ $this->unique ][ $menu_item_db_id ] ) ) ? $_POST[ $this->unique ][ $menu_item_db_id ] : array();
 
-        }
+			if ( ! empty( $request ) ) {
 
-      echo '</div>';
+				foreach ( $this->sections as $section ) {
 
-    }
+					if ( ! empty( $section['fields'] ) ) {
 
-    public function wp_update_nav_menu_item( $menu_id, $menu_item_db_id, $menu_item_args ) {
+						foreach ( $section['fields'] as $field ) {
 
-      $count    = 1;
-      $data     = array();
-      $errors   = array();
-      $noncekey = 'update-nav-menu-nonce';
-      $nonce    = ( ! empty( $_POST[ $noncekey ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ $noncekey ] ) ) : '';
+							if ( ! empty( $field['id'] ) ) {
 
-      if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ! wp_verify_nonce( $nonce, 'update-nav_menu' ) ) {
-        return $menu_item_db_id;
-      }
+								$field_id    = $field['id'];
+								$field_value = isset( $request[ $field_id ] ) ? $request[ $field_id ] : '';
 
-      // XSS ok.
-      // No worries, This "POST" requests is sanitizing in the below foreach.
-      $request = ( ! empty( $_POST[ $this->unique ][ $menu_item_db_id ] ) ) ? $_POST[ $this->unique ][ $menu_item_db_id ] : array();
+								// Sanitize "post" request of field.
+								if ( ! isset( $field['sanitize'] ) ) {
 
-      if ( ! empty( $request ) ) {
+									if ( is_array( $field_value ) ) {
+											$data[ $field_id ] = wp_kses_post_deep( $field_value );
+									} else {
+										$data[ $field_id ] = wp_kses_post( $field_value );
+									}
+								} elseif ( isset( $field['sanitize'] ) && is_callable( $field['sanitize'] ) ) {
 
-        foreach ( $this->sections as $section ) {
+											$data[ $field_id ] = call_user_func( $field['sanitize'], $field_value );
 
-          if ( ! empty( $section['fields'] ) ) {
+								} else {
 
-            foreach ( $section['fields'] as $field ) {
+									$data[ $field_id ] = $field_value;
 
-              if ( ! empty( $field['id'] ) ) {
+								}
 
-                $field_id    = $field['id'];
-                $field_value = isset( $request[$field_id] ) ? $request[$field_id] : '';
+								// Validate "post" request of field.
+								if ( isset( $field['validate'] ) && is_callable( $field['validate'] ) ) {
 
-                // Sanitize "post" request of field.
-                if ( ! isset( $field['sanitize'] ) ) {
+										$has_validated = call_user_func( $field['validate'], $field_value );
 
-                  if( is_array( $field_value ) ) {
-                    $data[$field_id] = wp_kses_post_deep( $field_value );
-                  } else {
-                    $data[$field_id] = wp_kses_post( $field_value );
-                  }
+									if ( ! empty( $has_validated ) ) {
 
-                } else if( isset( $field['sanitize'] ) && is_callable( $field['sanitize'] ) ) {
+										$errors['sections'][ $count ]  = true;
+										$errors['fields'][ $field_id ] = $has_validated;
+										$data[ $field_id ]             = $this->get_meta_value( $menu_item_db_id, $field );
 
-                  $data[$field_id] = call_user_func( $field['sanitize'], $field_value );
+									}
+								}
+							}
+						}
+					}
 
-                } else {
+					++$count;
 
-                  $data[$field_id] = $field_value;
+				}
+			}
 
-                }
+			$data = apply_filters( "scs_{$this->unique}_save", $data, $menu_item_db_id, $this );
 
-                // Validate "post" request of field.
-                if ( isset( $field['validate'] ) && is_callable( $field['validate'] ) ) {
+			do_action( "scs_{$this->unique}_save_before", $data, $menu_item_db_id, $this );
 
-                  $has_validated = call_user_func( $field['validate'], $field_value );
+			if ( empty( $data ) ) {
 
-                  if ( ! empty( $has_validated ) ) {
+				if ( $this->args['data_type'] !== 'serialize' ) {
+					foreach ( $this->pre_fields as $field ) {
+						if ( ! empty( $field['id'] ) ) {
+							delete_post_meta( $menu_item_db_id, $field['id'] );
+						}
+					}
+				} else {
+					delete_post_meta( $menu_item_db_id, $this->unique );
+				}
+			} else {
 
-                    $errors['sections'][$count] = true;
-                    $errors['fields'][$field_id] = $has_validated;
-                    $data[$field_id] = $this->get_meta_value( $menu_item_db_id, $field );
+				if ( $this->args['data_type'] !== 'serialize' ) {
+					foreach ( $data as $key => $value ) {
+						update_post_meta( $menu_item_db_id, $key, $value );
+					}
+				} else {
+					update_post_meta( $menu_item_db_id, $this->unique, $data );
+				}
 
-                  }
+				if ( ! empty( $errors ) ) {
+					update_post_meta( $menu_item_db_id, '_scs_errors_' . $this->unique, $errors );
+				}
+			}
 
-                }
+			do_action( "scs_{$this->unique}_saved", $data, $menu_item_db_id, $this );
 
-              }
-
-            }
-
-          }
-
-          $count++;
-
-        }
-
-      }
-
-      $data = apply_filters( "scs_{$this->unique}_save", $data, $menu_item_db_id, $this );
-
-      do_action( "scs_{$this->unique}_save_before", $data, $menu_item_db_id, $this );
-
-      if ( empty( $data ) ) {
-
-        if ( $this->args['data_type'] !== 'serialize' ) {
-          foreach ( $this->pre_fields as $field ) {
-            if ( ! empty( $field['id'] ) ) {
-              delete_post_meta( $menu_item_db_id, $field['id'] );
-            }
-          }
-        } else {
-          delete_post_meta( $menu_item_db_id, $this->unique );
-        }
-
-      } else {
-
-        if ( $this->args['data_type'] !== 'serialize' ) {
-          foreach ( $data as $key => $value ) {
-            update_post_meta( $menu_item_db_id, $key, $value );
-          }
-        } else {
-          update_post_meta( $menu_item_db_id, $this->unique, $data );
-        }
-
-        if ( ! empty( $errors ) ) {
-          update_post_meta( $menu_item_db_id, '_scs_errors_'. $this->unique, $errors );
-        }
-
-      }
-
-      do_action( "scs_{$this->unique}_saved", $data, $menu_item_db_id, $this );
-
-      do_action( "scs_{$this->unique}_save_after", $data, $menu_item_db_id, $this );
-
-    }
-
-  }
+			do_action( "scs_{$this->unique}_save_after", $data, $menu_item_db_id, $this );
+		}
+	}
 }

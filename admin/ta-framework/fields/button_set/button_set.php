@@ -47,7 +47,7 @@ if ( ! class_exists( 'SCS_Field_button_set' ) ) {
 
 						echo '<div class="scs--sibling scs--button' . esc_attr( $active ) . '">';
 						echo '<input type="' . esc_attr( $type ) . '" name="' . esc_attr( $this->field_name( $extra ) ) . '" value="' . esc_attr( $key ) . '"' . wp_kses_post( $this->field_attributes() ) . esc_attr( $checked ) . '/>';
-						echo esc_html($option);
+						echo esc_html( $option );
 						echo '</div>';
 
 					}

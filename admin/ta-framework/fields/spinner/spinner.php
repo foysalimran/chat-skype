@@ -28,7 +28,7 @@ if ( ! class_exists( 'SCS_Field_spinner' ) ) {
 
 			echo wp_kses_post( $this->field_before() );
 
-			echo '<div class="scs--spin"><input type="number" name="' . esc_attr( $this->field_name() ) . '" value="' . esc_attr( $this->value ) . '"' . wp_kses_post($this->field_attributes( array( 'class' => 'scs-input-number' ) )) . ' data-min="' . esc_attr( $args['min'] ) . '" data-max="' . esc_attr( $args['max'] ) . '" data-step="' . esc_attr( $args['step'] ) . '" data-unit="' . esc_attr( $args['unit'] ) . '" step="any" /></div>';
+			echo '<div class="scs--spin"><input type="number" name="' . esc_attr( $this->field_name() ) . '" value="' . esc_attr( $this->value ) . '"' . wp_kses_post( $this->field_attributes( array( 'class' => 'scs-input-number' ) ) ) . ' data-min="' . esc_attr( $args['min'] ) . '" data-max="' . esc_attr( $args['max'] ) . '" data-step="' . esc_attr( $args['step'] ) . '" data-unit="' . esc_attr( $args['unit'] ) . '" step="any" /></div>';
 
 			echo wp_kses_post( $this->field_after() );
 		}

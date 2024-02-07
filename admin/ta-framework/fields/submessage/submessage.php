@@ -18,7 +18,7 @@ if ( ! class_exists( 'SCS_Field_submessage' ) ) {
 
 			$style = ( ! empty( $this->field['style'] ) ) ? $this->field['style'] : 'normal';
 
-			echo '<div class="scs-submessage scs-submessage-' . esc_attr( $style ) . '">' . wp_kses_post($this->field['content']) . '</div>';
+			echo '<div class="scs-submessage scs-submessage-' . esc_attr( $style ) . '">' . wp_kses_post( $this->field['content'] ) . '</div>';
 		}
 	}
 }

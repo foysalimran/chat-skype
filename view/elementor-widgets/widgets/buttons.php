@@ -236,7 +236,6 @@ class Scs_Buttons extends Widget_Base {
 					'America/Anchorage'                => esc_html__( 'America/Anchorage', 'chat-skype' ),
 					'America/Anguilla'                 => esc_html__( 'America/Anguilla', 'chat-skype' ),
 					'America/Antigua'                  => esc_html__( 'America/Antigua', 'chat-skype' ),
-					'America/Araguaina'                => esc_html__( 'America/Araguaina', 'chat-skype' ),
 					'America/Argentina/Buenos_Aires'   => esc_html__( 'America/Argentina/Buenos_Aires', 'chat-skype' ),
 					'America/Argentina/Catamarca'      => esc_html__( 'America/Argentina/Catamarca', 'chat-skype' ),
 					'America/Argentina/ComodRivadavia' => esc_html__( 'America/Argentina/ComodRivadavia', 'chat-skype' ),
@@ -281,7 +280,6 @@ class Scs_Buttons extends Widget_Base {
 					'America/Curacao'                  => esc_html__( 'America/Curacao', 'chat-skype' ),
 					'America/Danmarkshavn'             => esc_html__( 'America/Danmarkshavn', 'chat-skype' ),
 					'America/Dawson'                   => esc_html__( 'America/Dawson', 'chat-skype' ),
-					'America/Araguaina'                => esc_html__( 'America/Araguaina', 'chat-skype' ),
 					'America/Denver'                   => esc_html__( 'America/Denver', 'chat-skype' ),
 					'America/Araguaina'                => esc_html__( 'America/Araguaina', 'chat-skype' ),
 					'America/Dominica'                 => esc_html__( 'America/Dominica', 'chat-skype' ),
@@ -1335,30 +1333,30 @@ class Scs_Buttons extends Widget_Base {
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 		// button settings
-		$style       = $settings['style'];
-		$skypeid     = $settings['skypeid'];
-		$timezone    = $settings['timezone'];
-		$visibility  = $settings['visibility'];
-		$icon        = $settings['button__icon']['value'];
-		$rounded     = $settings['rounded'];
-		$icon__bg    = $settings['show__icon__bg__color'];
-		$sizes       = $settings['button__sizes'];
-		$photo       = $settings['agent__photo']['url'];
-		$name        = $settings['agent__name'];
-		$designation = $settings['agent__designation'];
-		$labelText   = $settings['custom__button__label'];
-		$onlineText  = $settings['online__text'];
-		$offlineText = $settings['offline__text'];
+		$style        = $settings['style'];
+		$skypeid      = $settings['skypeid'];
+		$timezone     = $settings['timezone'];
+		$visibility   = $settings['visibility'];
+		$icon         = $settings['button__icon']['value'];
+		$rounded      = $settings['rounded'];
+		$icon__bg     = $settings['show__icon__bg__color'];
+		$sizes        = $settings['button__sizes'];
+		$photo        = $settings['agent__photo']['url'];
+		$name         = $settings['agent__name'];
+		$designation  = $settings['agent__designation'];
+		$label_text   = $settings['custom__button__label'];
+		$online_text  = $settings['online__text'];
+		$offline_text = $settings['offline__text'];
 		// availablity
 
-		$sunday         = ( $settings['sunday__start'] ? $settings['sunday__start'] : '0:00' ) . '-' . ( $settings['sunday__end'] ? $settings['sunday__end'] : '23:59' );
-		$monday         = ( $settings['monday__start'] ? $settings['monday__start'] : '0:00' ) . '-' . ( $settings['monday__end'] ? $settings['monday__end'] : '23:59' );
-		$tuesday        = ( $settings['tuesday__start'] ? $settings['tuesday__start'] : '0:00' ) . '-' . ( $settings['tuesday__end'] ? $settings['tuesday__end'] : '23:59' );
-		$wednesday      = ( $settings['wednesday__start'] ? $settings['wednesday__start'] : '0:00' ) . '-' . ( $settings['wednesday__end'] ? $settings['wednesday__end'] : '23:59' );
-		$thursday       = ( $settings['thursday__start'] ? $settings['thursday__start'] : '0:00' ) . '-' . ( $settings['thursday__end'] ? $settings['thursday__end'] : '23:59' );
-		$friday         = ( $settings['friday__start'] ? $settings['friday__start'] : '0:00' ) . '-' . ( $settings['friday__end'] ? $settings['friday__end'] : '23:59' );
-		$saturday       = ( $settings['saturday__start'] ? $settings['saturday__start'] : '0:00' ) . '-' . ( $settings['saturday__end'] ? $settings['saturday__end'] : '23:59' );
-		$skySupportIcon = $icon ? $icon : 'fas fa-phone-alt';
+		$sunday           = ( $settings['sunday__start'] ? $settings['sunday__start'] : '0:00' ) . '-' . ( $settings['sunday__end'] ? $settings['sunday__end'] : '23:59' );
+		$monday           = ( $settings['monday__start'] ? $settings['monday__start'] : '0:00' ) . '-' . ( $settings['monday__end'] ? $settings['monday__end'] : '23:59' );
+		$tuesday          = ( $settings['tuesday__start'] ? $settings['tuesday__start'] : '0:00' ) . '-' . ( $settings['tuesday__end'] ? $settings['tuesday__end'] : '23:59' );
+		$wednesday        = ( $settings['wednesday__start'] ? $settings['wednesday__start'] : '0:00' ) . '-' . ( $settings['wednesday__end'] ? $settings['wednesday__end'] : '23:59' );
+		$thursday         = ( $settings['thursday__start'] ? $settings['thursday__start'] : '0:00' ) . '-' . ( $settings['thursday__end'] ? $settings['thursday__end'] : '23:59' );
+		$friday           = ( $settings['friday__start'] ? $settings['friday__start'] : '0:00' ) . '-' . ( $settings['friday__end'] ? $settings['friday__end'] : '23:59' );
+		$saturday         = ( $settings['saturday__start'] ? $settings['saturday__start'] : '0:00' ) . '-' . ( $settings['saturday__end'] ? $settings['saturday__end'] : '23:59' );
+		$sky_support_icon = $icon ? $icon : 'fas fa-phone-alt';
 
 		?>
 		<?php if ( $style == '1' ) : ?>
@@ -1383,14 +1381,14 @@ class Scs_Buttons extends Widget_Base {
 									?>
 								/ <?php echo esc_html( $designation ); ?><?php } ?></p>
 						<?php } ?>
-						<?php if ( $labelText ) { ?>
-							<p class="title"><?php echo esc_html( $labelText ); ?></p>
+						<?php if ( $label_text ) { ?>
+							<p class="title"><?php echo esc_html( $label_text ); ?></p>
 						<?php } ?>
-						<?php if ( $onlineText ) { ?>
-							<p class="online"><?php echo esc_html( $onlineText ); ?></p>
+						<?php if ( $online_text ) { ?>
+							<p class="online"><?php echo esc_html( $online_text ); ?></p>
 						<?php } ?>
-						<?php if ( $offlineText ) { ?>
-							<p class="offline"><?php echo esc_html( $offlineText ); ?></p>
+						<?php if ( $offline_text ) { ?>
+							<p class="offline"><?php echo esc_html( $offline_text ); ?></p>
 						<?php } ?>
 					</div>
 					<a href="skype:<?php echo esc_url( $skypeid ); ?>?chat" target="_blank"></a>
@@ -1399,11 +1397,11 @@ class Scs_Buttons extends Widget_Base {
 		<?php else : ?>
 			<div class="button-wrapper">
 				<a href="skype:<?php echo esc_url( $skypeid ); ?>?chat" class="skySupport-button-2 <?php echo esc_attr( $icon__bg ); ?> skySupport-btn-bg <?php echo esc_attr( $visibility ); ?> <?php echo esc_attr( $rounded ); ?> <?php echo esc_attr( $sizes ); ?>">
-					<i class="<?php echo esc_attr( $skySupportIcon ); ?>"></i> 
+					<i class="<?php echo esc_attr( $sky_support_icon ); ?>"></i> 
 										<?php
-										if ( $labelText ) {
+										if ( $label_text ) {
 											?>
-						<span><?php echo esc_html( $labelText ); ?></span><?php } ?>
+						<span><?php echo esc_html( $label_text ); ?></span><?php } ?>
 				</a>
 			</div>
 		<?php endif; ?>
