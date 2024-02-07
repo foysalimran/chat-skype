@@ -1,12 +1,14 @@
 <?php
 /**
+ * The Custom Shortcode For This Plugin.
  *
- * @package    Chat skype support Wp plugin
- * @version    1.0
+ * @since        1.0.0
+ * @version      1.0.0
+ *
+ * @package    Chat_Skype
  * @author     ThemeAtelier
- * @description Creaate custom shortcode for this plugin.
- * @Websites: https://themeatelier.net/
  */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }

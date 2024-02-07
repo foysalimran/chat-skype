@@ -5,7 +5,7 @@ namespace Scselementor\Widgets;
 use Elementor\Controls_Manager;
 use Elementor\Widget_Base;
 
-// Exit if accessed directly
+// Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -18,25 +18,45 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Scs_Buttons extends Widget_Base {
 
 
+	/**
+	 * get_name
+	 *
+	 * @return void
+	 */
 	public function get_name() {
 		return 'scs-buttons';
 	}
 
+	/**
+	 * get_title
+	 *
+	 * @return void
+	 */
 	public function get_title() {
 		return esc_html__( 'Chat skype buttons', 'chat-skype' );
 	}
 
+	/**
+	 * get_icon
+	 *
+	 * @return void
+	 */
 	public function get_icon() {
 		return 'eicon-headphones';
 	}
 
+	/**
+	 * get_categories
+	 *
+	 * @return void
+	 */
 	public function get_categories() {
 		return array( 'scs-elements' );
 	}
 
 	protected function _register_controls() {
 
-		// ----------------------------------------  Chat skype Buttons Settings ------------------------------
+		// Chat skype Buttons Settings.
 
 		$this->start_controls_section(
 			'scs__general__settings',
@@ -771,7 +791,7 @@ class Scs_Buttons extends Widget_Base {
 			)
 		);
 
-		// start sunday popover
+		// start sunday popover.
 		$this->add_control(
 			'popover-sunday',
 			array(
@@ -808,9 +828,9 @@ class Scs_Buttons extends Widget_Base {
 		);
 
 		$this->end_popover();
-		// end sunday popover
+		// end sunday popover.
 
-		// start monday popover
+		// start monday popover.
 		$this->add_control(
 			'popover-monday',
 			array(
@@ -847,9 +867,9 @@ class Scs_Buttons extends Widget_Base {
 		);
 
 		$this->end_popover();
-		// end monday popover
+		// end monday popover.
 
-		// start tuesday popover
+		// start tuesday popover.
 		$this->add_control(
 			'popover-tuesday',
 			array(
@@ -886,9 +906,9 @@ class Scs_Buttons extends Widget_Base {
 		);
 
 		$this->end_popover();
-		// end tuesday popover
+		// end tuesday popover.
 
-		// start wednesday popover
+		// start wednesday popover.
 		$this->add_control(
 			'popover-wednesday',
 			array(
@@ -925,9 +945,9 @@ class Scs_Buttons extends Widget_Base {
 		);
 
 		$this->end_popover();
-		// end wednesday popover
+		// end wednesday popover.
 
-		// start sunday popover
+		// start sunday popover.
 		$this->add_control(
 			'popover-thursday',
 			array(
@@ -964,9 +984,9 @@ class Scs_Buttons extends Widget_Base {
 		);
 
 		$this->end_popover();
-		// end thursday popover
+		// end thursday popover.
 
-		// start sunday popover
+		// start sunday popover.
 		$this->add_control(
 			'popover-friday',
 			array(
@@ -1003,7 +1023,7 @@ class Scs_Buttons extends Widget_Base {
 		);
 
 		$this->end_popover();
-		// end friday popover
+		// end friday popover.
 
 		$this->add_control(
 			'popover-saturday',
@@ -1041,7 +1061,7 @@ class Scs_Buttons extends Widget_Base {
 		);
 		$this->end_popover();
 
-		$this->end_controls_section(); // End section top content
+		$this->end_controls_section(); // End section top content.
 
 		$this->start_controls_section(
 			'scs__appearance',
@@ -1327,12 +1347,11 @@ class Scs_Buttons extends Widget_Base {
 			)
 		);
 
-		$this->end_controls_section(); // End section top content
+		$this->end_controls_section(); // End section top content.
 	}
-
 	protected function render() {
 		$settings = $this->get_settings_for_display();
-		// button settings
+		// button settings.
 		$style        = $settings['style'];
 		$skypeid      = $settings['skypeid'];
 		$timezone     = $settings['timezone'];
@@ -1347,8 +1366,7 @@ class Scs_Buttons extends Widget_Base {
 		$label_text   = $settings['custom__button__label'];
 		$online_text  = $settings['online__text'];
 		$offline_text = $settings['offline__text'];
-		// availablity
-
+		// availablity.
 		$sunday           = ( $settings['sunday__start'] ? $settings['sunday__start'] : '0:00' ) . '-' . ( $settings['sunday__end'] ? $settings['sunday__end'] : '23:59' );
 		$monday           = ( $settings['monday__start'] ? $settings['monday__start'] : '0:00' ) . '-' . ( $settings['monday__end'] ? $settings['monday__end'] : '23:59' );
 		$tuesday          = ( $settings['tuesday__start'] ? $settings['tuesday__start'] : '0:00' ) . '-' . ( $settings['tuesday__end'] ? $settings['tuesday__end'] : '23:59' );
@@ -1357,11 +1375,9 @@ class Scs_Buttons extends Widget_Base {
 		$friday           = ( $settings['friday__start'] ? $settings['friday__start'] : '0:00' ) . '-' . ( $settings['friday__end'] ? $settings['friday__end'] : '23:59' );
 		$saturday         = ( $settings['saturday__start'] ? $settings['saturday__start'] : '0:00' ) . '-' . ( $settings['saturday__end'] ? $settings['saturday__end'] : '23:59' );
 		$sky_support_icon = $icon ? $icon : 'fas fa-phone-alt';
-
 		?>
-		<?php if ( $style == '1' ) : ?>
+		<?php if ( $style === '1' ) : ?>
 			<div class="button-wrapper">
-
 				<button 
 				<?php
 				if ( $timezone ) {
@@ -1398,10 +1414,9 @@ class Scs_Buttons extends Widget_Base {
 			<div class="button-wrapper">
 				<a href="skype:<?php echo esc_url( $skypeid ); ?>?chat" class="skySupport-button-2 <?php echo esc_attr( $icon__bg ); ?> skySupport-btn-bg <?php echo esc_attr( $visibility ); ?> <?php echo esc_attr( $rounded ); ?> <?php echo esc_attr( $sizes ); ?>">
 					<i class="<?php echo esc_attr( $sky_support_icon ); ?>"></i> 
-										<?php
-										if ( $label_text ) {
-											?>
-						<span><?php echo esc_html( $label_text ); ?></span><?php } ?>
+					<?php if ( $label_text ) { ?>
+						<span><?php echo esc_html( $label_text ); ?></span>
+					<?php } ?>
 				</a>
 			</div>
 		<?php endif; ?>

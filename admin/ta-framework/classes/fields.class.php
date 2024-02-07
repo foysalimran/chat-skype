@@ -301,6 +301,13 @@ if ( ! class_exists( 'SCS_Fields' ) ) {
 			return $options;
 		}
 
+		/**
+		 * field_wp_query_data_title
+		 *
+		 * @param  mixed $type
+		 * @param  mixed $values
+		 * @return void
+		 */
 		public function field_wp_query_data_title( $type, $values ) {
 
 			$options = array();

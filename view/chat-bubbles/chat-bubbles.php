@@ -1,42 +1,45 @@
 <?php
+/**
+ *
+ * @package    Chat skype support Wp plugin
+ * @version    1.0
+ * @author     ThemeAtelier
+ * @description Creaate chat bubble for this plugin.
+ * @Websites: https://themeatelier.net/
+ */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
 add_action( 'wp_footer', 'scs_chat_popup' );
-
 function scs_chat_popup() {
 	$options         = get_option( 'scs-opt' );
 	$opt_availablity = $options['opt-availablity'];
 	$sunday_from     = $opt_availablity ? $opt_availablity['availablity-sunday']['from'] : '00:00';
 	$sunday_to       = $opt_availablity ? $opt_availablity['availablity-sunday']['to'] : '23:59';
-
-	$monday_from = $opt_availablity ? $opt_availablity['availablity-monday']['from'] : '00:00';
-	$monday_to   = $opt_availablity ? $opt_availablity['availablity-monday']['to'] : '23:59';
-
-	$tuesday_from = $opt_availablity ? $opt_availablity['availablity-tuesday']['from'] : '00:00';
-	$tuesday_to   = $opt_availablity ? $opt_availablity['availablity-tuesday']['to'] : '23:59';
-
-	$wednesday_from = $opt_availablity ? $opt_availablity['availablity-wednesday']['from'] : '00:00';
-	$wednesday_to   = $opt_availablity ? $opt_availablity['availablity-wednesday']['to'] : '23:59';
-
-	$thursday_from = $opt_availablity ? $opt_availablity['availablity-thursday']['from'] : '00:00';
-	$thursday_to   = $opt_availablity ? $opt_availablity['availablity-thursday']['to'] : '23:59';
-	$friday_from   = $opt_availablity ? $opt_availablity['availablity-friday']['from'] : '00:00';
-	$friday_to     = $opt_availablity ? $opt_availablity['availablity-friday']['to'] : '23:59';
-	$saturday_from = $opt_availablity ? $opt_availablity['availablity-saturday']['from'] : '00:00';
-	$saturday_to   = $opt_availablity ? $opt_availablity['availablity-saturday']['to'] : '23:59';
-	$sunday        = ( $sunday_from ? $sunday_from : '0:00' ) . '-' . ( $sunday_to ? $sunday_to : '23:59' );
-	$monday        = ( $monday_from ? $monday_from : '0:00' ) . '-' . ( $monday_to ? $monday_to : '23:59' );
-	$tuesday       = ( $tuesday_from ? $tuesday_from : '0:00' ) . '-' . ( $tuesday_to ? $tuesday_to : '23:59' );
-	$wednesday     = ( $wednesday_from ? $wednesday_from : '0:00' ) . '-' . ( $wednesday_to ? $wednesday_to : '23:59' );
-	$thursday      = ( $thursday_from ? $thursday_from : '0:00' ) . '-' . ( $thursday_to ? $thursday_to : '23:59' );
-	$friday        = ( $friday_from ? $friday_from : '0:00' ) . '-' . ( $friday_to ? $friday_to : '23:59' );
-	$saturday      = ( $saturday_from ? $saturday_from : '0:00' ) . '-' . ( $saturday_to ? $saturday_to : '23:59' );
-	$random        = wp_rand( 1, 13 );
-	$bubble_type   = null;
-	$button_label  = $options['bubble-text'];
+	$monday_from     = $opt_availablity ? $opt_availablity['availablity-monday']['from'] : '00:00';
+	$monday_to       = $opt_availablity ? $opt_availablity['availablity-monday']['to'] : '23:59';
+	$tuesday_from    = $opt_availablity ? $opt_availablity['availablity-tuesday']['from'] : '00:00';
+	$tuesday_to      = $opt_availablity ? $opt_availablity['availablity-tuesday']['to'] : '23:59';
+	$wednesday_from  = $opt_availablity ? $opt_availablity['availablity-wednesday']['from'] : '00:00';
+	$wednesday_to    = $opt_availablity ? $opt_availablity['availablity-wednesday']['to'] : '23:59';
+	$thursday_from   = $opt_availablity ? $opt_availablity['availablity-thursday']['from'] : '00:00';
+	$thursday_to     = $opt_availablity ? $opt_availablity['availablity-thursday']['to'] : '23:59';
+	$friday_from     = $opt_availablity ? $opt_availablity['availablity-friday']['from'] : '00:00';
+	$friday_to       = $opt_availablity ? $opt_availablity['availablity-friday']['to'] : '23:59';
+	$saturday_from   = $opt_availablity ? $opt_availablity['availablity-saturday']['from'] : '00:00';
+	$saturday_to     = $opt_availablity ? $opt_availablity['availablity-saturday']['to'] : '23:59';
+	$sunday          = ( $sunday_from ? $sunday_from : '0:00' ) . '-' . ( $sunday_to ? $sunday_to : '23:59' );
+	$monday          = ( $monday_from ? $monday_from : '0:00' ) . '-' . ( $monday_to ? $monday_to : '23:59' );
+	$tuesday         = ( $tuesday_from ? $tuesday_from : '0:00' ) . '-' . ( $tuesday_to ? $tuesday_to : '23:59' );
+	$wednesday       = ( $wednesday_from ? $wednesday_from : '0:00' ) . '-' . ( $wednesday_to ? $wednesday_to : '23:59' );
+	$thursday        = ( $thursday_from ? $thursday_from : '0:00' ) . '-' . ( $thursday_to ? $thursday_to : '23:59' );
+	$friday          = ( $friday_from ? $friday_from : '0:00' ) . '-' . ( $friday_to ? $friday_to : '23:59' );
+	$saturday        = ( $saturday_from ? $saturday_from : '0:00' ) . '-' . ( $saturday_to ? $saturday_to : '23:59' );
+	$random          = wp_rand( 1, 13 );
+	$bubble_type     = null;
+	$button_label    = $options['bubble-text'];
 	if ( '1' === $options['opt-button-style'] ) {
 		$bubble_type = '<button class="skySupport-bubble circle-bubble circle-animation-' . esc_attr( $options['circle-animation'] ) . ' ">
       <span class="open-icon"><i class="' . esc_html( $options['circle-button-icon'] ) . '"></i></span>
@@ -92,48 +95,33 @@ function scs_chat_popup() {
   </div>' . esc_attr( $button_label ) . '</button>';
 	}
 	?>
-
-
 	<div class="skySupport skySupport-
 	<?php
 	if ( isset( $options['bubble-visibility'] ) ) {
 		echo esc_attr( $options['bubble-visibility'] );
 	}
 	?>
-									-only 
-									<?php
-									if ( $options['autoshow-popup'] ) :
-										?>
+	-only <?php if ( $options['autoshow-popup'] ) : ?>
 	skySupport-show<?php endif; ?> <?php
-	if ( $options['bubble-style'] === 'dark' ) :
+	if ( 'dark' === $options['bubble-style'] ) :
 		?>
-	dark-mode 
-		<?php
-		elseif ( $options['bubble-style'] === 'night' ) :
-			?>
+	dark-mode <?php elseif ( 'night' === $options['bubble-style'] ) : ?>
 	night-mode<?php endif; ?> <?php
-	if ( $options['bubble-position'] === 'left' ) {
+	if ( 'left' === $options['bubble-position'] ) {
 		?>
-	skySupport-left<?php } ?>">
+		skySupport-left<?php } ?>">
 		<?php echo wp_kses_post( $bubble_type ); ?>
 		<div class="skySupport__popup animation
-	<?php
-	if ( $options['select-animation'] === 'random' ) :
-		?>
+	<?php if ( 'random' === $options['select-animation'] ) : ?>
 		<?php echo esc_attr( $random ); ?>
-		<?php
-	else :
-		?>
+		<?php else : ?>
 		<?php echo esc_attr( $options['select-animation'] ); ?><?php endif; ?> chat-availability" 
 					<?php
 					if ( $options['select-timezone'] ) {
 						?>
-					data-timezone="<?php echo esc_attr( $options['select-timezone'] ); ?>" <?php } ?>
-			data-availability='{ "sunday":"<?php echo esc_attr( $sunday ); ?>", "monday":"<?php echo esc_attr( $monday ); ?>", "tuesday":"<?php echo esc_attr( $tuesday ); ?>", "wednesday":"<?php echo esc_attr( $wednesday ); ?>", "thursday":"<?php echo esc_attr( $thursday ); ?>", "friday":"<?php echo esc_attr( $friday ); ?>", "saturday":"<?php echo esc_attr( $saturday ); ?>" }'>
+						data-timezone="<?php echo esc_attr( $options['select-timezone'] ); ?>" <?php } ?> data-availability='{ "sunday":"<?php echo esc_attr( $sunday ); ?>", "monday":"<?php echo esc_attr( $monday ); ?>", "tuesday":"<?php echo esc_attr( $tuesday ); ?>", "wednesday":"<?php echo esc_attr( $wednesday ); ?>", "thursday":"<?php echo esc_attr( $thursday ); ?>", "friday":"<?php echo esc_attr( $friday ); ?>", "saturday":"<?php echo esc_attr( $saturday ); ?>" }'>
 			<div class="skySupport__popup--header 
-		<?php
-		if ( $options['header-content-position'] === 'center' ) {
-			?>
+		<?php if ( 'center' === $options['header-content-position'] ) { ?>
 			header-center<?php } ?>">
 				<div class="image">
 					<img src="<?php echo esc_attr( $options['agent-photo']['url'] ); ?>" />
@@ -167,9 +155,6 @@ function scs_chat_popup() {
 			</div>
 		</div>
 	</div>
-
 	<?php
 }
-
-
 ?>

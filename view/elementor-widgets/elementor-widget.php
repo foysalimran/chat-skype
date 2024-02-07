@@ -1,7 +1,4 @@
 <?php
-if ( ! defined( 'WPINC' ) ) {
-	die;
-}
 /**
  *
  * @package    Chat skype support
@@ -9,6 +6,11 @@ if ( ! defined( 'WPINC' ) ) {
  * @author     ThemeAtelier
  * @Websites: https://themeatelier.net/
  */
+
+
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
 
 
 // Make sure the same class is not loaded twice in free/premium versions.

@@ -8,6 +8,11 @@
  * @version 1.0.0
  */
 if ( ! function_exists( 'scs_get_icons' ) ) {
+	/**
+	 * scs_get_icons
+	 *
+	 * @return void
+	 */
 	function scs_get_icons() {
 
 		$nonce = ( ! empty( $_POST['nonce'] ) ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
@@ -55,6 +60,11 @@ if ( ! function_exists( 'scs_get_icons' ) ) {
  * @version 1.0.0
  */
 if ( ! function_exists( 'scs_export' ) ) {
+	/**
+	 * scs_export
+	 *
+	 * @return void
+	 */
 	function scs_export() {
 
 		$nonce  = ( ! empty( $_GET['nonce'] ) ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '';

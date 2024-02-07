@@ -8,6 +8,9 @@
  * @version 1.0.0
  */
 if ( ! class_exists( 'SCS_Shortcoder' ) ) {
+	/**
+	 * SCS_Shortcoder
+	 */
 	class SCS_Shortcoder extends SCS_Abstract {
 
 		// constans
