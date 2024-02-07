@@ -206,6 +206,9 @@ if ( ! class_exists( 'SCS_Options' ) ) {
       // XSS ok.
       // No worries, This "POST" requests is sanitizing in the below foreach. see #L337 - #L341
       $response  = ( $ajax && ! empty( $_POST['data'] ) ) ? json_decode( wp_unslash( trim( $_POST['data'] ) ), true ) : $_POST;
+      
+
+
 
       // Set variables.
       $data      = array();

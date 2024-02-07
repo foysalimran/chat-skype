@@ -57,7 +57,7 @@ if ( ! class_exists( 'SCS_Field_datetime' ) ) {
 
 			}
 
-			echo '<div class="scs-datetime-settings" data-settings="' . esc_attr( json_encode( $settings ) ) . '"></div>';
+			echo '<div class="scs-datetime-settings" data-settings="' . esc_attr( wp_json_encode( $settings ) ) . '"></div>';
 
 			echo wp_kses_post( $this->field_after() );
 		}

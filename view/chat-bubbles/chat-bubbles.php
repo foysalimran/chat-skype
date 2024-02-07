@@ -34,7 +34,7 @@ function scs_chat_popup() {
 	$thursday      = ( $thursday_from ? $thursday_from : '0:00' ) . '-' . ( $thursday_to ? $thursday_to : '23:59' );
 	$friday        = ( $friday_from ? $friday_from : '0:00' ) . '-' . ( $friday_to ? $friday_to : '23:59' );
 	$saturday      = ( $saturday_from ? $saturday_from : '0:00' ) . '-' . ( $saturday_to ? $saturday_to : '23:59' );
-	$random        = rand( 1, 13 );
+	$random        = wp_rand( 1, 13 );
 	$bubbleType    = null;
 	$buttonLabel   = $options['bubble-text'];
 	if ( $options['opt-button-style'] === '1' ) {
