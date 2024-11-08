@@ -6,7 +6,7 @@
  *  Author:         ThemeAtelier
  *  Author URI:     http://themeatelier.net/
  *  Requirements:   PHP 5.2.4 or above, WordPress 3.3 or above.
- *  Version:        1.1.0
+ *  Version:        1.1.1
  *  License:        GPLv2 or later
 *   License URI:    http://www.gnu.org/licenses/gpl-2.0.html
  *  Text Domain:    chat-skype
@@ -74,21 +74,3 @@ require_once SCS_DIR_PATH . '/view/chat-bubbles/chat-bubbles.php';
 // include framework for admin panel
 require_once SCS_DIR_PATH . 'admin/ta-framework/codestar-framework.php';
 require_once SCS_DIR_PATH . 'inc/scs-plugin-options.php';
-
-
-
-function skype_chat_cyber_week_sale_notice()
-{
-?>
-	<div class="notice notice-success is-dismissible" style="display:flex;align-items:center;gap:20px;justify-content:space-between">
-		<!-- <h3>Upgrade to the premium version of the WhatsApp plugin</h3> -->
-		<a href="https://1.envato.market/ta-plugins" target="_blank"><img src="https://i.ibb.co/tMQ5R34/envato-onsale.webp" alt="ThemeAtelier Items On Sale at Envato">
-		</a>
-		<div>
-			<a href="https://1.envato.market/skype" target="_blank" style="color:#fff;text-transform: uppercase; letter-spacing: 1px; display: inline-block; background: #05AAF1; text-decoration: none; padding: 12px 22px; margin-top: 10px; margin-bottom: 10px;text-align:center">Upgrade Skype chat support</a>
-		</div>
-	</div>
-
-<?php
-}
-add_action('admin_notices', 'skype_chat_cyber_week_sale_notice');
